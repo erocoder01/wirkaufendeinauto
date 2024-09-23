@@ -1,0 +1,58 @@
+.navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Heller Hintergrund für den Header */
+  color: #1e1f24; /* Dunkle Schriftfarbe */
+  padding: 0;
+  width: 100%;
+  border-bottom: 1px solid #d1d1d1; /* Untere Linie */
+  height: 70px;
+}
+
+.header {
+  display: flex;
+  width: 80%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 95px;
+}
+
+.logo-auto {
+  color: #ff6600; /* Gelbe Farbe für "Auto" */
+}
+
+.navigation {
+  flex: 1;
+  margin-left: 85px; /* Abstand zwischen Logo und Navigation */
+}
+
+.navigation ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.links {
+  color: #1e1f24; /* Dunkle Schriftfarbe */
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.active {
+  color: #000000 !important; /* Orange für die ausgewählte Seite */
+  font-weight: bold !important;
+}
+
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}

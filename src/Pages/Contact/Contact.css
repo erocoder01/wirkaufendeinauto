@@ -1,0 +1,86 @@
+/* Contact Section Styles */
+.contact-section {
+  padding: 50px 0;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  flex-direction: column;
+  display: flex;
+}
+
+.contact-section h2 {
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.contact-section p {
+  font-size: 18px;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+}
+
+.contact-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.contact-option {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  width: 450px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-icon {
+  font-size: 40px;
+  color: #ff6600;
+  margin-bottom: 20px;
+}
+
+.contact-option h3 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.contact-option p {
+  font-size: 1em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.contact-btn {
+  background-color: #000000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none; /* Removes the underline */
+  display: inline-block; /* Ensures the anchor behaves like a button */
+  text-align: center; /* Center the text in the button */
+  min-width: 200px; /* Ensure both buttons have the same minimum width */
+  line-height: 1.5em; /* Ensure proper vertical alignment */
+}
+
+.contact-btn:hover {
+  background-color: #ff6600;
+}
+
+.container-contact {
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
