@@ -7,6 +7,7 @@ import Contact from "./Pages/Contact/Contact";
 import Car from "./Pages/Car/Car";
 import CarDetails from "./Pages/CarDetails/CarDetails";
 import Whatsapp from "./components/Whatsapp/Whatsapp";
+import HowItWorks from "./Pages/HowItWorks/HowItWorks";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -49,6 +50,7 @@ function App() {
             }
           />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/howItWorks" element={<HowItWorks />} />
         </Routes>
         <Whatsapp />
         <Footer />
