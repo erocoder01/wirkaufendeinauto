@@ -118,8 +118,8 @@ const Partner = () => {
           <h2>Wir führen über 150 Punkte Inspektionen durch</h2>
           <p>
             Wir bieten detaillierte Inspektionsberichte, CarFax und
-            OBD2-Berichte für jedes Auto, um Ihnen den Kauf einfacher, schneller
-            und intelligenter zu machen.
+            OBD2-Berichte für jedes Auto, um Ihnen den Kauf <br /> einfacher,
+            schneller und intelligenter zu machen.
           </p>
           <div className="inspection-grid">
             {[

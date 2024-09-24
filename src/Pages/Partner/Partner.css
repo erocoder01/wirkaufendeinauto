@@ -1,8 +1,9 @@
 /* Partner Abteilung */
 
 .partner-section {
-  background-color: #edeef0;
-  color: #ffffff;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
 }
 
 .partner-content {
@@ -16,6 +17,7 @@
   flex: 1;
   max-width: 50%;
   padding-right: 30px;
+  text-align: left;
 }
 
 .partner-text h2 {
@@ -93,6 +95,9 @@
   padding: 20px 0;
   text-align: center;
   margin-bottom: -30px;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
 }
 
 .partner-benefits h2 {
@@ -189,14 +194,14 @@
 .benefit-grid {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 50px;
   flex-wrap: wrap;
 }
 
 .benefit-item {
   flex: 1;
-  max-width: 220px;
   text-align: center;
+  margin: 0 10px;
 }
 
 .benefit-item img {
@@ -222,6 +227,9 @@
   padding: 20px 0;
   text-align: center;
   margin-bottom: -30px;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
 }
 
 .inspection-section h2 {
@@ -276,6 +284,9 @@
   background-color: #edeef0;
   padding: 20px 0;
   text-align: center;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
 }
 
 .testimonials h2 {

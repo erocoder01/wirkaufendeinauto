@@ -5,7 +5,7 @@ import securityImage from "../../assets/security.png";
 const About = () => {
   return (
     <div>
-      <div className="about-container">
+      <div className="about">
         <section className="about-header">
           <h1>Wir sind AutoAnkauf24</h1>
           <h3>Ihrem vertrauenswürdigen Partner für den Autoankauf.</h3>
