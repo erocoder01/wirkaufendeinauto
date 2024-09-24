@@ -1,0 +1,345 @@
+/* Partner Abteilung */
+
+.partner-section {
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
+}
+
+.partner-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.partner-text {
+  flex: 1;
+  max-width: 50%;
+  padding-right: 30px;
+  text-align: left;
+}
+
+.partner-text h2 {
+  font-size: 38px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.partner-text h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.partner-text p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+}
+
+.partner-form {
+  flex: 1;
+  max-width: 40%;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  color: #333333;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Zentriere den Inhalt vertikal */
+  align-items: center; /* Zentriere den Inhalt horizontal */
+  text-align: center; /* Zentriere den Text */
+  margin-top: 50px;
+  border: 1px solid #d1d1d1;
+}
+
+.partner-form h3 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.partner-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1em;
+  color: #333333;
+  text-align: left; /* Links ausrichten */
+}
+
+.partner-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1em;
+  color: #333333;
+}
+
+.partner-form button {
+  background-color: #ff6600;
+  border: 1px solid #e04b00;
+  color: #ffffff;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  align-self: center; /* Button zentrieren */
+}
+
+.partner-benefits {
+  background-color: #edeef0;
+  padding: 20px 0;
+  text-align: center;
+  margin-bottom: -30px;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
+}
+
+.partner-benefits h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.partner-benefits p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #1e1f24;
+}
+
+/* Popup Overlay Styling */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup Content Styling */
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+/* Styling for the Success Checkmark */
+.popup-icon-container {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-tick {
+  width: 50px;
+  height: 50px;
+}
+
+/* Title Styling */
+.popup-content h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 40px; /* Platz für das Symbol oben */
+}
+
+/* Paragraph Styling */
+.popup-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Button Styling */
+.popup-content button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.popup-content button:hover {
+  background-color: #45a049;
+}
+
+.benefit-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.benefit-item {
+  flex: 1;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.benefit-item img {
+  width: 60px;
+  height: 60px; /* Stellt sicher, dass alle SVGs die gleiche Höhe haben */
+  margin-bottom: 20px;
+}
+
+.benefit-item h4 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.benefit-item p {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.inspection-section {
+  background-color: #edeef0;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  margin-bottom: -30px;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
+}
+
+.inspection-section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+  margin-top: 20px;
+}
+
+.inspection-section p {
+  font-size: 18px;
+  margin-bottom: 40px;
+  color: #1e1f24;
+}
+
+.inspection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.inspection-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inspection-item img {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.inspection-item p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .inspection-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inspection-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.testimonials {
+  background-color: #edeef0;
+  padding: 20px 0;
+  text-align: center;
+  max-width: 1200px; /* Dies kannst du nach Bedarf anpassen */
+  margin: 0 auto; /* Zentriert den Container */
+  padding: 0 15px; /* Fügt innen Abstände hinzu */
+}
+
+.testimonials h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #333;
+  margin-top: 20px;
+}
+
+.testimonial-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.testimonial-item {
+  padding: 20px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 350px;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-item .quote-icon {
+  font-size: 2em;
+  color: #ff6600;
+  margin-bottom: 15px;
+}
+
+.testimonial-item p {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.testimonial-item h4 {
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.testimonial-item p:last-of-type {
+  font-size: 0.9em;
+  color: #888;
+}
+
+/* Responsives Design */
+@media (max-width: 768px) {
+  .testimonial-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+}

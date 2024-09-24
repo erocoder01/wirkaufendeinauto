@@ -1,9 +1,10 @@
 import React from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-function Navbar(props) {
+import { NavLink } from "react-router-dom";
+
+function Navbar() {
   return (
-    <div class="navbar-container">
+    <div className="navbar-container">
       <div className="header">
         <div className="logo">
           <span className="logo-auto">Auto</span>
@@ -11,31 +12,35 @@ function Navbar(props) {
           <span className="logo-verkaufen">24</span>
         </div>
         <div className="navigation">
-          <ul class="nav-links">
+          <ul className="nav-links">
             <li>
-              <Link to="/" className="links">
+              <NavLink exact to="/" className="links" activeClassName="active">
                 Auto verkaufen
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/HowItWorks" className="links">
+              <NavLink
+                to="/HowItWorks"
+                className="links"
+                activeClassName="active"
+              >
                 So funktioniert’s
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/partner" className="links">
+              <NavLink to="/partner" className="links" activeClassName="active">
                 Für Partner
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <a href="about.html" className="active links">
+              <NavLink to="/about" className="links" activeClassName="active">
                 Über uns
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="contact.html" class="links">
+              <NavLink to="/contact" className="links" activeClassName="active">
                 Kontaktiere uns
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>

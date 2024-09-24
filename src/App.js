@@ -8,6 +8,8 @@ import Car from "./Pages/Car/Car";
 import CarDetails from "./Pages/CarDetails/CarDetails";
 import Whatsapp from "./components/Whatsapp/Whatsapp";
 import HowItWorks from "./Pages/HowItWorks/HowItWorks";
+import About from "./Pages/About/About";
+import Partner from "./Pages/Partner/Partner";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -53,6 +55,9 @@ function App() {
 
           <Route path="/howitworks" element={<HowItWorks />} />
 
+          <Route path="/about" element={<About />} />
+
+          <Route path="/partner" element={<Partner />} />
         </Routes>
         <Whatsapp />
         <Footer />
