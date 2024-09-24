@@ -1,0 +1,158 @@
+/* Über uns */
+.about {
+  position: relative;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.about-header {
+  padding: 50px;
+  position: relative;
+  z-index: 2;
+  text-align: center; /* Zentriert nur den Inhalt des Headers */
+}
+
+.about-header h1 {
+  font-size: 38px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.about-header h3 {
+  font-size: 22px;
+  color: #1e1f24;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding-bottom: 5px;
+  position: relative;
+}
+
+.about-header h3::after {
+  content: "";
+  display: block;
+  width: 60px; /* Breite der Linie */
+  height: 3px; /* Höhe der Linie */
+  background-color: #ff6600; /* Farbe der Linie */
+  margin: 10px auto 0; /* Abstand zur Überschrift und Zentrierung */
+}
+
+.about-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.about-image {
+  width: 400px;
+  margin-right: 20px;
+}
+
+.about-text {
+  max-width: 600px;
+  font-size: 20px;
+  color: #333;
+}
+
+.about-text p {
+  color: #666;
+  font-size: 18px;
+}
+
+/* Mondförmiger Hintergrund */
+.about::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%; /* Der Mond soll den gesamten Bereich umfassen */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='688'%3E%3Cpath d='M2417 0c-106.407 168.27-257.015 309.52-451.824 423.751C1672.963 595.1 1243.966 688 929.236 688 488.457 688 178.71 585.179 0 379.537V0h2417z' fill='%23F5F5F5' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Abstand zwischen Mond und den Icons */
+.about-features {
+  display: flex;
+  justify-content: center; /* Zentriert die Icons */
+  gap: 300px; /* Verringert den Abstand zwischen den Icons */
+  margin-top: 120px;
+  position: relative;
+  z-index: 2;
+}
+
+.about-feature {
+  text-align: center;
+}
+
+.about-feature img {
+  width: 40px;
+  height: 40px;
+}
+
+.about-feature h4 {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #1e1f24;
+}
+
+.about-details {
+  margin-top: 50px;
+  text-align: center;
+  max-width: 800px; /* Maximalbreite des Textes */
+  margin-left: auto; /* Zentrieren des Containers */
+  margin-right: auto; /* Zentrieren des Containers */
+  line-height: 1.6; /* Bessere Lesbarkeit durch erhöhten Zeilenabstand */
+  margin-bottom: 60px;
+}
+
+.about-details h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-details p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: justify; /* Optional, falls du den Text blockweise ausrichten möchtest */
+}
+
+/* Media Queries für verschiedene Bildschirmgrößen */
+
+/* Für größere Bildschirme */
+@media (min-width: 1024px) {
+  .about::before {
+    height: 600px;
+  }
+}
+
+/* Für größere Bildschirme (große Laptops, Desktops) */
+@media (min-width: 1440px) {
+  .about::before {
+    height: 700px;
+  }
+}
+
+/* Für kleinere Bildschirme (Mobilgeräte) */
+@media (min-width: 768px) {
+  .about::before {
+    height: 450px;
+  }
+
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-image {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}
