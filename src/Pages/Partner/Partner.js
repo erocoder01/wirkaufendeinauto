@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Partner.css";
 
 import icon1 from "../../assets/partners/Icon1.svg";
