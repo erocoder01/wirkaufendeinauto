@@ -1,5 +1,6 @@
 import React from "react";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 function Navbar(props) {
   return (
     <div class="navbar-container">
@@ -12,27 +13,27 @@ function Navbar(props) {
         <div className="navigation">
           <ul class="nav-links">
             <li>
-              <a href="index.html" className="links">
+              <Link to="/" className="links">
                 Auto verkaufen
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="howitworks.html" className="links">
+              <Link to="/HowItWorks" className="links">
                 So funktioniert’s
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="partner.html" className="links">
+              <Link to="/partner" className="links">
                 Für Partner
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="about.html" className="links">
+              <a href="about.html" className="active links">
                 Über uns
               </a>
             </li>
             <li>
-              <a href="contact.html" class="active links">
+              <a href="contact.html" class="links">
                 Kontaktiere uns
               </a>
             </li>

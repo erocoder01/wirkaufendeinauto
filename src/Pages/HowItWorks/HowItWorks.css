@@ -102,6 +102,10 @@
 }
 
 .how-it-works-benefits-box {
+  display: flex; /* Hier das Flexbox-Layout aktivieren */
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
   background-color: white;
   border-radius: 8px;
   padding: 30px;
