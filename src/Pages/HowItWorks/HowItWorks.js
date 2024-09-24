@@ -1,37 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./HowItWorks.css"; // Import your custom styles
+import howto1 from "../../assets/howitworks/howto1.webp";
+import howto2 from "../../assets/howitworks/howto2.webp";
+import howto3 from "../../assets/howitworks/howto3.webp";
+import howto4 from "../../assets/howitworks/howto4.webp";
 
-function HowItWorks() {
-  const [dynamicText, setDynamicText] = useState("schnell");
-  const [faqItems, setFaqItems] = useState([]);
-  const texts = ["schnell", "bequem", "einfach"];
-  const [currentIndex, setCurrentIndex] = useState(0);
+import icon1 from "../../assets/howitworks/Icon1.svg";
+import icon2 from "../../assets/howitworks/Icon2.svg";
+import icon3 from "../../assets/howitworks/Icon3.svg";
 
-  useEffect(() => {
-    // Dynamic text change logic
-    const interval = setInterval(() => {
-      setDynamicText(texts[currentIndex]);
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
-    }, 3000);
+import verkauf1 from "../../assets/howitworks/Verkauf1.png";
+import verkauf2 from "../../assets/howitworks/Verkauf2.jpg";
+import verkauf3 from "../../assets/howitworks/Verkauf3.png";
+import verkauf4 from "../../assets/howitworks/Verkauf4.jpg";
 
-    // Cleanup interval on unmount
-    return () => clearInterval(interval);
-  }, [currentIndex]);
-
-  useEffect(() => {
-    // FAQ toggling logic
-    const faqElements = document.querySelectorAll(".faq-item");
-    setFaqItems(faqElements);
-
-    faqElements.forEach((item) => {
-      const questionButton = item.querySelector(".faq-question");
-      questionButton.addEventListener("click", () => {
-        faqElements.forEach((i) => i !== item && i.classList.remove("active"));
-        item.classList.toggle("active");
-      });
-    });
-  }, []);
-
+const HowItWorks = () => {
   return (
     <div>
       <div className="howitworks-container">
@@ -40,27 +23,49 @@ function HowItWorks() {
           Erhalten Sie den besten Preis für Ihr Auto in 4 einfachen Schritten
         </p>
         <div className="howitworks-steps">
-          {/* How It Works Steps */}
-          {["Schritt 1", "Schritt 2", "Schritt 3", "Schritt 4"].map(
-            (step, idx) => (
-              <div key={idx} className="howitworks-step">
-                <img
-                  src={`images/howitworks/howto${idx + 1}.webp`}
-                  alt={`Step ${idx + 1}`}
-                />
-                <div className="howitworks-step-info">
-                  <h3>
-                    <span className="howitworks-step-number">{step}</span>{" "}
-                    Schätzen Sie Ihr Auto
-                  </h3>
-                  <p>
-                    Beantworten Sie ein paar Fragen und erhalten Sie eine
-                    Schätzung
-                  </p>
-                </div>
+          {/* Schritte und ihre individuellen Daten */}
+          {[
+            {
+              image: howto1,
+              title: "Schätzen Sie Ihr Auto",
+              description:
+                "Beantworten Sie ein paar Fragen und erhalten Sie eine Schätzung",
+            },
+            {
+              image: howto2,
+              title: "Erhalten Sie Ihr Angebot",
+              description:
+                "Erhalten Sie ein Angebot von unserem Netzwerk von Händlern",
+            },
+            {
+              image: howto3,
+              title: "Verkaufen Sie Ihr Auto",
+              description: "Akzeptieren Sie das Angebot",
+            },
+            {
+              image: howto4,
+              title: "Bezahlung erhalten",
+              description:
+                "Erhalten Sie Ihr Geld und wir kümmern uns um den Rest",
+            },
+          ].map((step, idx) => (
+            <div key={idx} className="howitworks-step">
+              <img
+                src={step.image}
+                alt={`Step ${idx + 1}`}
+                className="step-image"
+              />
+              <div className="howitworks-step-info">
+                <h3>
+                  <span className="howitworks-step-number">{`Schritt ${
+                    idx + 1
+                  }`}</span>{" "}
+                  {step.title}
+                </h3>
+                <p>{step.description}</p>
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -71,25 +76,25 @@ function HowItWorks() {
           <div className="how-it-works-benefits-box">
             {[
               {
-                icon: "Icon1.svg",
+                icon: icon1,
                 title: "Garantiertes Angebot",
-                text: "Unsere Angebote ändern sich nicht, ...",
+                text: "Unsere Angebote ändern sich nicht, sobald wir Ihre Fahrzeugdaten haben, im Gegensatz zu privaten Käufern und Händlern.",
               },
               {
-                icon: "Icon2.svg",
+                icon: icon2,
                 title: "Bequemer Verkauf",
-                text: "Verkaufen Sie Ihr Auto von Ihrer Couch aus, ...",
+                text: "Verkaufen Sie Ihr Auto von Ihrer Couch aus, in der Regel innerhalb eines Tages. Wir kümmern uns um alles, sodass Sie nie direkt mit Käufern zu tun haben.",
               },
               {
-                icon: "Icon3.svg",
+                icon: icon3,
                 title: "Fachkundige Unterstützung",
-                text: "Unser Team unterstützt Sie während des gesamten Prozesses, ...",
+                text: "Unser Team unterstützt Sie während des gesamten Prozesses, so dass Sie sich keine Sorgen machen müssen, viel über Autos zu wissen.",
               },
             ].map((benefit, idx) => (
               <div key={idx} className="how-it-works-benefit">
                 <div className="how-it-works-icon-title">
                   <img
-                    src={`images/howitworks/${benefit.icon}`}
+                    src={benefit.icon}
                     alt={benefit.title}
                     className="how-it-works-icon"
                   />
@@ -107,38 +112,33 @@ function HowItWorks() {
         <h2>Der AutoAnkauf24-Prozess</h2>
         <div className="verkaufsprozess-schritte">
           {/* Verkaufsprozess Steps */}
-          {["Verkauf1.png", "Verkauf2.jpg", "Verkauf3.png", "Verkauf4.jpg"].map(
-            (image, idx) => (
-              <div key={idx} className="verkaufsprozess-schritt">
-                <img
-                  src={`images/howitworks/${image}`}
-                  alt={`Verkauf ${idx + 1}`}
-                />
-                <div className="verkaufsprozess-schritt-info">
-                  <h3>
-                    {
-                      [
-                        "Bewertung",
-                        "Auktion",
-                        "Inspektion",
-                        "Zahlung & Papierkram",
-                      ][idx]
-                    }
-                  </h3>
-                  <p>
-                    {
-                      [
-                        "Wir verwenden Daten von...",
-                        "AutoAnkauf24 veranstaltet...",
-                        "Um den Zustand des...",
-                        "AutoAnkauf24 kommt an den...",
-                      ][idx]
-                    }
-                  </p>
-                </div>
+          {[verkauf1, verkauf2, verkauf3, verkauf4].map((image, idx) => (
+            <div key={idx} className="verkaufsprozess-schritt">
+              <img src={image} alt={`Verkauf ${idx + 1}`} />
+              <div className="verkaufsprozess-schritt-info">
+                <h3>
+                  {
+                    [
+                      "Bewertung",
+                      "Auktion",
+                      "Inspektion",
+                      "Zahlung & Papierkram",
+                    ][idx]
+                  }
+                </h3>
+                <p>
+                  {
+                    [
+                      "Wir verwenden Daten von Großhändlern, Einzelhändlern und 1st-Party-Auktionen, um einen Schätzwert für Ihr Auto zu ermitteln. Anhand zusätzlicher Informationen über den Zustand und den Kilometerstand des Fahrzeugs verfeinern wir diesen Wert weiter, um sicherzustellen, dass Sie eine genaue Bewertung erhalten.",
+                      "AutoAnkauf24 veranstaltet an drei Tagen pro Woche Auktionen, bei denen Hunderte von Käufern aus ganz BC und Alberta online um Fahrzeuge wie das Ihre konkurrieren. Sobald Sie Ihr Angebot erhalten haben, haben Sie 24 Stunden Zeit, um Ihre Entscheidung zu treffen.",
+                      "Um den Zustand des Fahrzeugs zu bestätigen, wird ein AutoAnkauf24-Mitarbeiter eine Inspektion Ihres Fahrzeugs durchführen, die eine kurze Probefahrt beinhaltet. Sobald diese abgeschlossen ist, wird das Angebot für Ihr Fahrzeug verbindlich sein.",
+                      "AutoAnkauf24 kommt an den Ort Ihrer Wahl, um alle ausstehenden Formalitäten zu erledigen, Ihr Fahrzeug abzuholen und Sie vor Ort zu bezahlen. Sie werden die Zahlung auf Ihrem Bankkonto sehen, noch bevor Ihr Auto Ihr Haus verlässt.",
+                    ][idx]
+                  }
+                </p>
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -161,37 +161,37 @@ function HowItWorks() {
               {[
                 [
                   "Reichweite",
-                  "Mit einem Klick...",
-                  "Einzelne Händler...",
-                  "Auf Plattformen selbst...",
+                  "Mit einem Klick 100+ Händler erreichen",
+                  "Einzelne Händler anfragen",
+                  "Auf Plattformen selbst Käufer suchen",
                 ],
                 [
                   "Verkaufsgeschwindigkeit",
                   "Schnell und unkompliziert",
-                  "Mittel",
+                  "Mittel – hängt von den Verhandlungen ab",
                   "Langsam – Wochen bis Monate",
                 ],
                 [
                   "Preis",
-                  "Bestpreis durch Händler...",
+                  "Bestpreis durch Händlervergleich",
                   "Individuell verhandelbar",
-                  "Ungewiss",
+                  "Der Preis varriert, aber ungewiss",
                 ],
                 [
                   "Aufwand",
-                  "Minimal",
-                  "Mittlerer Aufwand",
-                  "Hoch – viele Treffen",
+                  "Minimal – wir kümmern uns um alles",
+                  "Mittlerer Aufwand – einige Verhandlungen nötig",
+                  "Hoch – viele Treffen, Verhandlungen",
                 ],
                 [
                   "Formalitäten",
-                  "Wir übernehmen alles",
-                  "Teilweise",
-                  "Selbst managen",
+                  "Wir übernehmen alle Formalitäten",
+                  "Händler übernimmt teilweise Formalitäten",
+                  "Selbst alle Dokumente managen",
                 ],
                 [
                   "Sicherheit",
-                  "Garantierte Zahlung",
+                  "Garantierte sichere Zahlung",
                   "Hängt vom Händler ab",
                   "Risiko bei der Bezahlung",
                 ],
@@ -214,6 +214,6 @@ function HowItWorks() {
       </section>
     </div>
   );
-}
+};
 
 export default HowItWorks;

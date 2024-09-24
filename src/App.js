@@ -50,7 +50,9 @@ function App() {
             }
           />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/howItWorks" element={<HowItWorks />} />
+
+          <Route path="/howitworks" element={<HowItWorks />} />
+
         </Routes>
         <Whatsapp />
         <Footer />
