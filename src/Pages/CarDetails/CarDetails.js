@@ -3,21 +3,26 @@ import "./CarDetails.css";
 import carData from "../../carData.json";
 
 function CarDetails({ brandName, modelName, year }) {
+  // selected values
   const [selectedBodyType, setSelectedBodyType] = useState("");
-
   const [fuelType, setFuelType] = useState("");
   const [gearbox, setGearbox] = useState("");
   const [power, setPower] = useState("");
   const [modification, setModification] = useState("");
+
   const [kilometerstand, setKilometerstand] = useState("");
-  const [unfallschaden, setUnfallschaden] = useState("");
-  const [transmission, setTransmission] = useState("");
+  const [unfallschaden, setUnfallschaden] = useState(false);
+  const [serviceHeft, setServiceHeft] = useState(false);
   const [paintConditionLack, setPaintConditionLack] = useState("");
   const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  // list of options are saved here
   const [bodyTypes, setBodyTypes] = useState([]);
   const [fuelTypes, setFuelTypes] = useState([]);
+  const [gearboxTypes, setGearboxTypes] = useState([]);
+  const [powerHPOptions, setPowerHPOptions] = useState([]);
+  const [modificationOptions, setModificationOptions] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,13 +35,20 @@ function CarDetails({ brandName, modelName, year }) {
       modification,
       kilometerstand,
       unfallschaden,
-      transmission,
+      serviceHeft,
       paintConditionLack,
       paintConditionKarosserie,
       additionalNotes,
     };
     console.log(formData);
   };
+
+  useEffect(() => {
+    if (brandName && modelName && year) {
+      loadBodytypes(brandName, modelName, year);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [brandName, modelName, year]);
 
   // Function to load body types based on selected brand, model, and year
   function loadBodytypes(brandName, modelName, year) {
@@ -73,6 +85,10 @@ function CarDetails({ brandName, modelName, year }) {
       const updatedBodyTypes = [...prevBodyTypes, ...Array.from(newBodyTypes)];
       return [...new Set(updatedBodyTypes)]; // Ensure no duplicates
     });
+
+    //load the Fuel types after selecting bodytype
+
+    loadFuels(brandName, modelName, year, selectedBodyType);
   }
 
   function loadFuels(brandName, modelName, year, bodytype) {
@@ -110,17 +126,188 @@ function CarDetails({ brandName, modelName, year }) {
     });
   }
 
-  useEffect(() => {
-    if (brandName && modelName && year) {
-      loadBodytypes(brandName, modelName, year);
-    }
-  }, [brandName, modelName, year]);
+  function loadGearbox(brandName, modelName, year, bodytype, fuel) {
+    if (!brandName || !modelName || !year || !fuel || !bodytype) return;
 
-  useEffect(() => {
-    if (brandName && modelName && year && selectedBodyType) {
-      loadFuels(brandName, modelName, year, selectedBodyType);
-    }
-  }, [brandName, modelName, year, selectedBodyType]);
+    // Find the brand and model in carData
+    const selectedBrand = carData.brands.brand.find(
+      (brand) => brand.name === brandName
+    );
+    const selectedModel = selectedBrand.models.model.find(
+      (model) => model.name === modelName
+    );
+    if (!selectedModel) return;
+
+    // Create a Set to ensure uniqueness of gearboxes
+    const newGearboxes = new Set();
+
+    // Iterate through generations and modifications to find matching gearboxes
+    selectedModel.generations.generation.forEach((generation) => {
+      generation.modifications.modification.forEach((mod) => {
+        const yearStart = parseInt(mod.yearstart);
+        const yearStop = mod.yearstop
+          ? parseInt(mod.yearstop)
+          : new Date().getFullYear();
+        if (
+          year >= yearStart &&
+          year <= yearStop &&
+          mod.coupe === bodytype &&
+          mod.fuel === fuel
+        ) {
+          if (mod.gearboxMT) newGearboxes.add("Manuell");
+          if (mod.gearboxAT) newGearboxes.add("Automatik");
+        }
+      });
+    });
+
+    // Append new gearboxes while keeping the previous ones
+    setGearboxTypes((prevGearboxes) => {
+      const updatedGearboxes = [...prevGearboxes, ...Array.from(newGearboxes)];
+      return [...new Set(updatedGearboxes)]; // Ensure no duplicates
+    });
+  }
+
+  function loadPowerHp(brandName, modelName, year, bodytype, fuel, gearbox) {
+    if (!brandName || !modelName || !year || !fuel || !gearbox || !bodytype)
+      return;
+
+    // Find the brand and model in carData
+    const selectedBrand = carData.brands.brand.find(
+      (brand) => brand.name === brandName
+    );
+    const selectedModel = selectedBrand.models.model.find(
+      (model) => model.name === modelName
+    );
+    if (!selectedModel) return;
+
+    // Create a Set to ensure uniqueness of power HP options
+    const newPowerHp = new Set();
+
+    // Iterate through generations and modifications to find matching power HP
+    selectedModel.generations.generation.forEach((generation) => {
+      generation.modifications.modification.forEach((mod) => {
+        const yearStart = parseInt(mod.yearstart);
+        const yearStop = mod.yearstop
+          ? parseInt(mod.yearstop)
+          : new Date().getFullYear();
+        if (
+          year >= yearStart &&
+          year <= yearStop &&
+          mod.coupe === bodytype &&
+          mod.fuel === fuel &&
+          ((gearbox === "Manuell" && mod.gearboxMT) ||
+            (gearbox === "Automatik" && mod.gearboxAT))
+        ) {
+          newPowerHp.add(mod.powerHp); // Add power HP value
+        }
+      });
+    });
+
+    // Append new power HP options while keeping the previous ones
+    setPowerHPOptions((prevPowerHp) => {
+      const updatedPowerHp = [...prevPowerHp, ...Array.from(newPowerHp)];
+      return [...new Set(updatedPowerHp)]; // Ensure no duplicates
+    });
+  }
+
+  function loadModifications(
+    brandName,
+    modelName,
+    year,
+    bodytype,
+    gearbox,
+    fuel,
+    powerHp
+  ) {
+    if (
+      !brandName ||
+      !modelName ||
+      !year ||
+      !powerHp ||
+      !fuel ||
+      !gearbox ||
+      !bodytype
+    )
+      return;
+
+    // Find the brand and model in carData
+    const selectedBrand = carData.brands.brand.find(
+      (brand) => brand.name === brandName
+    );
+    const selectedModel = selectedBrand.models.model.find(
+      (model) => model.name === modelName
+    );
+    if (!selectedModel) return;
+
+    // Create an array to store modifications
+    const newModifications = [];
+
+    // Iterate through generations and modifications to find matching modifications
+    selectedModel.generations.generation.forEach((generation) => {
+      generation.modifications.modification.forEach((mod) => {
+        const yearStart = parseInt(mod.yearstart);
+        const yearStop = mod.yearstop
+          ? parseInt(mod.yearstop)
+          : new Date().getFullYear();
+        if (
+          year >= yearStart &&
+          year <= yearStop &&
+          mod.coupe === bodytype &&
+          mod.fuel === fuel &&
+          mod.powerHp === powerHp &&
+          ((gearbox === "Manuell" && mod.gearboxMT) ||
+            (gearbox === "Automatik" && mod.gearboxAT))
+        ) {
+          // Combine generation and modification details for dropdown text
+          const modificationText = `${generation.name} ${mod.engine} (${
+            mod.powerHp
+          } PS) ${mod.gearboxAT ? "Steptronic" : "Manuell"}`;
+          newModifications.push(modificationText);
+        }
+      });
+    });
+
+    // Append new modifications while keeping the previous ones
+    setModificationOptions((prevModifications) => {
+      const updatedModifications = [...prevModifications, ...newModifications];
+      return [...new Set(updatedModifications)]; // Ensure no duplicates
+    });
+  }
+
+  const selectBodyType = (bodytype) => {
+    setSelectedBodyType(bodytype);
+    loadFuels(brandName, modelName, year, bodytype);
+  };
+
+  const selectFuelType = (fuelType) => {
+    setFuelType(fuelType);
+    loadGearbox(brandName, modelName, year, selectedBodyType, fuelType);
+  };
+
+  const selectGearbox = (gearboxType) => {
+    setGearbox(gearboxType);
+    loadPowerHp(
+      brandName,
+      modelName,
+      year,
+      selectedBodyType,
+      fuelType,
+      gearboxType
+    );
+  };
+
+  const selectHorsePower = (horsePower) => {
+    setPower(fuelType);
+    loadModifications(
+      brandName,
+      modelName,
+      year,
+      selectedBodyType,
+      gearbox,
+      fuelType,
+      horsePower
+    );
+  };
 
   return (
     <div className="second-page-background">
@@ -141,7 +328,7 @@ function CarDetails({ brandName, modelName, year }) {
                 id="body-type"
                 name="body-type"
                 value={selectedBodyType}
-                onChange={(e) => setSelectedBodyType(e.target.value)}
+                onChange={(e) => selectBodyType(e.target.value)}
                 required
               >
                 <option value="" disabled>
@@ -161,7 +348,7 @@ function CarDetails({ brandName, modelName, year }) {
                 id="fuel-type"
                 name="fuel-type"
                 value={fuelType}
-                onChange={(e) => setFuelType(e.target.value)}
+                onChange={(e) => selectFuelType(e.target.value)}
                 required
               >
                 <option value="" disabled>
@@ -181,13 +368,17 @@ function CarDetails({ brandName, modelName, year }) {
                 id="gearbox"
                 name="gearbox"
                 value={gearbox}
-                onChange={(e) => setGearbox(e.target.value)}
+                onChange={(e) => selectGearbox(e.target.value)}
                 required
               >
                 <option value="" disabled>
                   Bitte auswählen
                 </option>
-                {/* Add options here */}
+                {gearboxTypes.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -197,13 +388,17 @@ function CarDetails({ brandName, modelName, year }) {
                 id="power"
                 name="power"
                 value={power}
-                onChange={(e) => setPower(e.target.value)}
+                onChange={(e) => selectHorsePower(e.target.value)}
                 required
               >
                 <option value="" disabled>
                   Bitte auswählen
                 </option>
-                {/* Add options here */}
+                {powerHPOptions.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -219,7 +414,11 @@ function CarDetails({ brandName, modelName, year }) {
                 <option value="" disabled>
                   Bitte auswählen
                 </option>
-                {/* Add options here */}
+                {modificationOptions.map((type, index) => (
+                  <option key={index} value={type}>
+                    {type}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -248,10 +447,10 @@ function CarDetails({ brandName, modelName, year }) {
                     type="radio"
                     name="unfallschaden"
                     value="Ja"
-                    checked={unfallschaden === "Ja"}
-                    onChange={() => setUnfallschaden("Ja")}
+                    checked={unfallschaden}
+                    onChange={() => setUnfallschaden(true)}
                     required
-                  />{" "}
+                  />
                   Ja
                 </label>
                 <label>
@@ -259,10 +458,10 @@ function CarDetails({ brandName, modelName, year }) {
                     type="radio"
                     name="unfallschaden"
                     value="Nein"
-                    checked={unfallschaden === "Nein"}
-                    onChange={() => setUnfallschaden("Nein")}
+                    checked={!unfallschaden}
+                    onChange={() => setUnfallschaden(false)}
                     required
-                  />{" "}
+                  />
                   Nein
                 </label>
               </div>
@@ -276,10 +475,10 @@ function CarDetails({ brandName, modelName, year }) {
                 <label>
                   <input
                     type="radio"
-                    name="transmission"
-                    value="Ja"
-                    checked={transmission === "Ja"}
-                    onChange={() => setTransmission("Ja")}
+                    name="serviceHeft"
+                    value={true}
+                    checked={serviceHeft}
+                    onChange={() => setServiceHeft(true)}
                     required
                   />{" "}
                   Ja
@@ -287,10 +486,10 @@ function CarDetails({ brandName, modelName, year }) {
                 <label>
                   <input
                     type="radio"
-                    name="transmission"
-                    value="Nein"
-                    checked={transmission === "Nein"}
-                    onChange={() => setTransmission("Nein")}
+                    name="serviceHeft"
+                    value={false}
+                    checked={!serviceHeft}
+                    onChange={() => setServiceHeft(false)}
                     required
                   />{" "}
                   Nein / Nicht vollständig
