@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./HowItWorks.css"; // Import your custom styles
 import howto1 from "../../assets/howitworks/howto1.webp";
 import howto2 from "../../assets/howitworks/howto2.webp";
@@ -206,9 +206,7 @@ const HowItWorks = () => {
             </tbody>
           </table>
           <div className="comparison-cta">
-            <a href="#" className="comparison-btn">
-              Jetzt Fahrzeug bewerten
-            </a>
+            <span className="comparison-btn">Jetzt Fahrzeug bewerten</span>
           </div>
         </div>
       </section>
