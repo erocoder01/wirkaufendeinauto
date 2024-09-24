@@ -198,7 +198,12 @@ function CarDetails({ brandName, modelName, year }) {
           ((gearbox === "Manuell" && mod.gearboxMT) ||
             (gearbox === "Automatik" && mod.gearboxAT))
         ) {
-          newPowerHp.add(mod.powerHp); // Add power HP value
+          // If powerHp is available, use it; otherwise extract from engine for electric cars
+          let powerHp = mod.powerHp;
+
+          if (powerHp) {
+            newPowerHp.add(powerHp); // Add power HP value (either from powerHp or extracted from engine)
+          }
         }
       });
     });
@@ -297,7 +302,7 @@ function CarDetails({ brandName, modelName, year }) {
   };
 
   const selectHorsePower = (horsePower) => {
-    setPower(fuelType);
+    setPower(horsePower);
     loadModifications(
       brandName,
       modelName,
