@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Car.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import carData from "../../carData.json";
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
+import stats1 from "../../assets/public-relation.png";
+import stats2 from "../../assets/service.png";
+import stats3 from "../../assets/customer-service.png";
 import whysell1 from "../../assets/bildone.webp";
 import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
@@ -179,11 +183,17 @@ function Car({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedBrand]);
 
-  // FAQ State
+  // FAQ State and toggle logic with dynamic height for animation
   const [activeIndex, setActiveIndex] = useState(null);
   const handleToggle = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+
+  const getAnswerStyle = (index) => ({
+    maxHeight: activeIndex === index ? "200px" : "0", // Adjust the height based on the active state
+    overflow: "hidden",
+    transition: "max-height 0.5s ease", // Smooth transition effect
+  });
 
   return (
     <div className="home-container">
@@ -278,7 +288,6 @@ function Car({
           </div>
         </div>
       </section>
-
       {/* Vorteile - Neuer Abschnitt */}
       <section className="features">
         <div className="container">
@@ -314,8 +323,8 @@ function Car({
           </div>
         </div>
       </section>
-
       {/* So funktioniert's */}
+      <div class="section-divider"></div>
       <section className="how-it-works">
         <div className="container">
           <h2 id="Sofunktioniert's">So funktioniert's</h2>
@@ -356,8 +365,8 @@ function Car({
           </div>
         </div>
       </section>
-
       {/* Warum bei uns verkaufen */}
+      <div class="section-divider"></div>
       <section className="why-sell">
         <div className="container">
           <h2>Warum bei uns verkaufen?</h2>
@@ -399,8 +408,38 @@ function Car({
           </div>
         </div>
       </section>
-
+      {/* Stats Section */}
+      <div className="section-divider"></div> {/* Divider */}
+      <section className="stats-section">
+        <div className="section-title">
+          <h2>Zahlen & Fakten</h2>
+        </div>
+        <div className="container">
+          <div className="stat-item">
+            <div className="stat-icon">
+              <img src={stats1} alt="Zufriedene Kunden Icon" />
+            </div>
+            <div className="stat-number">2,793+</div>
+            <div className="stat-description">Zufriedene Kunden</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-icon">
+              <img src={stats2} alt="Weiterempfehlungen Icon" />
+            </div>
+            <div className="stat-number">197+</div>
+            <div className="stat-description">Weiterempfehlungen</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-icon">
+              <img src={stats3} alt="Auto Bewertungen Icon" />
+            </div>
+            <div className="stat-number">3,924</div>
+            <div className="stat-description">Auto Bewertungen</div>
+          </div>
+        </div>
+      </section>
       {/* FAQ Section */}
+      <div class="section-divider"></div>
       <section className="faq">
         <div className="container">
           <h2>Häufig gestellte Fragen</h2>
@@ -409,18 +448,18 @@ function Car({
               question:
                 "Muss ich Gebühren bezahlen, wenn ich mein Auto nicht verkaufe?",
               answer:
-                "Nein, für dich entstehen keinerlei Gebühren. Unser Service ist vollkommen kostenlos.",
+                "Nein, für dich entstehen keinerlei Gebühren. Unser Service ist vollkommen kostenlos. Übrigens: Bei uns kannst du auch dein defektes Auto verkaufen.",
             },
             {
               question:
                 "Wie verkaufe ich mein Auto nachdem ich den endgültigen Verkaufspreis erhalten habe?",
               answer:
-                "Nachdem du deinen endgültigen Verkaufspreis erhalten hast, buchst du einen Abgabe-Termin in einer unserer Filialen.",
+                "Nachdem du deinen endgültigen Verkaufspreis erhalten hast, buchst du einen Abgabe-Termin in einer unserer Filialen in deiner Nähe. Vor Ort werden die Auto-Details von einem unserer Mitarbeiter bestätigt. Anschließend wird der Kaufvertrag aufgesetzt und mit deiner Unterschrift der Verkauf deines Autos abgeschlossen. Das Auto bleibt direkt in unserer Filiale. Wir überweisen dir dein Geld und melden dein Auto kostenlos für dich ab.",
             },
             {
               question: "Wie buche ich meinen Abgabe-Termin?",
               answer:
-                "Nach der Online-Begutachtung erhältst du per E-Mail deinen endgültigen Verkaufspreis.",
+                "Nach der Online-Begutachtung erhältst du per E-Mail deinen endgültigen Verkaufspreis. Gleichzeitig schicken wir dir einen Link, damit du auf unserer Website bequem deinen Abgabe-Termin buchen kannst.",
             },
             {
               question: "Wie läuft mein Abgabe-Termin ab?",
@@ -448,7 +487,7 @@ function Car({
             {
               question: "Wie bezahlt ihr den Verkaufspreis für mein Auto?",
               answer:
-                "Wir überweisen dir nach dem Verkauf den Verkaufspreis umgehend und sicher auf dein Bankkonto.",
+                "Wir überweisen dir nach dem Verkauf den Verkaufspreis umgehend und absolut sicher auf dein Bankkonto. Du erhältst dein Geld komfortabel, zuverlässig und auf sicherem Weg. Eine Barauszahlung ist aus Sicherheits- und organisatorischen Gründen leider nicht möglich.",
             },
             {
               question: "Du hast noch weitere Fragen?",
@@ -466,11 +505,13 @@ function Car({
               >
                 {faq.question}
               </button>
-              {activeIndex === idx && (
-                <div className="faq-answer">
-                  <p>{faq.answer}</p>
-                </div>
-              )}
+              {/* Use style to animate max-height */}
+              <div
+                className="faq-answer"
+                style={{ maxHeight: activeIndex === idx ? "200px" : "0" }}
+              >
+                <p>{faq.answer}</p>
+              </div>
             </div>
           ))}
         </div>

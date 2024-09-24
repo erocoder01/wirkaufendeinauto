@@ -69,8 +69,8 @@ const HowItWorks = () => {
         </div>
       </div>
 
+      <div class="section-divider"></div>
       <section className="how-it-works-section">
-        <div className="section-divider"></div>
         <div className="how-it-works-container">
           <h2>Was macht AutoAnkauf24 anders?</h2>
           <div className="how-it-works-benefits-box">
@@ -107,8 +107,8 @@ const HowItWorks = () => {
         </div>
       </section>
 
+      <div class="section-divider"></div>
       <div className="verkaufsprozess-container">
-        <div className="section-divider"></div>
         <h2>Der AutoAnkauf24-Prozess</h2>
         <div className="verkaufsprozess-schritte">
           {/* Verkaufsprozess Steps */}
@@ -142,8 +142,8 @@ const HowItWorks = () => {
         </div>
       </div>
 
+      <div class="section-divider"></div>
       <section className="comparison-section">
-        <div className="section-divider"></div>
         <div className="comparison-container">
           <h2 className="comparison-title">
             AutoAnkauf24 im Vergleich zu anderen Verkaufsoptionen
