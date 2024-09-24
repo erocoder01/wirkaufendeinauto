@@ -131,6 +131,24 @@ function Car({
     setSelectedYear(selectedYear);
   };
 
+  // Benutzerdefinierte Sortierung der Modelle: Zuerst Zahlen, dann Buchstaben
+  function customSortModels(models) {
+    return models.sort((a, b) => {
+      const regex = /^\d+/;
+      const aIsNumber = regex.test(a);
+      const bIsNumber = regex.test(b);
+
+      if (aIsNumber && !bIsNumber) return -1;
+      if (!aIsNumber && bIsNumber) return 1;
+
+      if (aIsNumber && bIsNumber) {
+        return parseInt(a.match(regex)[0]) - parseInt(b.match(regex)[0]);
+      }
+
+      return a.localeCompare(b, undefined, { numeric: true });
+    });
+  }
+
   // Function to load models for the selected brand
   function loadModels(brandName) {
     const selectedBrandData = carData.brands.brand.find(
@@ -138,7 +156,9 @@ function Car({
     );
 
     if (selectedBrandData) {
-      const models = selectedBrandData.models.model.map((model) => model.name);
+      let models = selectedBrandData.models.model.map((model) => model.name);
+
+      customSortModels(models);
       setBrandModels(models);
     } else {
       setBrandModels([]); // If no brand found, reset models
