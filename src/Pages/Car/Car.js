@@ -1,99 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Car.css";
-import carData from "../../carData.json";
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
 import whysell1 from "../../assets/bildone.webp";
 import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
 import whysell4 from "../../assets/bildfour.webp";
-
-const allowedBrands = [
-  "Abarth",
-  "Aiways",
-  "Aixam",
-  "Alfa Romeo",
-  "Alpine",
-  "Aston Martin",
-  "Audi",
-  "Barkas",
-  "Bentley",
-  "BMW",
-  "Brilliance",
-  "Buick",
-  "BYD",
-  "Cadillac",
-  "Caterham",
-  "Chevrolet",
-  "Chrysler",
-  "Citroen",
-  "Cupra",
-  "Dacia",
-  "Daewoo",
-  "Daihatsu",
-  "Dodge",
-  "DS",
-  "Ferrari",
-  "Fiat",
-  "Fisker",
-  "Ford",
-  "Honda",
-  "Hyundai",
-  "INEOS",
-  "Infiniti",
-  "Isuzu",
-  "Iveco",
-  "Jaguar",
-  "Jeep",
-  "Kia",
-  "Lada",
-  "Lamborghini",
-  "Lancia",
-  "Land Rover",
-  "LEVC",
-  "Lexus",
-  "Lotus",
-  "Lucid",
-  "Lynk & Co",
-  "Mahindra",
-  "Maserati",
-  "Maxus",
-  "Mazda",
-  "Mercedes-Benz",
-  "MG",
-  "MINI",
-  "Mitsubishi",
-  "NIO",
-  "Nissan",
-  "Opel",
-  "Ora",
-  "Peugeot",
-  "Vespa",
-  "Polestar",
-  "Pontiac",
-  "Porsche",
-  "Proton",
-  "Renault",
-  "Rover",
-  "Saab",
-  "Seat",
-  "Skoda",
-  "Smart",
-  "SsangYong",
-  "Subaru",
-  "Suzuki",
-  "Tata",
-  "Tesla",
-  "Toyota",
-  "Trabant",
-  "Triumph",
-  "VinFast",
-  "Volkswagen",
-  "Volvo",
-  "Wartburg",
-  "Westfield",
-  "Zastava",
-];
 
 function Car({
   selectedBrand,
@@ -107,21 +19,41 @@ function Car({
   setSelectedYear,
   selectedYear,
 }) {
+  const [carBrands, setCarBrands] = useState([]);
+
+  // Fetch the car brands from the backend when the page loads
+  useEffect(() => {
+    const fetchCarBrands = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3001/api/cars/carBrands"
+        ); // Replace with your actual backend URL and port
+        const brands = await response.json();
+        setCarBrands(brands);
+      } catch (error) {
+        console.error("Error fetching car brands:", error);
+      }
+    };
+
+    fetchCarBrands();
+  }, []);
+
   const handleBrandChange = (event) => {
     setSelectedBrand(event.target.value);
     setSelectedModel(""); // Reset model when the brand changes
     setAvailableYears([]); // Reset years when the brand changes
   };
 
-  const handleModelChange = (event) => {
+  // Handle when the model is changed
+  const handleModelChange = async (event) => {
     const modelName = event.target.value;
     setSelectedModel(modelName);
     setSelectedYear(""); // Reset selected year when the model changes
-    setAvailableYears([]); // Clear available years until a model is chosen
+    setAvailableYears([]); // Clear available years until they are fetched
 
     if (selectedBrand && modelName) {
       // Load the available years for the selected brand and model
-      const years = loadYears(selectedBrand, modelName);
+      const years = await loadYears(selectedBrand, modelName);
       setAvailableYears(years); // Update state with available years
     }
   };
@@ -131,65 +63,47 @@ function Car({
     setSelectedYear(selectedYear);
   };
 
-  // Benutzerdefinierte Sortierung der Modelle: Zuerst Zahlen, dann Buchstaben
-  function customSortModels(models) {
-    return models.sort((a, b) => {
-      const regex = /^\d+/;
-      const aIsNumber = regex.test(a);
-      const bIsNumber = regex.test(b);
+  async function loadModels(brandName) {
+    try {
+      // Make a request to the backend to get the models for the selected brand
+      const response = await fetch(
+        `http://localhost:3001/api/cars/getModels/${brandName}`
+      );
 
-      if (aIsNumber && !bIsNumber) return -1;
-      if (!aIsNumber && bIsNumber) return 1;
+      // Parse the JSON response
+      const data = await response.json();
 
-      if (aIsNumber && bIsNumber) {
-        return parseInt(a.match(regex)[0]) - parseInt(b.match(regex)[0]);
+      if (response.ok) {
+        // If models are found, sort and set them in the state
+        const models = data.models; // Custom sorting (optional)
+        setBrandModels(models); // Assuming you have a state setter like useState
+      } else {
+        setBrandModels([]); // Reset models if no data or error
       }
-
-      return a.localeCompare(b, undefined, { numeric: true });
-    });
-  }
-
-  // Function to load models for the selected brand
-  function loadModels(brandName) {
-    const selectedBrandData = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-
-    if (selectedBrandData) {
-      let models = selectedBrandData.models.model.map((model) => model.name);
-
-      customSortModels(models);
-      setBrandModels(models);
-    } else {
-      setBrandModels([]); // If no brand found, reset models
+    } catch (error) {
+      console.error("Error fetching models:", error);
+      setBrandModels([]); // Handle errors by resetting models
     }
   }
 
-  function loadYears(brandName, modelName) {
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
+  async function loadYears(brandName, modelName) {
+    try {
+      // Fetch the years from the backend
+      const response = await fetch(
+        `http://localhost:3001/api/cars/getYears/${brandName}/${modelName}`
+      );
+      const data = await response.json();
 
-    const years = new Set(); // To avoid duplicate years
-    const currentYear = new Date().getFullYear();
-
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop ? parseInt(mod.yearstop) : currentYear; // Use current year if yearstop is not present
-
-        // Add all years between yearStart and yearStop to the Set
-        for (let year = yearStart; year <= yearStop; year++) {
-          years.add(year);
-        }
-      });
-    });
-
-    // Convert the Set to an array, sort it from newest to oldest, and return it
-    return Array.from(years).sort((a, b) => b - a);
+      if (response.ok) {
+        return data.years; // Return years from the backend response
+      } else {
+        console.error(data.error);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching years:", error);
+      return [];
+    }
   }
 
   useEffect(() => {
@@ -235,7 +149,7 @@ function Car({
                   <option value="" disabled>
                     Marke auswählen
                   </option>
-                  {allowedBrands.map((brand, index) => (
+                  {carBrands.map((brand, index) => (
                     <option key={index} value={brand}>
                       {brand}
                     </option>
