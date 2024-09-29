@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { apiUrl } from "../../config/apiUrl";
 import "./CarImages.css";
 
 function CarImages({
@@ -64,6 +65,8 @@ function CarImages({
     fileInput.value = ""; // Reset the file input
   };
 
+  const api = apiUrl();
+
   // Function to handle form submission (dummy for now)
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -123,7 +126,7 @@ function CarImages({
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/cars/uploadCar", {
+      const response = await fetch(`${api}/cars/uploadCar`, {
         method: "POST",
         body: formData, // Send the formData with images and other fields
       });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
@@ -21,13 +22,14 @@ function Car({
 }) {
   const [carBrands, setCarBrands] = useState([]);
 
+  const api = apiUrl();
+
   // Fetch the car brands from the backend when the page loads
   useEffect(() => {
     const fetchCarBrands = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3001/api/cars/carBrands"
-        ); // Replace with your actual backend URL and port
+        const response = await fetch(`${api}/cars/carBrands`);
+
         const brands = await response.json();
         setCarBrands(brands);
       } catch (error) {
@@ -36,6 +38,7 @@ function Car({
     };
 
     fetchCarBrands();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleBrandChange = (event) => {
@@ -65,10 +68,7 @@ function Car({
 
   async function loadModels(brandName) {
     try {
-      // Make a request to the backend to get the models for the selected brand
-      const response = await fetch(
-        `http://localhost:3001/api/cars/getModels/${brandName}`
-      );
+      const response = await fetch(`${api}/cars/getModels/${brandName}`);
 
       // Parse the JSON response
       const data = await response.json();
@@ -88,10 +88,10 @@ function Car({
 
   async function loadYears(brandName, modelName) {
     try {
-      // Fetch the years from the backend
       const response = await fetch(
-        `http://localhost:3001/api/cars/getYears/${brandName}/${modelName}`
+        `${api}/cars/getModels/${brandName}/${modelName}`
       );
+
       const data = await response.json();
 
       if (response.ok) {
