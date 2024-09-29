@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../config/apiUrl";
 import "./CarDetails.css";
 
 function CarDetails({
@@ -36,6 +37,8 @@ function CarDetails({
   const [powerHPOptions, setPowerHPOptions] = useState([]);
   const [modificationOptions, setModificationOptions] = useState([]);
 
+  const api = apiUrl();
+
   useEffect(() => {
     if (brandName && modelName && year) {
       loadBodytypes(brandName, modelName, year);
@@ -48,9 +51,8 @@ function CarDetails({
     if (!brandName || !modelName || !year) return;
 
     try {
-      // Make a request to the backend to get body types for the selected brand, model, and year
       const response = await fetch(
-        `http://localhost:3001/api/carDetails/getBodyTypes/${brandName}/${modelName}/${year}`
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}`
       );
 
       const data = await response.json();
@@ -84,10 +86,10 @@ function CarDetails({
     if (!brandName || !modelName || !year || !bodytype) return;
 
     try {
-      // Make a request to the backend to get fuel types
       const response = await fetch(
-        `http://localhost:3001/api/carDetails/getFuels/${brandName}/${modelName}/${year}/${bodytype}`
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}`
       );
+
       const data = await response.json();
 
       if (response.ok) {
@@ -114,8 +116,9 @@ function CarDetails({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/carDetails/getGearboxes/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
       );
+
       const data = await response.json();
 
       if (response.ok) {
@@ -151,8 +154,9 @@ function CarDetails({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/carDetails/getPowerHp/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
       );
+
       const data = await response.json();
 
       if (response.ok) {
@@ -194,8 +198,9 @@ function CarDetails({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/api/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
       );
+
       const data = await response.json();
 
       if (response.ok) {
