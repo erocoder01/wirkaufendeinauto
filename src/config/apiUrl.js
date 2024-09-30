@@ -6,5 +6,5 @@ export const apiUrl = () => {
   ) {
     return "http://localhost:3001/api"; // Local backend URL
   }
-  return "https://wkda-backend-main-28a636c08246.herokuapp.com/api"; // Heroku backend URL
+  return "https://wkda-backend-main-28a636c08246.herokuapp.com/api";
 };

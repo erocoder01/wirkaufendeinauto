@@ -246,15 +246,18 @@ function Car({
                 </select>
               </div>
 
-              <Link to={!isButtonDisabled ? "/cardetails" : "#"}>
-                <button
-                  className={cx("submit", isButtonDisabled && "disabled")}
-                  type="button"
-                  disabled={isButtonDisabled}
-                >
-                  Jetzt Bewertung ansehen <i className="fas fa-arrow-right"></i>
-                </button>
-              </Link>
+              <div className="submit-button-wrapper">
+                <Link to={!isButtonDisabled ? "/cardetails" : "#"}>
+                  <button
+                    className={cx("submit", isButtonDisabled && "disabled")}
+                    type="button"
+                    disabled={isButtonDisabled}
+                  >
+                    Jetzt Bewertung ansehen{" "}
+                    <i className="fas fa-arrow-right"></i>
+                  </button>
+                </Link>
+              </div>
             </form>
           </div>
         </div>

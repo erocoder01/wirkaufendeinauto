@@ -16,13 +16,6 @@
   }
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-  .slogan-box {
-    display: none;
-  }
-}
-
 .slogan-box {
   background-color: #ff6600;
   color: #fff;
@@ -445,6 +438,72 @@
 
   .why-item {
     max-width: 100%;
+  }
+
+  .slogan-box {
+    display: none;
+  }
+
+  .form-container {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .form-header h1 {
+    font-size: 28px;
+  }
+
+  .form-header p {
+    font-size: 14px;
+  }
+
+  .submit-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .submit-button-wrapper a {
+    width: 100%;
+  }
+
+  .submit {
+    width: 100%;
+  }
+
+  .container {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .faq .container {
+    padding: 0 20px;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: start;
+    align-items: flex-start;
+  }
+
+  .faq-item {
+    width: 100%;
+  }
+
+  .features,
+  .why-sell {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .feature {
+    width: 100% !important;
+  }
+
+  .home-container {
+    margin-top: 70px;
   }
 }
 
