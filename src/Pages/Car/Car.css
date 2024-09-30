@@ -16,6 +16,13 @@
   }
 }
 
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .slogan-box {
+    display: none;
+  }
+}
+
 .slogan-box {
   background-color: #ff6600;
   color: #fff;
