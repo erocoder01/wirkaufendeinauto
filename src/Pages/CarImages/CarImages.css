@@ -193,3 +193,10 @@
   width: 100%;
   height: 100%;
 }
+
+/* Bei kleineren Bildschirmen umbricht es ordentlich */
+@media (max-width: 768px) {
+  .third-page-wrapper {
+    margin-top: 90px;
+  }
+}
