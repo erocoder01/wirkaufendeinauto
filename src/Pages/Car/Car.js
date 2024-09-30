@@ -7,6 +7,7 @@ import whysell1 from "../../assets/bildone.webp";
 import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
 import whysell4 from "../../assets/bildfour.webp";
+import cx from "classnames";
 
 function Car({
   selectedBrand,
@@ -21,6 +22,18 @@ function Car({
   selectedYear,
 }) {
   const [carBrands, setCarBrands] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredBrands, setFilteredBrands] = useState([]);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (selectedBrand !== "" && selectedModel !== "" && selectedYear !== "") {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [selectedBrand, selectedModel, selectedYear]);
 
   const api = apiUrl();
 
@@ -41,8 +54,10 @@ function Car({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleBrandChange = (event) => {
-    setSelectedBrand(event.target.value);
+  const handleBrandSelect = (brand) => {
+    setSelectedBrand(brand);
+    setSearchTerm(brand); // Set search term to the selected brand
+
     setSelectedModel(""); // Reset model when the brand changes
     setAvailableYears([]); // Reset years when the brand changes
   };
@@ -89,7 +104,7 @@ function Car({
   async function loadYears(brandName, modelName) {
     try {
       const response = await fetch(
-        `${api}/cars/getModels/${brandName}/${modelName}`
+        `${api}/cars/getYears/${brandName}/${modelName}`
       );
 
       const data = await response.json();
@@ -119,6 +134,18 @@ function Car({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  // Handle input change and filter car brands
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setSelectedBrand("");
+    // Filter the brands based on the input value
+    const filtered = carBrands.filter((brand) =>
+      brand.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredBrands(filtered);
+  };
+
   return (
     <div className="home-container">
       <section className="hero">
@@ -127,34 +154,50 @@ function Car({
             <p className="hero-subtitle">Klick, Kleck, Auto weg!</p>
           </div>
           <div className="form-container">
-            <h1>
-              Verkaufe dein Auto <span id="dynamic-text">bequem</span>
-            </h1>
-            <p>
-              Ohne Stress zum besten Preis - Erhalte direkt deinen finalen
-              Verkaufspreis und buche deinen Abgabe-Termin online
-            </p>
+            <div className="form-header">
+              <h1>
+                Verkaufe dein Auto <span id="dynamic-text">bequem</span>
+              </h1>
+              <p>
+                Ohne Stress zum besten Preis - Erhalte direkt deinen finalen
+                Verkaufspreis und buche deinen Abgabe-Termin online
+              </p>
+            </div>
+
             <form id="evaluation-form" action="second-page.html" method="GET">
               <div className="input-wrapper">
                 <label htmlFor="make">
                   <b>Von welcher Marke ist dein Auto?</b>
                 </label>
-                <select
+
+                {/* Input field for searching */}
+                <input
+                  type="text"
                   id="make"
                   name="make"
                   required
-                  value={selectedBrand}
-                  onChange={handleBrandChange}
-                >
-                  <option value="" disabled>
-                    Marke auswählen
-                  </option>
-                  {carBrands.map((brand, index) => (
-                    <option key={index} value={brand}>
-                      {brand}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Marke auswählen"
+                  value={!searchTerm ? selectedBrand : searchTerm}
+                  onChange={handleSearchChange}
+                />
+
+                {/* List with filtered brands */}
+                {searchTerm.length > 0 && !selectedBrand && (
+                  <ul className="filtered-brands-list">
+                    {filteredBrands.map((brand, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleBrandSelect(brand)} // Handle brand selection on click
+                        className="filtered-brand-item"
+                      >
+                        {brand}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Hidden input field to store the selected brand */}
+                <input type="hidden" name="make" value={selectedBrand} />
               </div>
 
               <div className="input-wrapper">
@@ -203,8 +246,12 @@ function Car({
                 </select>
               </div>
 
-              <Link to="/cardetails">
-                <button className="submit">
+              <Link to={!isButtonDisabled ? "/cardetails" : "#"}>
+                <button
+                  className={cx("submit", isButtonDisabled && "disabled")}
+                  type="button"
+                  disabled={isButtonDisabled}
+                >
                   Jetzt Bewertung ansehen <i className="fas fa-arrow-right"></i>
                 </button>
               </Link>

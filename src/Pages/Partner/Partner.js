@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Partner.css";
-
 import icon1 from "../../assets/partners/Icon1.svg";
 import icon2 from "../../assets/partners/Icon2.svg";
 import icon3 from "../../assets/partners/Icon3.svg";
@@ -11,11 +10,56 @@ import inspection3 from "../../assets/partners/Inspection3.svg";
 import inspection4 from "../../assets/partners/Inspection4.svg";
 import inspection5 from "../../assets/partners/Inspection5.svg";
 import inspection6 from "../../assets/partners/Inspection6.svg";
+import { apiUrl } from "../../config/apiUrl"; // Assuming you have an apiUrl function to get the API base URL
 
 const Partner = () => {
+  // Define states for form fields
+  const [company, setCompany] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const api = apiUrl();
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const partnerData = {
+      company,
+      name: fullname,
+      email,
+      phone,
+    };
+
+    try {
+      const response = await fetch(`${api}/partner/uploadPartner`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(partnerData),
+      });
+
+      if (response.ok) {
+        alert("Partner information submitted successfully!");
+        // Reset form fields after successful submission
+        setCompany("");
+        setFullname("");
+        setEmail("");
+        setPhone("");
+      } else {
+        alert("Error submitting partner information");
+      }
+    } catch (error) {
+      console.error("Error submitting form: ", error);
+      alert("Error submitting partner information");
+    }
+  };
+
   return (
     <div>
-      {/* Partner Sektion */}
+      {/* Partner Section */}
       <section className="partner-section">
         <div className="partner-content">
           <div className="partner-text">
@@ -32,13 +76,15 @@ const Partner = () => {
 
           <div className="partner-form">
             <h3>Werde ein Partner</h3>
-            <form action="#" method="post" id="partnerForm">
+            <form onSubmit={handleSubmit} id="partnerForm">
               <label htmlFor="company">Firma</label>
               <input
                 type="text"
                 id="company"
                 name="company"
                 placeholder="Firma"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
                 required
               />
 
@@ -48,6 +94,8 @@ const Partner = () => {
                 id="fullname"
                 name="fullname"
                 placeholder="Vollständiger Name"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
                 required
               />
 
@@ -57,6 +105,8 @@ const Partner = () => {
                 id="email"
                 name="email"
                 placeholder="E-Mail-Adresse"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
 
@@ -66,6 +116,8 @@ const Partner = () => {
                 id="phone"
                 name="phone"
                 placeholder="Mobiltelefonnummer"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required
               />
 
@@ -76,7 +128,6 @@ const Partner = () => {
           </div>
         </div>
       </section>
-
       {/* Partner Vorteile */}
       <section className="partner-benefits">
         <div className="section-divider"></div>

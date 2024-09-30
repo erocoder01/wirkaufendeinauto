@@ -132,17 +132,29 @@
 .submit {
   padding: 14px 16px;
   border: 1px solid #e04b00;
+  height: 51px;
   background-color: #ff6600;
+  align-items: center;
   color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none; /* Remove underline or any text decoration */
+
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
-  display: block;
   min-width: 290px;
   max-width: 500px;
   font-size: 18px;
   margin-left: auto; /* Zentriere den Button */
   margin-right: auto; /* Zentriere den Button */
+}
+
+.disabled {
+  background-color: #e5e5e5 !important;
+  color: #ababab !;
 }
 
 .input-wrapper {
@@ -499,4 +511,14 @@
 
 .faq-item.active .faq-question::after {
   content: "\f077"; /* FontAwesome up arrow */
+}
+
+.form-header {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

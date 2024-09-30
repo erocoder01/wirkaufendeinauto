@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./CarImages.css";
+import cx from "classnames";
+import { BarLoader } from "react-spinners";
 
 function CarImages({
   brandName,
@@ -26,6 +28,9 @@ function CarImages({
   const [postalCode, setPostalCode] = useState(""); // Postal code state
   const [priceExpectation, setPriceExpectation] = useState(""); // Price expectation state
   const [sellTime, setSellTime] = useState(""); // Sell time state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   // State to manage the preview images
   const [imagePreviews, setImagePreviews] = useState({
@@ -37,9 +42,54 @@ function CarImages({
     dashboard: null,
   });
 
+  useEffect(() => {
+    if (
+      firstName !== "" &&
+      lastName !== "" &&
+      phoneNumber !== "" &&
+      email !== "" &&
+      postalCode !== "" &&
+      priceExpectation !== "" &&
+      sellTime !== "" &&
+      imagePreviews.front !== null &&
+      imagePreviews.back !== null &&
+      imagePreviews.side !== null &&
+      imagePreviews.interiorFront !== null &&
+      imagePreviews.interiorBack !== null &&
+      imagePreviews.dashboard !== null
+    ) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [
+    firstName,
+    lastName,
+    phoneNumber,
+    email,
+    postalCode,
+    priceExpectation,
+    sellTime,
+    imagePreviews.front,
+    imagePreviews.back,
+    imagePreviews.side,
+    imagePreviews.interiorFront,
+    imagePreviews.interiorBack,
+    imagePreviews.dashboard,
+  ]);
+
   // Function to preview the image
   const previewImage = (event, previewKey) => {
     const file = event.target.files[0];
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (file && !allowedTypes.includes(file.type)) {
+      alert("Please upload a valid image format (JPEG, JPG, PNG, WEBP).");
+      event.target.value = ""; // Reset the input
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -70,6 +120,8 @@ function CarImages({
   // Function to handle form submission (dummy for now)
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    setIsButtonDisabled(true);
 
     const formData = new FormData();
 
@@ -94,7 +146,9 @@ function CarImages({
     formData.append("serviceHeft", serviceHeft);
     formData.append("paintConditionLack", paintConditionLack);
     formData.append("paintConditionKarosserie", paintConditionKarosserie);
-    formData.append("additionalNotes", additionalNotes);
+
+    additionalNotes !== "" &&
+      formData.append("additionalNotes", additionalNotes);
 
     // Append images (ensure these inputs are files in the state)
     if (document.getElementById("front-photo").files[0]) {
@@ -133,8 +187,12 @@ function CarImages({
 
       if (response.ok) {
         alert("Car data uploaded successfully!");
+        setIsLoading(false);
+        setIsButtonDisabled(false);
       } else {
         alert("Error uploading car data");
+        setIsLoading(false);
+        setIsButtonDisabled(false);
       }
     } catch (error) {
       console.error("Error submitting form: ", error);
@@ -158,13 +216,6 @@ function CarImages({
       >
         {/* Exterior Photos */}
         <div className="photo-upload-container">
-          <h2>Wie sieht dein Auto von außen aus?</h2>
-          <p>
-            Um deinen Verkaufspreis so genau wie möglich zu bestimmen, benötigen
-            wir einige Fotos vom Außenraum deines Autos. Bitte lade die
-            folgenden Bilder hoch.
-          </p>
-
           <div className="upload-section">
             {/* Front Photo */}
             <div className="photo-upload-box">
@@ -177,7 +228,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.front}
                         alt="Vorne"
-                        name="Vorne"
                       />
                       <button
                         type="button"
@@ -194,7 +244,7 @@ function CarImages({
                     type="file"
                     className="input-image"
                     id="front-photo"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "front")}
                   />
                 </div>
@@ -212,7 +262,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.back}
                         alt="Hinten"
-                        name="Hinten"
                       />
                       <button
                         type="button"
@@ -229,7 +278,7 @@ function CarImages({
                     type="file"
                     id="back-photo"
                     className="input-image"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "back")}
                   />
                 </div>
@@ -247,7 +296,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.side}
                         alt="Seite"
-                        name="Seite"
                       />
                       <button
                         type="button"
@@ -263,7 +311,7 @@ function CarImages({
                   <input
                     type="file"
                     id="side-photo"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "side")}
                   />
                 </div>
@@ -274,13 +322,6 @@ function CarImages({
 
         {/* Interior Photos */}
         <div className="photo-upload-container">
-          <h2>Wie sieht dein Auto von innen aus?</h2>
-          <p>
-            Um deinen Verkaufspreis so genau wie möglich zu bestimmen, benötigen
-            wir einige Fotos vom Innenraum deines Autos. Bitte lade die
-            folgenden Bilder hoch.
-          </p>
-
           <div className="upload-section">
             {/* Interior Front Photo */}
             <div className="photo-upload-box">
@@ -293,7 +334,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.interiorFront}
                         alt="Vordersitze"
-                        name="interiorFront"
                       />
                       <button
                         type="button"
@@ -311,7 +351,7 @@ function CarImages({
                   <input
                     type="file"
                     id="interior-front-photo"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "interiorFront")}
                   />
                 </div>
@@ -329,7 +369,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.interiorBack}
                         alt="Rücksitzbank"
-                        name="interiorBack"
                       />
                       <button
                         type="button"
@@ -347,7 +386,7 @@ function CarImages({
                   <input
                     type="file"
                     id="interior-back-photo"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "interiorBack")}
                   />
                 </div>
@@ -365,7 +404,6 @@ function CarImages({
                         className="uploaded"
                         src={imagePreviews.dashboard}
                         alt="Tacho"
-                        name="dashboard"
                       />
                       <button
                         type="button"
@@ -383,7 +421,7 @@ function CarImages({
                   <input
                     type="file"
                     id="interior-dashboard-photo"
-                    accept="image/*"
+                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
                     onChange={(event) => previewImage(event, "dashboard")}
                   />
                 </div>
@@ -499,9 +537,22 @@ function CarImages({
           </select>
         </div>
 
-        <button type="submit" className="button-abschließen">
-          Bewertung abschließen{" "}
-          <i className="fas fa-spinner fa-spin" style={{ display: "none" }}></i>
+        <button
+          className={cx("submit transition", isButtonDisabled && "disabled")}
+          type="submit"
+          disabled={isButtonDisabled}
+        >
+          {isLoading ? (
+            <BarLoader
+              color="#fff"
+              loading={isLoading}
+              size={5}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            <span>Bewertung abschließen</span>
+          )}
         </button>
       </form>
     </div>

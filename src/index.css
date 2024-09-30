@@ -22,3 +22,52 @@ p {
   margin: 0px;
   padding: 0px;
 }
+
+.input-wrapper {
+  position: relative; /* Set the parent container to relative positioning */
+}
+
+.disabled {
+  background-color: #e5e5e5 !important;
+  color: #ababab !important;
+  border: 1px solid transparent !important;
+}
+
+.disabled:hover {
+  cursor: not-allowed;
+}
+
+a {
+  text-decoration: none;
+}
+
+.filtered-brands-list {
+  position: absolute; /* Position the list absolutely within the parent */
+
+  top: 100%; /* Place it directly below the input field */
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's on top of other elements */
+  background-color: white; /* Ensure the background is visible */
+  border: 1px solid #ccc; /* Optional: add a border */
+  max-height: 200px; /* Optional: limit the height */
+  overflow-y: auto; /* Add scrolling if the list is too long */
+  list-style-type: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.filtered-brand-item {
+  padding: 8px; /* Add some padding to each item */
+  cursor: pointer;
+  list-style: none;
+}
+
+.filtered-brand-item:hover {
+  background-color: #f0f0f0; /* Add a hover effect */
+}
+
+/* Apply a general transition to all elements */
+.transition {
+  transition: all 0.5s ease;
+}
