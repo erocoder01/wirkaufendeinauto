@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiUrl } from "../../config/apiUrl";
 import "./CarDetails.css";
+import cx from "classnames";
 
 function CarDetails({
   brandName,
@@ -36,6 +37,35 @@ function CarDetails({
   const [gearboxTypes, setGearboxTypes] = useState([]);
   const [powerHPOptions, setPowerHPOptions] = useState([]);
   const [modificationOptions, setModificationOptions] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      selectedBodyType !== "" &&
+      fuelType !== "" &&
+      gearbox !== "" &&
+      power !== "" &&
+      modification !== "" &&
+      kilometerstand !== "" &&
+      unfallschaden !== "" &&
+      paintConditionLack !== "" &&
+      paintConditionKarosserie !== ""
+    ) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [
+    selectedBodyType,
+    fuelType,
+    gearbox,
+    power,
+    modification,
+    kilometerstand,
+    unfallschaden,
+    paintConditionLack,
+    paintConditionKarosserie,
+  ]);
 
   const api = apiUrl();
 
@@ -51,8 +81,9 @@ function CarDetails({
     if (!brandName || !modelName || !year) return;
 
     try {
+      // Make a request to the backend to get body types for the selected brand, model, and year
       const response = await fetch(
-        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}`
+        `${api}/carDetails/getBodyTypes/${brandName}/${modelName}/${year}`
       );
 
       const data = await response.json();
@@ -86,10 +117,10 @@ function CarDetails({
     if (!brandName || !modelName || !year || !bodytype) return;
 
     try {
+      // Make a request to the backend to get fuel types
       const response = await fetch(
-        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}`
+        `${api}/carDetails/getFuels/${brandName}/${modelName}/${year}/${bodytype}`
       );
-
       const data = await response.json();
 
       if (response.ok) {
@@ -116,9 +147,8 @@ function CarDetails({
 
     try {
       const response = await fetch(
-        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
+        `${api}/carDetails/getGearboxes/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
       );
-
       const data = await response.json();
 
       if (response.ok) {
@@ -154,9 +184,8 @@ function CarDetails({
 
     try {
       const response = await fetch(
-        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
+        `${api}/carDetails/getPowerHp/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
       );
-
       const data = await response.json();
 
       if (response.ok) {
@@ -200,7 +229,6 @@ function CarDetails({
       const response = await fetch(
         `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
       );
-
       const data = await response.json();
 
       if (response.ok) {
@@ -637,13 +665,13 @@ function CarDetails({
               ></textarea>
             </div>
 
-            <Link to="/carImages">
-              <button type="submit" className="button-abschließen">
+            <Link to={!isButtonDisabled ? "/carImages" : "#"}>
+              <button
+                className={cx("submit", isButtonDisabled && "disabled")}
+                type="button"
+                disabled={isButtonDisabled}
+              >
                 Bewertung abschließen
-                <i
-                  className="fas fa-spinner fa-spin"
-                  style={{ display: "none" }}
-                ></i>
               </button>
             </Link>
           </div>
