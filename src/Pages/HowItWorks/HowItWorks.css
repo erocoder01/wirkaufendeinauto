@@ -69,20 +69,6 @@
   margin-top: 10px; /* Add spacing between title and paragraph */
 }
 
-/* Responsive design adjustments */
-@media (max-width: 1024px) {
-  .howitworks-step {
-    width: 48%;
-  }
-}
-
-@media (max-width: 768px) {
-  .howitworks-step {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-}
-
 /* General Section Styling */
 .how-it-works-section {
   padding: 20px 0;
@@ -154,25 +140,6 @@
   text-align: left;
 }
 
-/* Media Query for Responsiveness */
-@media (max-width: 1024px) {
-  .how-it-works-benefit {
-    width: 48%;
-  }
-}
-
-@media (max-width: 768px) {
-  .how-it-works-benefits-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .how-it-works-benefit {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-}
-
 /* Verkaufsprozess */
 
 .verkaufsprozess-container {
@@ -233,19 +200,6 @@
   font-size: 14px;
   color: #666;
   margin-top: 10px;
-}
-
-@media (max-width: 1024px) {
-  .verkaufsprozess-schritt {
-    width: 48%;
-  }
-}
-
-@media (max-width: 768px) {
-  .verkaufsprozess-schritt {
-    width: 100%;
-    margin-bottom: 20px;
-  }
 }
 
 /* Comparison Section Styling */
@@ -316,4 +270,102 @@
   min-width: 290px;
   max-width: 500px;
   font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .howitworks-step {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .verkaufsprozess-schritt {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .how-it-works-benefits-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .how-it-works-benefit {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .howitworks-container,
+  .verkaufsprozess-container {
+    margin-top: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .howitworks-container p {
+    font-size: 14px;
+  }
+
+  .step-image {
+    width: 100%;
+  }
+
+  .howitworks-steps {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+
+  .howitworks-step {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .howitworks-step-info {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .howitworks-step-info h3 {
+    margin-bottom: 0;
+    font-size: 20px;
+  }
+
+  .howitworks-step-info p {
+    margin-bottom: 30px;
+  }
+
+  .howitworks-step-info h3 span {
+    font-size: 18px;
+  }
+
+  .how-it-works-benefits-box {
+    flex-direction: column;
+  }
+
+  .howitworks-container h2,
+  .comparison-title,
+  .how-it-works-section h2,
+  .verkaufsprozess-container h2 {
+    font-size: 28px;
+  }
+
+  .verkaufsprozess-schritte {
+    flex-direction: column;
+  }
+
+  .comparison-table td:first-child {
+    font-weight: bold;
+    color: #000000;
+    background-color: #f1f1f1;
+    text-align: left;
+    max-width: 120px;
+    word-wrap: break-word; /* Ensures words break to the next line */
+    overflow-wrap: break-word; /* Provides support for other browsers */
+    hyphens: auto; /* Allows words to be hyphenated if they are too long */
+  }
+
+  .comparison-table td {
+    max-width: 120px;
+  }
 }

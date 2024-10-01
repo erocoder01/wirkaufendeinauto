@@ -130,4 +130,13 @@ footer {
   .footer-link {
     margin-left: 0px !important;
   }
+
+  .footer-column {
+    min-width: unset;
+  }
+
+  .footer-row {
+    justify-content: space-between;
+    width: 100%;
+  }
 }

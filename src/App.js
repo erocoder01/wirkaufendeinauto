@@ -11,6 +11,7 @@ import HowItWorks from "./Pages/HowItWorks/HowItWorks";
 import About from "./Pages/About/About";
 import Partner from "./Pages/Partner/Partner";
 import CarImages from "./Pages/CarImages/CarImages";
+import Success from "./Pages/Success/Success";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -114,6 +115,7 @@ function App() {
           <Route path="/howitworks" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/partner" element={<Partner />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
         <Whatsapp />
         <Footer />
