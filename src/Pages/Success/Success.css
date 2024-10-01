@@ -108,3 +108,25 @@
 .thank-you-contact-btn:hover {
   background-color: #ff6600;
 }
+
+/* Für kleinere Bildschirme (Mobilgeräte) */
+@media (max-width: 768px) {
+  .thank-you-container {
+    margin-top: 70px;
+  }
+
+  .thank-you-message h1,
+  .thank-you-contact-section h2 {
+    font-size: 28px;
+  }
+
+  .thank-you-message {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .thank-you-contact-section p {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}

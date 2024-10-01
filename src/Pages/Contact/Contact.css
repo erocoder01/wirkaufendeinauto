@@ -84,3 +84,14 @@
   display: flex;
   flex-direction: column;
 }
+
+/* Für kleinere Bildschirme (Mobilgeräte) */
+@media (max-width: 768px) {
+  .contact-section {
+    padding-top: 100px;
+  }
+
+  .contact-section h2 {
+    font-size: 28px;
+  }
+}
