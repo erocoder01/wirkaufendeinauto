@@ -3,6 +3,7 @@ import { apiUrl } from "../../config/apiUrl";
 import "./CarImages.css";
 import cx from "classnames";
 import { BarLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 function CarImages({
   brandName,
@@ -29,6 +30,8 @@ function CarImages({
   const [priceExpectation, setPriceExpectation] = useState(""); // Price expectation state
   const [sellTime, setSellTime] = useState(""); // Sell time state
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate(); // Initialize navigate
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
@@ -186,9 +189,9 @@ function CarImages({
       });
 
       if (response.ok) {
-        alert("Car data uploaded successfully!");
         setIsLoading(false);
         setIsButtonDisabled(false);
+        navigate("/success"); // Redirect to /success
       } else {
         alert("Error uploading car data");
         setIsLoading(false);
