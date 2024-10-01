@@ -268,18 +268,6 @@
   color: #333;
 }
 
-@media (min-width: 768px) {
-  .inspection-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1024px) {
-  .inspection-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .testimonials {
   background-color: #edeef0;
   padding: 20px 0;
@@ -341,5 +329,52 @@
   .testimonial-grid {
     flex-direction: column;
     align-items: center;
+  }
+  .inspection-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .partner-content {
+    flex-direction: column;
+  }
+
+  .partner-section {
+    margin-top: 140px;
+  }
+
+  .partner-text {
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .partner-text h2,
+  .partner-benefits h2,
+  .inspection-section h2,
+  .testimonials h2 {
+    font-size: 28px;
+  }
+
+  .partner-text h4 {
+    font-size: 20px;
+  }
+
+  .partner-text p,
+  .partner-benefits p {
+    font-size: 18px;
+  }
+
+  .partner-form {
+    max-width: 100%;
+  }
+
+  .testimonial-grid {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .testimonial-item {
+    max-width: 100%;
   }
 }
