@@ -15,7 +15,7 @@ function Navbar() {
     >
       {!isMobile ? (
         <div className="header">
-          <Link exact to="/" className="logo">
+          <Link exact to="/" className="logo" onClick={() => setIsOpen(false)}>
             <span className="logo-auto">Auto</span>
             <span className="logo-sofort">Ankauf</span>
             <span className="logo-verkaufen">24</span>
@@ -23,7 +23,7 @@ function Navbar() {
 
           <div className={`navigation`}>
             <ul className="nav-links">
-              <li>
+              <li onClick={() => setIsOpen(false)}>
                 <NavLink
                   exact
                   to="/"
@@ -33,7 +33,7 @@ function Navbar() {
                   Auto verkaufen
                 </NavLink>
               </li>
-              <li>
+              <li onClick={() => setIsOpen(false)}>
                 <NavLink
                   to="/HowItWorks"
                   className="links"
@@ -42,7 +42,7 @@ function Navbar() {
                   So funktioniert’s
                 </NavLink>
               </li>
-              <li>
+              <li onClick={() => setIsOpen(false)}>
                 <NavLink
                   to="/partner"
                   className="links"
@@ -51,12 +51,12 @@ function Navbar() {
                   Für Partner
                 </NavLink>
               </li>
-              <li>
+              <li onClick={() => setIsOpen(false)}>
                 <NavLink to="/about" className="links" activeClassName="active">
                   Über uns
                 </NavLink>
               </li>
-              <li>
+              <li onClick={() => setIsOpen(false)}>
                 <NavLink
                   to="/contact"
                   className="links"
@@ -71,7 +71,12 @@ function Navbar() {
       ) : (
         <div className="header">
           <div className="mobile-nav-header">
-            <Link exact to="/" className="logo">
+            <Link
+              exact
+              to="/"
+              className="logo"
+              onClick={() => setIsOpen(false)}
+            >
               <span className="logo-auto">Auto</span>
               <span className="logo-sofort">Ankauf</span>
               <span className="logo-verkaufen">24</span>
@@ -79,13 +84,16 @@ function Navbar() {
             <Hamburger toggled={isOpen} toggle={setIsOpen} />
           </div>
 
-          <ul className="nav-links">
-            <li>
+          <ul
+            className="nav-links"
+            style={{ display: isOpen ? "block" : "none" }}
+          >
+            <li onClick={() => setIsOpen(false)}>
               <NavLink exact to="/" className="links" activeClassName="active">
                 Auto verkaufen
               </NavLink>
             </li>
-            <li>
+            <li onClick={() => setIsOpen(false)}>
               <NavLink
                 to="/HowItWorks"
                 className="links"
@@ -94,17 +102,17 @@ function Navbar() {
                 So funktioniert’s
               </NavLink>
             </li>
-            <li>
+            <li onClick={() => setIsOpen(false)}>
               <NavLink to="/partner" className="links" activeClassName="active">
                 Für Partner
               </NavLink>
             </li>
-            <li>
+            <li onClick={() => setIsOpen(false)}>
               <NavLink to="/about" className="links" activeClassName="active">
                 Über uns
               </NavLink>
             </li>
-            <li>
+            <li onClick={() => setIsOpen(false)}>
               <NavLink to="/contact" className="links" activeClassName="active">
                 Kontaktiere uns
               </NavLink>
