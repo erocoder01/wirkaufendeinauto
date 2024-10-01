@@ -92,6 +92,7 @@ footer {
   text-decoration: none;
   font-size: 14px;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .footer-link:hover {
@@ -128,5 +129,14 @@ footer {
 
   .footer-link {
     margin-left: 0px !important;
+  }
+
+  .footer-column {
+    min-width: unset;
+  }
+
+  .footer-row {
+    justify-content: space-between;
+    width: 100%;
   }
 }

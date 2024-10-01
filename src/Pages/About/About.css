@@ -133,30 +133,53 @@
 /* Für größere Bildschirme */
 @media (min-width: 1024px) {
   .about::before {
-    height: 600px;
+    height: 500px;
   }
 }
 
 /* Für größere Bildschirme (große Laptops, Desktops) */
 @media (min-width: 1440px) {
   .about::before {
-    height: 700px;
+    height: 600px;
   }
 }
 
 /* Für kleinere Bildschirme (Mobilgeräte) */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .about::before {
-    height: 450px;
+    height: 500px;
+  }
+
+  .about {
+    margin-top: 70px;
+  }
+
+  .about-header h1,
+  .about-details h2 {
+    font-size: 28px;
+  }
+
+  .about-header h3 {
+    font-size: 20px;
   }
 
   .about-content {
     flex-direction: column;
     text-align: center;
+    margin-top: 0;
+  }
+
+  .about-features {
+    gap: 100px;
+    margin-top: 50px;
   }
 
   .about-image {
     margin-right: 0;
     margin-bottom: 20px;
+  }
+
+  .about-details {
+    padding: 0 20px;
   }
 }

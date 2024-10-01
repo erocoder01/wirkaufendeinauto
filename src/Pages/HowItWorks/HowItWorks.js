@@ -13,8 +13,11 @@ import verkauf1 from "../../assets/howitworks/Verkauf1.png";
 import verkauf2 from "../../assets/howitworks/Verkauf2.jpg";
 import verkauf3 from "../../assets/howitworks/Verkauf3.png";
 import verkauf4 from "../../assets/howitworks/Verkauf4.jpg";
+import { useMediaQuery } from "@reactuses/core";
 
 const HowItWorks = () => {
+  const isMobile = useMediaQuery(`(max-width: ${1000}px)`);
+
   return (
     <div>
       <div className="howitworks-container">
@@ -149,61 +152,116 @@ const HowItWorks = () => {
             AutoAnkauf24 im Vergleich zu anderen Verkaufsoptionen
           </h2>
           <table className="comparison-table">
-            <thead>
-              <tr>
-                <th></th>
-                <th>AutoAnkauf24</th>
-                <th>Händler</th>
-                <th>Privatverkauf</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                [
-                  "Reichweite",
-                  "Mit einem Klick 100+ Händler erreichen",
-                  "Einzelne Händler anfragen",
-                  "Auf Plattformen selbst Käufer suchen",
-                ],
-                [
-                  "Verkaufsgeschwindigkeit",
-                  "Schnell und unkompliziert",
-                  "Mittel – hängt von den Verhandlungen ab",
-                  "Langsam – Wochen bis Monate",
-                ],
-                [
-                  "Preis",
-                  "Bestpreis durch Händlervergleich",
-                  "Individuell verhandelbar",
-                  "Der Preis varriert, aber ungewiss",
-                ],
-                [
-                  "Aufwand",
-                  "Minimal – wir kümmern uns um alles",
-                  "Mittlerer Aufwand – einige Verhandlungen nötig",
-                  "Hoch – viele Treffen, Verhandlungen",
-                ],
-                [
-                  "Formalitäten",
-                  "Wir übernehmen alle Formalitäten",
-                  "Händler übernimmt teilweise Formalitäten",
-                  "Selbst alle Dokumente managen",
-                ],
-                [
-                  "Sicherheit",
-                  "Garantierte sichere Zahlung",
-                  "Hängt vom Händler ab",
-                  "Risiko bei der Bezahlung",
-                ],
-              ].map((row, idx) => (
-                <tr key={idx}>
-                  <td>{row[0]}</td>
-                  <td>{row[1]}</td>
-                  <td>{row[2]}</td>
-                  <td>{row[3]}</td>
+            {!isMobile ? (
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>AutoAnkauf24</th>
+                  <th>Händler</th>
+                  <th>Privatverkauf</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+            ) : (
+              <thead>
+                <tr>
+                  <th>AutoAnkauf24</th>
+                  <th>Händler</th>
+                  <th>Privatverkauf</th>
+                </tr>
+              </thead>
+            )}
+
+            {!isMobile ? (
+              <tbody>
+                {[
+                  [
+                    "Reichweite",
+                    "Mit einem Klick 100+ Händler erreichen",
+                    "Einzelne Händler anfragen",
+                    "Auf Plattformen selbst Käufer suchen",
+                  ],
+                  [
+                    "Verkaufs&shy;dauer", // Soft hyphen added here
+                    "Schnell und unkompliziert",
+                    "Mittel – hängt von den Verhandlungen ab",
+                    "Langsam – Wochen bis Monate",
+                  ],
+                  [
+                    "Preis",
+                    "Bestpreis durch Händlervergleich",
+                    "Individuell verhandelbar",
+                    "Der Preis varriert, aber ungewiss",
+                  ],
+                  [
+                    "Aufwand",
+                    "Minimal – wir kümmern uns um alles",
+                    "Mittlerer Aufwand – einige Verhandlungen nötig",
+                    "Hoch – viele Treffen, Verhandlungen",
+                  ],
+                  [
+                    "Formalitäten",
+                    "Wir übernehmen alle Formalitäten",
+                    "Händler übernimmt teilweise Formalitäten",
+                    "Selbst alle Dokumente managen",
+                  ],
+                  [
+                    "Sicherheit",
+                    "Garantierte sichere Zahlung",
+                    "Hängt vom Händler ab",
+                    "Risiko bei der Bezahlung",
+                  ],
+                ].map((row, idx) => (
+                  <tr key={idx}>
+                    <td dangerouslySetInnerHTML={{ __html: row[0] }}></td>
+                    <td>{row[1]}</td>
+                    <td>{row[2]}</td>
+                    <td>{row[3]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            ) : (
+              <tbody>
+                {[
+                  [
+                    "Mit einem Klick 100+ Händler erreichen",
+                    "Einzelne Händler anfragen",
+                    "Auf Plattformen selbst Käufer suchen",
+                  ],
+                  [
+                    "Schnell und unkompliziert",
+                    "Mittel – hängt von den Verhandlungen ab",
+                    "Langsam – Wochen bis Monate",
+                  ],
+                  [
+                    "Bestpreis durch Händlervergleich",
+                    "Individuell verhandelbar",
+                    "Der Preis varriert, aber ungewiss",
+                  ],
+                  [
+                    "Minimal – wir kümmern uns um alles",
+                    "Mittlerer Aufwand – einige Verhandlungen nötig",
+                    "Hoch – viele Treffen, Verhandlungen",
+                  ],
+                  [
+                    "Wir übernehmen alle Formalitäten",
+                    "Händler übernimmt teilweise Formalitäten",
+                    "Selbst alle Dokumente managen",
+                  ],
+                  [
+                    "Garantierte sichere Zahlung",
+                    "Hängt vom Händler ab",
+                    "Risiko bei der Bezahlung",
+                  ],
+                ].map((row, idx) => (
+                  <tr key={idx}>
+                    <td dangerouslySetInnerHTML={{ __html: row[0] }}></td>{" "}
+                    {/* Use dangerouslySetInnerHTML for HTML injection */}
+                    <td>{row[1]}</td>
+                    <td>{row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
           <div className="comparison-cta">
             <span className="comparison-btn">Jetzt Fahrzeug bewerten</span>

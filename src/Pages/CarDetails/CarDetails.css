@@ -417,3 +417,10 @@ textarea {
   border: 1px solid #ccc;
   font-size: 14px;
 }
+
+/* Bei kleineren Bildschirmen umbricht es ordentlich */
+@media (max-width: 768px) {
+  .second-page-background {
+    margin-top: 90px;
+  }
+}

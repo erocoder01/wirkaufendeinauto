@@ -200,7 +200,7 @@ function CarImages({
   };
 
   return (
-    <div className="form-container">
+    <div className="form-container third-page-wrapper">
       <div className="progress-bar">
         <div className="progress" style={{ width: "75%" }}></div>
       </div>
