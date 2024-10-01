@@ -430,7 +430,92 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* FAQ Section */
+
+/* Bei kleineren Bildschirmen umbricht es ordentlich */
+@media (max-width: 768px) {
+  .why-grid {
+    flex-direction: column;
+  }
+
+  .why-item {
+    max-width: 100%;
+  }
+}
+
+/* Stats */
+
+.stats-section {
+  padding: 20px 0;
+  background-color: #edeef0; /* Weißer Hintergrund */
+  text-align: center;
+}
+
+.section-title {
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: -20px;
+  margin-top: 40px;
+}
+
+.stats-section .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-icon img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+  margin-top: -5px;
+}
+
+.stat-description {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Für kleinere Bildschirme */
+@media (max-width: 768px) {
+  .stats-section .container {
+    flex-direction: column;
+  }
+
+  .stat-item {
+    margin-bottom: 30px;
+  }
+}
+
+
 /* FAQ Section */
 .faq {
   background-color: #edeef0;
@@ -457,6 +542,7 @@
   font-size: 16px;
   color: #666;
   text-align: left;
+  font-weight: 500;
 }
 
 .faq-item {

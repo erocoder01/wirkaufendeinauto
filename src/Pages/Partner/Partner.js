@@ -129,8 +129,8 @@ const Partner = () => {
         </div>
       </section>
       {/* Partner Vorteile */}
+      <div class="section-divider"></div>
       <section className="partner-benefits">
-        <div className="section-divider"></div>
         <div className="container">
           <h2>Wir betreuen professionelle Autokäufer</h2>
           <p>Die Vorteile, die unsere Partner erwarten können</p>
@@ -163,8 +163,8 @@ const Partner = () => {
       </section>
 
       {/* Inspektions Sektion */}
+      <div class="section-divider"></div>
       <section className="inspection-section">
-        <div className="section-divider"></div>
         <div className="container">
           <h2>Wir führen über 150 Punkte Inspektionen durch</h2>
           <p>
@@ -191,8 +191,8 @@ const Partner = () => {
       </section>
 
       {/* Testimonial Sektion */}
+      <div class="section-divider"></div>
       <section className="testimonials">
-        <div className="section-divider"></div>
         <div className="container">
           <h2>Das sagen unsere Partner über AutoAnkauf24</h2>
           <div className="testimonial-grid">
