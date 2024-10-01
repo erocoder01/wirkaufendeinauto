@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import carData from "../../carData.json";
+
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
 import stats1 from "../../assets/public-relation.png";
@@ -11,93 +14,7 @@ import whysell1 from "../../assets/bildone.webp";
 import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
 import whysell4 from "../../assets/bildfour.webp";
-
-const allowedBrands = [
-  "Abarth",
-  "Aiways",
-  "Aixam",
-  "Alfa Romeo",
-  "Alpine",
-  "Aston Martin",
-  "Audi",
-  "Barkas",
-  "Bentley",
-  "BMW",
-  "Brilliance",
-  "Buick",
-  "BYD",
-  "Cadillac",
-  "Caterham",
-  "Chevrolet",
-  "Chrysler",
-  "Citroen",
-  "Cupra",
-  "Dacia",
-  "Daewoo",
-  "Daihatsu",
-  "Dodge",
-  "DS",
-  "Ferrari",
-  "Fiat",
-  "Fisker",
-  "Ford",
-  "Honda",
-  "Hyundai",
-  "INEOS",
-  "Infiniti",
-  "Isuzu",
-  "Iveco",
-  "Jaguar",
-  "Jeep",
-  "Kia",
-  "Lada",
-  "Lamborghini",
-  "Lancia",
-  "Land Rover",
-  "LEVC",
-  "Lexus",
-  "Lotus",
-  "Lucid",
-  "Lynk & Co",
-  "Mahindra",
-  "Maserati",
-  "Maxus",
-  "Mazda",
-  "Mercedes-Benz",
-  "MG",
-  "MINI",
-  "Mitsubishi",
-  "NIO",
-  "Nissan",
-  "Opel",
-  "Ora",
-  "Peugeot",
-  "Vespa",
-  "Polestar",
-  "Pontiac",
-  "Porsche",
-  "Proton",
-  "Renault",
-  "Rover",
-  "Saab",
-  "Seat",
-  "Skoda",
-  "Smart",
-  "SsangYong",
-  "Subaru",
-  "Suzuki",
-  "Tata",
-  "Tesla",
-  "Toyota",
-  "Trabant",
-  "Triumph",
-  "VinFast",
-  "Volkswagen",
-  "Volvo",
-  "Wartburg",
-  "Westfield",
-  "Zastava",
-];
+import cx from "classnames";
 
 function Car({
   selectedBrand,
@@ -111,21 +28,57 @@ function Car({
   setSelectedYear,
   selectedYear,
 }) {
-  const handleBrandChange = (event) => {
-    setSelectedBrand(event.target.value);
+  const [carBrands, setCarBrands] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredBrands, setFilteredBrands] = useState([]);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  useEffect(() => {
+    if (selectedBrand !== "" && selectedModel !== "" && selectedYear !== "") {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [selectedBrand, selectedModel, selectedYear]);
+
+  const api = apiUrl();
+
+  // Fetch the car brands from the backend when the page loads
+  useEffect(() => {
+    const fetchCarBrands = async () => {
+      try {
+        const response = await fetch(`${api}/cars/carBrands`);
+
+        const brands = await response.json();
+        setCarBrands(brands);
+      } catch (error) {
+        console.error("Error fetching car brands:", error);
+      }
+    };
+
+    fetchCarBrands();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleBrandSelect = (brand) => {
+    setSelectedBrand(brand);
+    setSearchTerm(brand); // Set search term to the selected brand
+
     setSelectedModel(""); // Reset model when the brand changes
     setAvailableYears([]); // Reset years when the brand changes
   };
 
-  const handleModelChange = (event) => {
+  // Handle when the model is changed
+  const handleModelChange = async (event) => {
     const modelName = event.target.value;
     setSelectedModel(modelName);
     setSelectedYear(""); // Reset selected year when the model changes
-    setAvailableYears([]); // Clear available years until a model is chosen
+    setAvailableYears([]); // Clear available years until they are fetched
 
     if (selectedBrand && modelName) {
       // Load the available years for the selected brand and model
-      const years = loadYears(selectedBrand, modelName);
+      const years = await loadYears(selectedBrand, modelName);
       setAvailableYears(years); // Update state with available years
     }
   };
@@ -135,45 +88,44 @@ function Car({
     setSelectedYear(selectedYear);
   };
 
-  // Function to load models for the selected brand
-  function loadModels(brandName) {
-    const selectedBrandData = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
+  async function loadModels(brandName) {
+    try {
+      const response = await fetch(`${api}/cars/getModels/${brandName}`);
 
-    if (selectedBrandData) {
-      const models = selectedBrandData.models.model.map((model) => model.name);
-      setBrandModels(models);
-    } else {
-      setBrandModels([]); // If no brand found, reset models
+      // Parse the JSON response
+      const data = await response.json();
+
+      if (response.ok) {
+        // If models are found, sort and set them in the state
+        const models = data.models; // Custom sorting (optional)
+        setBrandModels(models); // Assuming you have a state setter like useState
+      } else {
+        setBrandModels([]); // Reset models if no data or error
+      }
+    } catch (error) {
+      console.error("Error fetching models:", error);
+      setBrandModels([]); // Handle errors by resetting models
     }
   }
 
-  function loadYears(brandName, modelName) {
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
+  async function loadYears(brandName, modelName) {
+    try {
+      const response = await fetch(
+        `${api}/cars/getYears/${brandName}/${modelName}`
+      );
 
-    const years = new Set(); // To avoid duplicate years
-    const currentYear = new Date().getFullYear();
+      const data = await response.json();
 
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop ? parseInt(mod.yearstop) : currentYear; // Use current year if yearstop is not present
-
-        // Add all years between yearStart and yearStop to the Set
-        for (let year = yearStart; year <= yearStop; year++) {
-          years.add(year);
-        }
-      });
-    });
-
-    // Convert the Set to an array, sort it from newest to oldest, and return it
-    return Array.from(years).sort((a, b) => b - a);
+      if (response.ok) {
+        return data.years; // Return years from the backend response
+      } else {
+        console.error(data.error);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching years:", error);
+      return [];
+    }
   }
 
   useEffect(() => {
@@ -189,11 +141,25 @@ function Car({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+
   const getAnswerStyle = (index) => ({
     maxHeight: activeIndex === index ? "200px" : "0", // Adjust the height based on the active state
     overflow: "hidden",
     transition: "max-height 0.5s ease", // Smooth transition effect
   });
+
+  // Handle input change and filter car brands
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setSelectedBrand("");
+    // Filter the brands based on the input value
+    const filtered = carBrands.filter((brand) =>
+      brand.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredBrands(filtered);
+  };
+
 
   return (
     <div className="home-container">
@@ -203,34 +169,50 @@ function Car({
             <p className="hero-subtitle">Klick, Kleck, Auto weg!</p>
           </div>
           <div className="form-container">
-            <h1>
-              Verkaufe dein Auto <span id="dynamic-text">bequem</span>
-            </h1>
-            <p>
-              Ohne Stress zum besten Preis - Erhalte direkt deinen finalen
-              Verkaufspreis und buche deinen Abgabe-Termin online
-            </p>
+            <div className="form-header">
+              <h1>
+                Verkaufe dein Auto <span id="dynamic-text">bequem</span>
+              </h1>
+              <p>
+                Ohne Stress zum besten Preis - Erhalte direkt deinen finalen
+                Verkaufspreis und buche deinen Abgabe-Termin online
+              </p>
+            </div>
+
             <form id="evaluation-form" action="second-page.html" method="GET">
               <div className="input-wrapper">
                 <label htmlFor="make">
                   <b>Von welcher Marke ist dein Auto?</b>
                 </label>
-                <select
+
+                {/* Input field for searching */}
+                <input
+                  type="text"
                   id="make"
                   name="make"
                   required
-                  value={selectedBrand}
-                  onChange={handleBrandChange}
-                >
-                  <option value="" disabled>
-                    Marke auswählen
-                  </option>
-                  {allowedBrands.map((brand, index) => (
-                    <option key={index} value={brand}>
-                      {brand}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Marke auswählen"
+                  value={!searchTerm ? selectedBrand : searchTerm}
+                  onChange={handleSearchChange}
+                />
+
+                {/* List with filtered brands */}
+                {searchTerm.length > 0 && !selectedBrand && (
+                  <ul className="filtered-brands-list">
+                    {filteredBrands.map((brand, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleBrandSelect(brand)} // Handle brand selection on click
+                        className="filtered-brand-item"
+                      >
+                        {brand}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Hidden input field to store the selected brand */}
+                <input type="hidden" name="make" value={selectedBrand} />
               </div>
 
               <div className="input-wrapper">
@@ -279,11 +261,18 @@ function Car({
                 </select>
               </div>
 
-              <Link to="/cardetails">
-                <button className="submit">
-                  Jetzt Bewertung ansehen <i className="fas fa-arrow-right"></i>
-                </button>
-              </Link>
+              <div className="submit-button-wrapper">
+                <Link to={!isButtonDisabled ? "/cardetails" : "#"}>
+                  <button
+                    className={cx("submit", isButtonDisabled && "disabled")}
+                    type="button"
+                    disabled={isButtonDisabled}
+                  >
+                    Jetzt Bewertung ansehen{" "}
+                    <i className="fas fa-arrow-right"></i>
+                  </button>
+                </Link>
+              </div>
             </form>
           </div>
         </div>

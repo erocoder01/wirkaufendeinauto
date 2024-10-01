@@ -1,47 +1,73 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { apiUrl } from "../../config/apiUrl";
 import "./CarDetails.css";
-import carData from "../../carData.json";
+import cx from "classnames";
 
-function CarDetails({ brandName, modelName, year }) {
-  // selected values
-  const [selectedBodyType, setSelectedBodyType] = useState("");
-  const [fuelType, setFuelType] = useState("");
-  const [gearbox, setGearbox] = useState("");
-  const [power, setPower] = useState("");
-  const [modification, setModification] = useState("");
-
-  const [kilometerstand, setKilometerstand] = useState("");
-  const [unfallschaden, setUnfallschaden] = useState(false);
-  const [serviceHeft, setServiceHeft] = useState(false);
-  const [paintConditionLack, setPaintConditionLack] = useState("");
-  const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
-  const [additionalNotes, setAdditionalNotes] = useState("");
-
+function CarDetails({
+  brandName,
+  modelName,
+  year,
+  selectedBodyType,
+  setSelectedBodyType,
+  fuelType,
+  setFuelType,
+  gearbox,
+  setGearbox,
+  power,
+  setPower,
+  modification,
+  setModification,
+  kilometerstand,
+  setKilometerstand,
+  unfallschaden,
+  setUnfallschaden,
+  serviceHeft,
+  setServiceHeft,
+  paintConditionLack,
+  setPaintConditionLack,
+  paintConditionKarosserie,
+  setPaintConditionKarosserie,
+  additionalNotes,
+  setAdditionalNotes,
+}) {
   // list of options are saved here
   const [bodyTypes, setBodyTypes] = useState([]);
   const [fuelTypes, setFuelTypes] = useState([]);
   const [gearboxTypes, setGearboxTypes] = useState([]);
   const [powerHPOptions, setPowerHPOptions] = useState([]);
   const [modificationOptions, setModificationOptions] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission
-    const formData = {
-      selectedBodyType,
-      fuelType,
-      gearbox,
-      power,
-      modification,
-      kilometerstand,
-      unfallschaden,
-      serviceHeft,
-      paintConditionLack,
-      paintConditionKarosserie,
-      additionalNotes,
-    };
-    console.log(formData);
-  };
+  useEffect(() => {
+    if (
+      selectedBodyType !== "" &&
+      fuelType !== "" &&
+      gearbox !== "" &&
+      power !== "" &&
+      modification !== "" &&
+      kilometerstand !== "" &&
+      unfallschaden !== "" &&
+      paintConditionLack !== "" &&
+      paintConditionKarosserie !== ""
+    ) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [
+    selectedBodyType,
+    fuelType,
+    gearbox,
+    power,
+    modification,
+    kilometerstand,
+    unfallschaden,
+    paintConditionLack,
+    paintConditionKarosserie,
+  ]);
+
+  const api = apiUrl();
 
   useEffect(() => {
     if (brandName && modelName && year) {
@@ -51,171 +77,135 @@ function CarDetails({ brandName, modelName, year }) {
   }, [brandName, modelName, year]);
 
   // Function to load body types based on selected brand, model, and year
-  function loadBodytypes(brandName, modelName, year) {
+  async function loadBodytypes(brandName, modelName, year) {
     if (!brandName || !modelName || !year) return;
 
-    // Find the brand and model in carData
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
+    try {
+      // Make a request to the backend to get body types for the selected brand, model, and year
+      const response = await fetch(
+        `${api}/carDetails/getBodyTypes/${brandName}/${modelName}/${year}`
+      );
 
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
-    if (!selectedModel) return;
+      const data = await response.json();
 
-    // Create a Set to ensure uniqueness of body types
-    const newBodyTypes = new Set();
+      if (response.ok) {
+        // Create a Set to ensure uniqueness of body types
+        const newBodyTypes = new Set(data.bodyTypes);
 
-    // Iterate through generations and modifications to find matching body types
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop
-          ? parseInt(mod.yearstop)
-          : new Date().getFullYear();
-        if (year >= yearStart && year <= yearStop) {
-          newBodyTypes.add(mod.coupe); // Add the body type (e.g., "Coupe")
-        }
-      });
-    });
+        // Append new body types while keeping the previous ones
+        setBodyTypes((prevBodyTypes) => {
+          const updatedBodyTypes = [
+            ...prevBodyTypes,
+            ...Array.from(newBodyTypes),
+          ];
+          return [...new Set(updatedBodyTypes)]; // Ensure no duplicates
+        });
 
-    // Append new body types while keeping the previous ones
-    setBodyTypes((prevBodyTypes) => {
-      const updatedBodyTypes = [...prevBodyTypes, ...Array.from(newBodyTypes)];
-      return [...new Set(updatedBodyTypes)]; // Ensure no duplicates
-    });
-
-    //load the Fuel types after selecting bodytype
-
-    loadFuels(brandName, modelName, year, selectedBodyType);
+        // After selecting a body type, load the available fuels
+        loadFuels(brandName, modelName, year, selectedBodyType);
+      } else {
+        console.error("Error fetching body types:", data.error);
+        setBodyTypes([]); // Reset body types if an error occurs
+      }
+    } catch (error) {
+      console.error("Error fetching body types:", error);
+      setBodyTypes([]); // Handle errors by resetting body types
+    }
   }
 
-  function loadFuels(brandName, modelName, year, bodytype) {
+  async function loadFuels(brandName, modelName, year, bodytype) {
     if (!brandName || !modelName || !year || !bodytype) return;
 
-    // Find the brand and model in carData
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
-    if (!selectedModel) return;
+    try {
+      // Make a request to the backend to get fuel types
+      const response = await fetch(
+        `${api}/carDetails/getFuels/${brandName}/${modelName}/${year}/${bodytype}`
+      );
+      const data = await response.json();
 
-    // Create a Set to ensure uniqueness of fuels
-    const newFuels = new Set();
+      if (response.ok) {
+        // Create a Set to ensure uniqueness of fuel types
+        const newFuels = new Set(data.fuelTypes);
 
-    // Iterate through generations and modifications to find matching fuels
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop
-          ? parseInt(mod.yearstop)
-          : new Date().getFullYear();
-        if (year >= yearStart && year <= yearStop && mod.coupe === bodytype) {
-          newFuels.add(mod.fuel); // Add fuel type (e.g., "Diesel", "Petrol")
-        }
-      });
-    });
-
-    // Append new fuels while keeping the previous ones
-    setFuelTypes((prevFuels) => {
-      const updatedFuels = [...prevFuels, ...Array.from(newFuels)];
-      return [...new Set(updatedFuels)]; // Ensure no duplicates
-    });
+        // Append new fuels while keeping the previous ones
+        setFuelTypes((prevFuels) => {
+          const updatedFuels = [...prevFuels, ...Array.from(newFuels)];
+          return [...new Set(updatedFuels)]; // Ensure no duplicates
+        });
+      } else {
+        console.error("Error fetching fuel types:", data.error);
+        setFuelTypes([]); // Reset fuel types if an error occurs
+      }
+    } catch (error) {
+      console.error("Error fetching fuel types:", error);
+      setFuelTypes([]); // Handle errors by resetting fuel types
+    }
   }
 
-  function loadGearbox(brandName, modelName, year, bodytype, fuel) {
+  async function loadGearbox(brandName, modelName, year, bodytype, fuel) {
     if (!brandName || !modelName || !year || !fuel || !bodytype) return;
 
-    // Find the brand and model in carData
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
-    if (!selectedModel) return;
+    try {
+      const response = await fetch(
+        `${api}/carDetails/getGearboxes/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
+      );
+      const data = await response.json();
 
-    // Create a Set to ensure uniqueness of gearboxes
-    const newGearboxes = new Set();
+      if (response.ok) {
+        const newGearboxes = new Set(data.gearboxes);
 
-    // Iterate through generations and modifications to find matching gearboxes
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop
-          ? parseInt(mod.yearstop)
-          : new Date().getFullYear();
-        if (
-          year >= yearStart &&
-          year <= yearStop &&
-          mod.coupe === bodytype &&
-          mod.fuel === fuel
-        ) {
-          if (mod.gearboxMT) newGearboxes.add("Manuell");
-          if (mod.gearboxAT) newGearboxes.add("Automatik");
-        }
-      });
-    });
-
-    // Append new gearboxes while keeping the previous ones
-    setGearboxTypes((prevGearboxes) => {
-      const updatedGearboxes = [...prevGearboxes, ...Array.from(newGearboxes)];
-      return [...new Set(updatedGearboxes)]; // Ensure no duplicates
-    });
+        setGearboxTypes((prevGearboxes) => {
+          const updatedGearboxes = [
+            ...prevGearboxes,
+            ...Array.from(newGearboxes),
+          ];
+          return [...new Set(updatedGearboxes)];
+        });
+      } else {
+        console.error("Error fetching gearboxes:", data.error);
+        setGearboxTypes([]);
+      }
+    } catch (error) {
+      console.error("Error fetching gearboxes:", error);
+      setGearboxTypes([]);
+    }
   }
 
-  function loadPowerHp(brandName, modelName, year, bodytype, fuel, gearbox) {
+  async function loadPowerHp(
+    brandName,
+    modelName,
+    year,
+    bodytype,
+    fuel,
+    gearbox
+  ) {
     if (!brandName || !modelName || !year || !fuel || !gearbox || !bodytype)
       return;
 
-    // Find the brand and model in carData
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
-    if (!selectedModel) return;
+    try {
+      const response = await fetch(
+        `${api}/carDetails/getPowerHp/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
+      );
+      const data = await response.json();
 
-    // Create a Set to ensure uniqueness of power HP options
-    const newPowerHp = new Set();
+      if (response.ok) {
+        const newPowerHp = new Set(data.powerHpOptions);
 
-    // Iterate through generations and modifications to find matching power HP
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop
-          ? parseInt(mod.yearstop)
-          : new Date().getFullYear();
-        if (
-          year >= yearStart &&
-          year <= yearStop &&
-          mod.coupe === bodytype &&
-          mod.fuel === fuel &&
-          ((gearbox === "Manuell" && mod.gearboxMT) ||
-            (gearbox === "Automatik" && mod.gearboxAT))
-        ) {
-          // If powerHp is available, use it; otherwise extract from engine for electric cars
-          let powerHp = mod.powerHp;
-
-          if (powerHp) {
-            newPowerHp.add(powerHp); // Add power HP value (either from powerHp or extracted from engine)
-          }
-        }
-      });
-    });
-
-    // Append new power HP options while keeping the previous ones
-    setPowerHPOptions((prevPowerHp) => {
-      const updatedPowerHp = [...prevPowerHp, ...Array.from(newPowerHp)];
-      return [...new Set(updatedPowerHp)]; // Ensure no duplicates
-    });
+        setPowerHPOptions((prevPowerHp) => {
+          const updatedPowerHp = [...prevPowerHp, ...Array.from(newPowerHp)];
+          return [...new Set(updatedPowerHp)];
+        });
+      } else {
+        console.error("Error fetching power HP:", data.error);
+        setPowerHPOptions([]);
+      }
+    } catch (error) {
+      console.error("Error fetching power HP:", error);
+      setPowerHPOptions([]);
+    }
   }
 
-  function loadModifications(
+  async function loadModifications(
     brandName,
     modelName,
     year,
@@ -228,55 +218,35 @@ function CarDetails({ brandName, modelName, year }) {
       !brandName ||
       !modelName ||
       !year ||
-      !powerHp ||
       !fuel ||
       !gearbox ||
+      !powerHp ||
       !bodytype
     )
       return;
 
-    // Find the brand and model in carData
-    const selectedBrand = carData.brands.brand.find(
-      (brand) => brand.name === brandName
-    );
-    const selectedModel = selectedBrand.models.model.find(
-      (model) => model.name === modelName
-    );
-    if (!selectedModel) return;
+    try {
+      const response = await fetch(
+        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
+      );
+      const data = await response.json();
 
-    // Create an array to store modifications
-    const newModifications = [];
-
-    // Iterate through generations and modifications to find matching modifications
-    selectedModel.generations.generation.forEach((generation) => {
-      generation.modifications.modification.forEach((mod) => {
-        const yearStart = parseInt(mod.yearstart);
-        const yearStop = mod.yearstop
-          ? parseInt(mod.yearstop)
-          : new Date().getFullYear();
-        if (
-          year >= yearStart &&
-          year <= yearStop &&
-          mod.coupe === bodytype &&
-          mod.fuel === fuel &&
-          mod.powerHp === powerHp &&
-          ((gearbox === "Manuell" && mod.gearboxMT) ||
-            (gearbox === "Automatik" && mod.gearboxAT))
-        ) {
-          // Combine generation and modification details for dropdown text
-          const modificationText = `${generation.name} ${mod.engine} (${
-            mod.powerHp
-          } PS) ${mod.gearboxAT ? "Steptronic" : "Manuell"}`;
-          newModifications.push(modificationText);
-        }
-      });
-    });
-
-    // Append new modifications while keeping the previous ones
-    setModificationOptions((prevModifications) => {
-      const updatedModifications = [...prevModifications, ...newModifications];
-      return [...new Set(updatedModifications)]; // Ensure no duplicates
-    });
+      if (response.ok) {
+        setModificationOptions((prevModifications) => {
+          const updatedModifications = [
+            ...prevModifications,
+            ...data.modifications,
+          ];
+          return [...new Set(updatedModifications)];
+        });
+      } else {
+        console.error("Error fetching modifications:", data.error);
+        setModificationOptions([]);
+      }
+    } catch (error) {
+      console.error("Error fetching modifications:", error);
+      setModificationOptions([]);
+    }
   }
 
   const selectBodyType = (bodytype) => {
@@ -325,8 +295,7 @@ function CarDetails({ brandName, modelName, year }) {
             Geschätzte Zeit bis zur Fertigstellung: 3 Minuten
           </p>
 
-          <form id="second-form" onSubmit={handleSubmit}>
-            {/* Felder für Karosserieform, Kraftstoff, Getriebe, PS und Variante */}
+          <div>
             <div className="second-page-select-wrapper">
               <label htmlFor="body-type">Karosserieform</label>
               <select
@@ -696,14 +665,16 @@ function CarDetails({ brandName, modelName, year }) {
               ></textarea>
             </div>
 
-            <button type="submit" className="button-abschließen">
-              Bewertung abschließen
-              <i
-                className="fas fa-spinner fa-spin"
-                style={{ display: "none" }}
-              ></i>
-            </button>
-          </form>
+            <Link to={!isButtonDisabled ? "/carImages" : "#"}>
+              <button
+                className={cx("submit", isButtonDisabled && "disabled")}
+                type="button"
+                disabled={isButtonDisabled}
+              >
+                Bewertung abschließen
+              </button>
+            </Link>
+          </div>
         </div>
       </main>
     </div>

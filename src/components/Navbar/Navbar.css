@@ -7,7 +7,8 @@
   padding: 0;
   width: 100%;
   border-bottom: 1px solid #d1d1d1; /* Untere Linie */
-  height: 70px;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
 }
 
 .header {
@@ -55,4 +56,119 @@
   margin-left: auto;
   display: flex;
   align-items: center;
+}
+
+/* Bei kleineren Bildschirmen umbricht es ordentlich */
+@media (max-width: 768px) {
+  .navbar-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #ffffff; /* Background color for visibility */
+    color: #1e1f24; /* Text color */
+    width: 100%;
+    height: auto;
+    z-index: 1000; /* High z-index to bring it to the front */
+    border-bottom: 1px solid #d1d1d1; /* Bottom border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  }
+
+  .mobile-nav-header {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    width: 100%;
+    max-height: 100vh; /* Ensure the links do not overflow the viewport */
+    overflow-y: auto; /* Enable scrolling for long lists */
+  }
+
+  .nav-links li {
+    height: 50px;
+    border-bottom: 1px solid gray;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+
+  .links {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    text-decoration: none;
+    color: #1e1f24;
+  }
+
+  .active {
+    color: #000;
+    font-weight: bold;
+  }
+}
+
+/* hambuer icon */
+
+.hamburger {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  width: 30px;
+  height: 20px;
+}
+
+.hamburger span {
+  background-color: #bbb;
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  transition: all 0.3s ease;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2) {
+  top: 8px;
+}
+
+.hamburger span:nth-child(3) {
+  top: 16px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 8px;
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 8px;
 }

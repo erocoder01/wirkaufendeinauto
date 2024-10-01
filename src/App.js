@@ -10,6 +10,8 @@ import Whatsapp from "./components/Whatsapp/Whatsapp";
 import HowItWorks from "./Pages/HowItWorks/HowItWorks";
 import About from "./Pages/About/About";
 import Partner from "./Pages/Partner/Partner";
+import CarImages from "./Pages/CarImages/CarImages";
+import Success from "./Pages/Success/Success";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -18,6 +20,20 @@ function App() {
 
   const [brandModels, setBrandModels] = useState([]);
   const [availableYears, setAvailableYears] = useState([]); // Store available years
+
+  // selected values for CarDetails
+  const [selectedBodyType, setSelectedBodyType] = useState("");
+  const [fuelType, setFuelType] = useState("");
+  const [gearbox, setGearbox] = useState("");
+  const [power, setPower] = useState("");
+  const [modification, setModification] = useState("");
+
+  const [kilometerstand, setKilometerstand] = useState("");
+  const [unfallschaden, setUnfallschaden] = useState(false);
+  const [serviceHeft, setServiceHeft] = useState(false);
+  const [paintConditionLack, setPaintConditionLack] = useState("");
+  const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
 
   return (
     <Router>
@@ -48,16 +64,58 @@ function App() {
                 brandName={selectedBrand}
                 modelName={selectedModel}
                 year={selectedYear}
+                selectedBodyType={selectedBodyType}
+                setSelectedBodyType={setSelectedBodyType}
+                fuelType={fuelType}
+                setFuelType={setFuelType}
+                gearbox={gearbox}
+                setGearbox={setGearbox}
+                power={power}
+                setPower={setPower}
+                modification={modification}
+                setModification={setModification}
+                kilometerstand={kilometerstand}
+                setKilometerstand={setKilometerstand}
+                unfallschaden={unfallschaden}
+                setUnfallschaden={setUnfallschaden}
+                serviceHeft={serviceHeft}
+                setServiceHeft={setServiceHeft}
+                paintConditionLack={paintConditionLack}
+                setPaintConditionLack={setPaintConditionLack}
+                paintConditionKarosserie={paintConditionKarosserie}
+                setPaintConditionKarosserie={setPaintConditionKarosserie}
+                additionalNotes={additionalNotes}
+                setAdditionalNotes={setAdditionalNotes}
+              />
+            }
+          />
+
+          <Route
+            path="/carImages"
+            element={
+              <CarImages
+                brandName={selectedBrand}
+                modelName={selectedModel}
+                year={selectedYear}
+                selectedBodyType={selectedBodyType}
+                fuelType={fuelType}
+                gearbox={gearbox}
+                power={power}
+                modification={modification}
+                kilometerstand={kilometerstand}
+                unfallschaden={unfallschaden}
+                serviceHeft={serviceHeft}
+                paintConditionLack={paintConditionLack}
+                paintConditionKarosserie={paintConditionKarosserie}
+                additionalNotes={additionalNotes}
               />
             }
           />
           <Route path="/contact" element={<Contact />} />
-
           <Route path="/howitworks" element={<HowItWorks />} />
-
           <Route path="/about" element={<About />} />
-
           <Route path="/partner" element={<Partner />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
         <Whatsapp />
         <Footer />

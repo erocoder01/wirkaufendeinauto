@@ -1,34 +1,66 @@
-/* Contact Section Styles */
-.contact-section {
-  padding: 50px 0;
-  background-color: #f9f9f9;
-  text-align: center;
-  font-family: "Open Sans", sans-serif;
-  flex-direction: column;
-  display: flex;
+.thank-you-message,
+.thank-you-contact-section {
+  background-color: #edeef0; /* Stelle sicher, dass der Hintergrund einheitlich ist */
 }
 
-.contact-section h2 {
+.thank-you-message {
+  padding: 50px 0;
+  background-color: #edeef0;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: -40px;
+}
+
+.thank-you-message h1 {
   color: #333;
-  font-size: 2.5em;
+  font-size: 32px;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
-.contact-section p {
+.thank-you-message p {
+  font-size: 18px;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto 20px auto;
+}
+
+.thank-you-check i {
+  font-size: 60px;
+  margin-top: 20px;
+  color: #27ae60;
+}
+
+/* Contact Section Styles */
+.thank-you-contact-section {
+  padding: 20px 0;
+  background-color: #edeef0;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.thank-you-contact-section h2 {
+  color: #333;
+  font-size: 32px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.thank-you-contact-section p {
   font-size: 18px;
   color: #666;
   max-width: 800px;
   margin: 0 auto 40px auto;
 }
 
-.contact-options {
+.thank-you-contact-options {
   display: flex;
   justify-content: center;
   gap: 30px;
   flex-wrap: wrap;
 }
 
-.contact-option {
+.thank-you-contact-option {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -39,25 +71,25 @@
   margin-bottom: 40px;
 }
 
-.contact-icon {
+.thank-you-contact-icon {
   font-size: 40px;
   color: #ff6600;
   margin-bottom: 20px;
 }
 
-.contact-option h3 {
+.thank-you-contact-option h3 {
   font-size: 1.5em;
   color: #333;
   margin-bottom: 10px;
 }
 
-.contact-option p {
+.thank-you-contact-option p {
   font-size: 1em;
   color: #666;
   margin-bottom: 20px;
 }
 
-.contact-btn {
+.thank-you-contact-btn {
   background-color: #000000;
   color: white;
   padding: 10px 20px;
@@ -73,25 +105,28 @@
   line-height: 1.5em; /* Ensure proper vertical alignment */
 }
 
-.contact-btn:hover {
+.thank-you-contact-btn:hover {
   background-color: #ff6600;
-}
-
-.container-contact {
-  width: 80%;
-  margin: auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Für kleinere Bildschirme (Mobilgeräte) */
 @media (max-width: 768px) {
-  .contact-section {
-    padding-top: 100px;
+  .thank-you-container {
+    margin-top: 70px;
   }
 
-  .contact-section h2 {
+  .thank-you-message h1,
+  .thank-you-contact-section h2 {
     font-size: 28px;
+  }
+
+  .thank-you-message {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .thank-you-contact-section p {
+    margin-left: 20px;
+    margin-right: 20px;
   }
 }
