@@ -23,7 +23,6 @@ p {
   padding: 0px;
 }
 
-
 .section-with-divider {
   padding: 40px 0; /* Abstand zwischen Inhalt und Dividern */
 }
@@ -35,19 +34,10 @@ p {
 
 .section-with-divider h2 {
   text-align: center;
+}
 
 .input-wrapper {
   position: relative; /* Set the parent container to relative positioning */
-}
-
-.disabled {
-  background-color: #e5e5e5 !important;
-  color: #ababab !important;
-  border: 1px solid transparent !important;
-}
-
-.disabled:hover {
-  cursor: not-allowed;
 }
 
 a {
@@ -84,5 +74,4 @@ a {
 /* Apply a general transition to all elements */
 .transition {
   transition: all 0.5s ease;
-
 }

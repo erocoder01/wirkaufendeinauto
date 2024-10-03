@@ -143,7 +143,9 @@ function CarDetails({
   }
 
   async function loadGearbox(brandName, modelName, year, bodytype, fuel) {
-    if (!brandName || !modelName || !year || !fuel || !bodytype) return;
+    if (!brandName || !modelName || !year || !fuel || !bodytype) {
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -298,63 +300,58 @@ function CarDetails({
           <div>
             <div className="second-page-select-wrapper">
               <label htmlFor="body-type">Karosserieform</label>
-              <select
-                id="body-type"
-                name="body-type"
-                value={selectedBodyType}
-                onChange={(e) => selectBodyType(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Bitte auswählen
-                </option>
+              <div className="type-options">
                 {bodyTypes.map((type, index) => (
-                  <option key={index} value={type}>
+                  <div
+                    key={index}
+                    className={`type-box ${
+                      selectedBodyType === type ? "selected" : ""
+                    }`}
+                    onClick={() => selectBodyType(type)}
+                  >
                     {type}
-                  </option>
+                  </div>
                 ))}
-              </select>
+              </div>
             </div>
 
-            <div className="second-page-select-wrapper">
-              <label htmlFor="fuel-type">Kraftstoff</label>
-              <select
-                id="fuel-type"
-                name="fuel-type"
-                value={fuelType}
-                onChange={(e) => selectFuelType(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Bitte auswählen
-                </option>
-                {fuelTypes.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {fuelTypes.length > 0 && (
+              <div className="second-page-select-wrapper">
+                <label htmlFor="fuel-type">Kraftstoff</label>
+                <div className="type-options">
+                  {fuelTypes.map((type, index) => (
+                    <div
+                      key={index}
+                      className={`type-box ${
+                        fuelType === type ? "selected" : ""
+                      }`}
+                      onClick={() => selectFuelType(type)}
+                    >
+                      {type}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-            <div className="second-page-select-wrapper">
-              <label htmlFor="gearbox">Getriebeart</label>
-              <select
-                id="gearbox"
-                name="gearbox"
-                value={gearbox}
-                onChange={(e) => selectGearbox(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Bitte auswählen
-                </option>
-                {gearboxTypes.map((type, index) => (
-                  <option key={index} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {gearboxTypes.length > 0 && (
+              <div className="second-page-select-wrapper">
+                <label htmlFor="gearbox">Getriebeart</label>
+                <div className="type-options">
+                  {gearboxTypes.map((type, index) => (
+                    <div
+                      key={index}
+                      className={`type-box ${
+                        gearbox === type ? "selected" : ""
+                      }`}
+                      onClick={() => selectGearbox(type)}
+                    >
+                      {type}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="second-page-select-wrapper">
               <label htmlFor="power">PS</label>

@@ -204,6 +204,14 @@
   margin-bottom: 20px;
 }
 
+.type-options {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* This makes the items wrap to the next row on overflow */
+}
+
 .second-page-select-wrapper label {
   font-weight: bold;
   display: block;
@@ -226,6 +234,26 @@
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 12px;
+}
+
+.type-box {
+  width: 49%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.selected {
+  border: 1px solid #ff6600 !important;
 }
 
 .second-page-select-wrapper select:focus {
