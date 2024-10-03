@@ -152,11 +152,6 @@
   margin-right: auto; /* Zentriere den Button */
 }
 
-.disabled {
-  background-color: #e5e5e5 !important;
-  color: #ababab !;
-}
-
 .input-wrapper {
   position: relative;
   width: 100%;
@@ -430,7 +425,6 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-
 /* Bei kleineren Bildschirmen umbricht es ordentlich */
 @media (max-width: 768px) {
   .why-grid {
@@ -514,7 +508,6 @@
     margin-bottom: 30px;
   }
 }
-
 
 /* FAQ Section */
 .faq {
