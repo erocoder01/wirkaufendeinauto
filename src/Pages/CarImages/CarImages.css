@@ -194,6 +194,21 @@
   height: 100%;
 }
 
+.phone-input {
+  width: 100%;
+  padding-right: 40px; /* Platz für das "km" */
+  font-size: 16px;
+  padding: 12px 15px;
+  background-color: #ededed !important;
+  border: none;
+  height: 100%;
+  outline: none; /* Removes the blue outline */
+}
+
+.phone-input:focus {
+  outline: none; /* Ensures that the blue border is removed when focused */
+}
+
 /* Bei kleineren Bildschirmen umbricht es ordentlich */
 @media (max-width: 768px) {
   .third-page-wrapper {

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./CarImages.css";
 import cx from "classnames";
 import { BarLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { scrollToWithOffset } from "../../helpers/scrollDown";
 
 function CarImages({
   brandName,
@@ -22,18 +23,6 @@ function CarImages({
   additionalNotes,
 }) {
   // State variables for form inputs
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [postalCode, setPostalCode] = useState(""); // Postal code state
-  const [priceExpectation, setPriceExpectation] = useState(""); // Price expectation state
-  const [sellTime, setSellTime] = useState(""); // Sell time state
-  const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate(); // Initialize navigate
-
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   // State to manage the preview images
   const [imagePreviews, setImagePreviews] = useState({
@@ -44,6 +33,35 @@ function CarImages({
     interiorBack: null,
     dashboard: null,
   });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [postalCode, setPostalCode] = useState(""); // Postal code state
+  const [priceExpectation, setPriceExpectation] = useState(""); // Price expectation state
+  const [sellTime, setSellTime] = useState(""); // Sell time state
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [submitClicked, setSubmitClicked] = useState(false);
+
+  // Create refs for each section
+
+  const imagesRef = useRef(null);
+  const firstNameRef = useRef(null);
+  const lastNameRef = useRef(null);
+  const phoneNumberRef = useRef(null);
+  const emailRef = useRef(null);
+  const postalCodeRef = useRef(null);
+  const priceExpectationRef = useRef(null);
+  const sellTimeRef = useRef(null);
+
+  const allImagesValid = Object.values(imagePreviews).every(
+    (image) => image !== null
+  );
+
+  const navigate = useNavigate(); // Initialize navigate
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
     if (
@@ -120,9 +138,48 @@ function CarImages({
 
   const api = apiUrl();
 
+  const validateAndScrollToFirstInvalid = () => {
+    setSubmitClicked(true);
+
+    if (!allImagesValid) {
+      scrollToWithOffset(imagesRef, -50);
+      return false;
+    } else if (firstName === "") {
+      scrollToWithOffset(firstNameRef, -50);
+      return false;
+    } else if (lastName === "") {
+      scrollToWithOffset(lastNameRef, -50);
+      return false;
+    } else if (phoneNumber === "") {
+      scrollToWithOffset(phoneNumberRef, -50);
+      return false;
+    } else if (email === "") {
+      scrollToWithOffset(emailRef, -50);
+      return false;
+    } else if (postalCode === "") {
+      scrollToWithOffset(postalCodeRef, -50);
+      return false;
+    } else if (priceExpectation === "") {
+      scrollToWithOffset(priceExpectationRef, -50);
+      return false;
+    } else if (sellTime === "") {
+      scrollToWithOffset(sellTimeRef, -50);
+      return false;
+    }
+
+    return true; // If all validations passed
+  };
+
   // Function to handle form submission (dummy for now)
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if the validation passes
+    const isValid = validateAndScrollToFirstInvalid();
+
+    if (!isValid) {
+      return; // If validation failed, do not proceed
+    }
     setIsLoading(true);
     setIsButtonDisabled(true);
 
@@ -211,17 +268,16 @@ function CarImages({
         Geschätzte Zeit bis zur Fertigstellung: 1 Minute
       </p>
 
-      <form
-        id="third-step-form"
-        onSubmit={handleSubmit}
-        method="POST"
-        encType="multipart/form-data"
-      >
+      {submitClicked && !allImagesValid && (
+        <span className="required">*Erforderlich</span>
+      )}
+
+      <form id="third-step-form" method="POST" encType="multipart/form-data">
         {/* Exterior Photos */}
         <div className="photo-upload-container">
           <div className="upload-section">
             {/* Front Photo */}
-            <div className="photo-upload-box">
+            <div className="photo-upload-box" ref={imagesRef}>
               <label htmlFor="front-photo">
                 <div className="upload-box-content">
                   {imagePreviews.front ? (
@@ -435,7 +491,12 @@ function CarImages({
 
         {/* Form Fields */}
         <div className="second-page-input-wrapper">
-          <label htmlFor="first-name">Vorname</label>
+          <div className="Title-wrapper" ref={firstNameRef}>
+            <label htmlFor="first-name">Vorname</label>
+            {submitClicked && firstName === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <input
             type="text"
             id="first-name"
@@ -447,7 +508,12 @@ function CarImages({
         </div>
 
         <div className="second-page-input-wrapper">
-          <label htmlFor="last-name">Nachname</label>
+          <div className="Title-wrapper" ref={lastNameRef}>
+            <label htmlFor="last-name">Nachname</label>
+            {submitClicked && lastName === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <input
             type="text"
             id="last-name"
@@ -459,7 +525,12 @@ function CarImages({
         </div>
 
         <div className="phone-input-wrapper">
-          <label htmlFor="phone-number">Telefonnummer</label>
+          <div className="Title-wrapper" ref={phoneNumberRef}>
+            <label htmlFor="phone-number">Telefonnummer</label>
+            {submitClicked && phoneNumber === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <small className="third-step-subtitle">
             Wir werden sie nur verwenden, um dir deinen Verkaufspreis per
             SMS/WhatsApp zu schicken. Sie wird nicht an Dritte weitergegeben.
@@ -470,18 +541,26 @@ function CarImages({
               <span className="code">+43</span>
             </div>
             <input
-              type="text"
+              type="number" // changed to number
               id="phone-number"
               name="phone-number"
               placeholder="6767519696"
               onChange={(e) => setPhoneNumber(e.target.value)}
               required
+              min="0" // prevents negative values
+              step="1" // restricts to whole numbers
+              className="no-arrows phone-input"
             />
           </div>
         </div>
 
         <div className="second-page-input-wrapper">
-          <label htmlFor="email">E-Mail-Adresse</label>
+          <div className="Title-wrapper" ref={emailRef}>
+            <label htmlFor="email">E-Mail-Adresse</label>{" "}
+            {submitClicked && email === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <input
             type="email"
             id="email"
@@ -493,7 +572,12 @@ function CarImages({
         </div>
 
         <div className="second-page-input-wrapper">
-          <label htmlFor="postal-code">Postleitzahl</label>
+          <div className="Title-wrapper" ref={postalCodeRef}>
+            <label htmlFor="postal-code">Postleitzahl</label>
+            {submitClicked && postalCode === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <small className="third-step-subtitle">
             Wir werden sie verwenden, um dir einen besseren Kundenservice zu
             bieten. Sie wird keinen Einfluss auf deinen Preis haben.
@@ -509,7 +593,12 @@ function CarImages({
         </div>
 
         <div className="second-page-input-wrapper">
-          <label htmlFor="price-expectation">Preisvorstellung (optional)</label>
+          <div className="Title-wrapper" ref={priceExpectationRef}>
+            <label htmlFor="price-expectation">Preisvorstellung</label>
+            {submitClicked && priceExpectation === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <small className="third-step-subtitle">
             Dies hat keinen Einfluss auf deinen endgültigen Verkaufspreis.
           </small>
@@ -523,7 +612,12 @@ function CarImages({
         </div>
 
         <div className="second-page-select-wrapper">
-          <label htmlFor="sell-time">Wann möchtest du verkaufen?</label>
+          <div className="Title-wrapper" ref={sellTimeRef}>
+            <label htmlFor="sell-time">Wann möchtest du verkaufen?</label>
+            {submitClicked && sellTime === "" && (
+              <span className="required">*Erforderlich</span>
+            )}
+          </div>
           <select
             id="sell-time"
             name="sell-time"
@@ -543,7 +637,7 @@ function CarImages({
         <button
           className={cx("submit transition", isButtonDisabled && "disabled")}
           type="submit"
-          disabled={isButtonDisabled}
+          onClick={handleSubmit}
         >
           {isLoading ? (
             <BarLoader
