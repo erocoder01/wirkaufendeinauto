@@ -160,11 +160,6 @@
   margin-right: auto; /* Zentriere den Button */
 }
 
-.disabled {
-  background-color: #e5e5e5 !important;
-  color: #ababab !;
-}
-
 .input-wrapper {
   position: relative;
   width: 100%;

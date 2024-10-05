@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
 
+
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { HashLink } from "react-router-hash-link";
@@ -46,9 +47,6 @@ function Car({
   selectedYear,
 }) {
   const [carBrands, setCarBrands] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredBrands, setFilteredBrands] = useState([]);
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   useEffect(() => {
@@ -66,8 +64,9 @@ function Car({
     const fetchCarBrands = async () => {
       try {
         const response = await fetch(`${api}/cars/carBrands`);
-
-        const brands = await response.json();
+        let brands = await response.json();
+        // Sort the brands alphabetically (A-Z)
+        brands = brands.sort((a, b) => a.localeCompare(b));
         setCarBrands(brands);
       } catch (error) {
         console.error("Error fetching car brands:", error);
@@ -80,8 +79,6 @@ function Car({
 
   const handleBrandSelect = (brand) => {
     setSelectedBrand(brand);
-    setSearchTerm(brand); // Set search term to the selected brand
-
     setSelectedModel(""); // Reset model when the brand changes
     setAvailableYears([]); // Reset years when the brand changes
   };
@@ -158,6 +155,7 @@ function Car({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+
   // Handle input change and filter car brands
   const handleSearchChange = (e) => {
     const value = e.target.value;
@@ -169,6 +167,7 @@ function Car({
     );
     setFilteredBrands(filtered);
   };
+
 
   return (
     <div className="home-container">
@@ -192,38 +191,28 @@ function Car({
 
             <form id="evaluation-form" action="second-page.html" method="GET">
               <div className="input-wrapper">
-                <label htmlFor="make">
+                <label htmlFor="brand">
                   <b>Von welcher Marke ist dein Auto?</b>
                 </label>
-
-                {/* Input field for searching */}
-                <input
+                <select
                   type="text"
                   id="make"
                   name="make"
                   required
                   placeholder="Marke auswählen"
-                  value={!searchTerm ? selectedBrand : searchTerm}
-                  onChange={handleSearchChange}
-                />
-
-                {/* List with filtered brands */}
-                {searchTerm.length > 0 && !selectedBrand && (
-                  <ul className="filtered-brands-list">
-                    {filteredBrands.map((brand, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleBrandSelect(brand)} // Handle brand selection on click
-                        className="filtered-brand-item"
-                      >
-                        {brand}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Hidden input field to store the selected brand */}
-                <input type="hidden" name="make" value={selectedBrand} />
+                  value={selectedBrand}
+                  onChange={(e) => handleBrandSelect(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Modell auswählen
+                  </option>
+                  {/* List with filtered brands */}
+                  {carBrands.map((brand, index) => (
+                    <option key={index} value={brand}>
+                      {brand}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="input-wrapper">
