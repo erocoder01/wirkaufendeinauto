@@ -12,6 +12,8 @@ import About from "./Pages/About/About";
 import Partner from "./Pages/Partner/Partner";
 import CarImages from "./Pages/CarImages/CarImages";
 import Success from "./Pages/Success/Success";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Impressum from "./Pages/Impressum/Impressum";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -37,6 +39,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="App">
         <Navbar />
         <Routes>
@@ -111,11 +114,13 @@ function App() {
               />
             }
           />
+          <Route path="/" element={<Car />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/howitworks" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
           <Route path="/partner" element={<Partner />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/impressum" element={<Impressum />} />
         </Routes>
         <Whatsapp />
         <Footer />

@@ -16,21 +16,21 @@
   width: 80%;
 }
 
+.logo-image {
+  margin-left: 95px;
+  width: 150px;
+  height: auto;
+}
+
 .logo {
   display: flex;
   align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-left: 95px;
-}
-
-.logo-auto {
-  color: #ff6600; /* Gelbe Farbe für "Auto" */
+  justify-content: center;
 }
 
 .navigation {
   flex: 1;
-  margin-left: 85px; /* Abstand zwischen Logo und Navigation */
+  margin-left: 25px; /* Abstand zwischen Logo und Navigation */
 }
 
 .navigation ul {
@@ -92,7 +92,7 @@
     width: 100%;
   }
 
-  .logo {
+  .logo-image {
     margin-left: 0;
   }
 

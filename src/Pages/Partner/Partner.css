@@ -42,7 +42,7 @@
   flex: 1;
   max-width: 40%;
   background-color: #ffffff;
-  padding: 40px;
+  padding: 20px;
   border-radius: 8px;
   color: #333333;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -53,6 +53,7 @@
   text-align: center; /* Zentriere den Text */
   margin-top: 50px;
   border: 1px solid #d1d1d1;
+  margin-bottom: 40px;
 }
 
 .partner-form h3 {
@@ -247,7 +248,7 @@
 
 .inspection-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
@@ -326,10 +327,32 @@
 
 /* Responsives Design */
 @media (max-width: 768px) {
+  .benefit-grid {
+    display: flex;
+    flex-direction: column; /* Ändert die Ausrichtung der Items auf eine Spalte */
+    align-items: center; /* Zentriert die Items horizontal */
+    gap: 0px;
+  }
+
+  .benefit-item {
+    width: 100%; /* Items füllen die volle Breite */
+    margin-bottom: 20px; /* Abstand zwischen den einzelnen Items */
+    text-align: center; /* Zentriert den Text in jedem Item */
+  }
+
+  .benefit-item img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+  }
+
+  /* Rest deines responsiven Designs */
   .testimonial-grid {
     flex-direction: column;
     align-items: center;
+    gap: 0px;
   }
+
   .inspection-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -345,14 +368,15 @@
   .partner-text {
     width: 100%;
     max-width: 100%;
-    text-align: center;
+    text-align: left;
+    margin-top: -60px;
   }
 
   .partner-text h2,
   .partner-benefits h2,
   .inspection-section h2,
   .testimonials h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .partner-text h4 {
@@ -362,6 +386,7 @@
   .partner-text p,
   .partner-benefits p {
     font-size: 18px;
+    max-width: 300px;
   }
 
   .partner-form {

@@ -3,6 +3,7 @@ import "./Navbar.css";
 import { NavLink, Link } from "react-router-dom";
 import { useMediaQuery } from "@reactuses/core";
 import Hamburger from "hamburger-react";
+import logo from "../../assets/AutoEinfachLos_Positive.webp";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,10 +16,8 @@ function Navbar() {
     >
       {!isMobile ? (
         <div className="header">
-          <Link exact to="/" className="logo" onClick={() => setIsOpen(false)}>
-            <span className="logo-auto">Auto</span>
-            <span className="logo-sofort">Ankauf</span>
-            <span className="logo-verkaufen">24</span>
+          <Link to="/" className="logo" onClick={() => setIsOpen(false)}>
+            <img src={logo} alt="Auto Einfach Los" className="logo-image" />
           </Link>
 
           <div className={`navigation`}>
@@ -77,9 +76,7 @@ function Navbar() {
               className="logo"
               onClick={() => setIsOpen(false)}
             >
-              <span className="logo-auto">Auto</span>
-              <span className="logo-sofort">Ankauf</span>
-              <span className="logo-verkaufen">24</span>
+              <img src={logo} alt="Auto Einfach Los" className="logo-image" />
             </Link>
             <Hamburger toggled={isOpen} toggle={setIsOpen} />
           </div>

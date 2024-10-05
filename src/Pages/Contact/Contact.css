@@ -94,4 +94,17 @@
   .contact-section h2 {
     font-size: 28px;
   }
+
+  .contact-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Verringert den Abstand zwischen den Boxen */
+    flex-wrap: wrap;
+  }
+
+  .contact-options .contact-option {
+    width: 100%; /* Setzt die Breite der Boxen auf 90% der Bildschirmbreite */
+    max-width: 500px; /* Optional: Maximalbreite der Boxen */
+    margin-bottom: 20px; /* Fügt einen Abstand zwischen den Boxen hinzu */
+  }
 }

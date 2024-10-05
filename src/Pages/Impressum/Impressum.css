@@ -1,0 +1,67 @@
+.impressum-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.impressum-container h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.impressum-container p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.impressum-container strong {
+  font-weight: bold;
+}
+
+.impressum-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.impressum-container a:hover {
+  text-decoration: underline;
+}
+
+.impressum-container .contact-info {
+  margin-top: 20px;
+}
+
+.impressum-container .contact-info p {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .impressum-container {
+    margin-top: 100px;
+    padding: 20px 10px;
+    max-width: 90%;
+    border-radius: 10px;
+  }
+
+  .impressum-container h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .impressum-container p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .impressum-container a {
+    font-size: 14px;
+  }
+}

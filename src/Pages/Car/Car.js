@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
 
-// import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
+import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
 import stats1 from "../../assets/public-relation.png";
@@ -14,6 +15,23 @@ import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
 import whysell4 from "../../assets/bildfour.webp";
 import cx from "classnames";
+
+function DynamicText() {
+  const texts = ["schnell", "bequem", "einfach"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+    }, 3000);
+
+    // Cleanup function to clear the interval when the component is unmounted
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <span id="dynamic-text">{texts[currentIndex]}</span>;
+}
 
 function Car({
   selectedBrand,
@@ -136,27 +154,23 @@ function Car({
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  // const getAnswerStyle = (index) => ({
-  //   maxHeight: activeIndex === index ? "200px" : "0", // Adjust the height based on the active state
-  //   overflow: "hidden",
-  //   transition: "max-height 0.5s ease", // Smooth transition effect
-  // });
-
   return (
     <div className="home-container">
       <section className="hero">
         <div className="container">
           <div className="slogan-box">
-            <p className="hero-subtitle">Klick, Kleck, Auto weg!</p>
+            <p className="hero-subtitle">Aktuell nur in Tirol verfügbar!</p>
           </div>
           <div className="form-container">
             <div className="form-header">
               <h1>
-                Verkaufe dein Auto <span id="dynamic-text">bequem</span>
+                Verkaufe dein Auto <DynamicText />{" "}
+                {/* Nutze DynamicText hier */}
               </h1>
               <p>
-                Ohne Stress zum besten Preis - Erhalte direkt deinen finalen
-                Verkaufspreis und buche deinen Abgabe-Termin online
+                Einfach und stressfrei zum Top-Preis. Erhalte sofort dein
+                finales Angebot und buche bequem online deinen Termin zur
+                Abgabe.
               </p>
             </div>
 
@@ -285,7 +299,7 @@ function Car({
       </section>
       {/* So funktioniert's */}
       <div class="section-divider"></div>
-      <section className="how-it-works">
+      <section id="sofunktionierts" className="how-it-works">
         <div className="container">
           <h2 id="Sofunktioniert's">So funktioniert's</h2>
           <div className="steps">
@@ -320,9 +334,11 @@ function Car({
               </div>
             ))}
           </div>
-          <div className="cta-button">
-            <button>Mit der Bewertung fortfahren</button>
-          </div>
+          <HashLink smooth to="/#">
+            <div className="cta-button">
+              <button>Mit der Bewertung fortfahren</button>
+            </div>
+          </HashLink>
         </div>
       </section>
       {/* Warum bei uns verkaufen */}
@@ -369,8 +385,7 @@ function Car({
         </div>
       </section>
       {/* Stats Section */}
-      <div className="section-divider"></div> {/* Divider */}
-      <section className="stats-section">
+      <section className="stats-section" style={{ display: "none" }}>
         <div className="section-title">
           <h2>Zahlen & Fakten</h2>
         </div>
@@ -398,9 +413,10 @@ function Car({
           </div>
         </div>
       </section>
+
       {/* FAQ Section */}
       <div class="section-divider"></div>
-      <section className="faq">
+      <section id="häufigefragen" className="faq">
         <div className="container">
           <h2>Häufig gestellte Fragen</h2>
           {[
