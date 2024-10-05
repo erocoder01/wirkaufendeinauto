@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
 
-
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import { HashLink } from "react-router-hash-link";
@@ -154,20 +153,6 @@ function Car({
   const handleToggle = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
-
-
-  // Handle input change and filter car brands
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    setSelectedBrand("");
-    // Filter the brands based on the input value
-    const filtered = carBrands.filter((brand) =>
-      brand.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredBrands(filtered);
-  };
-
 
   return (
     <div className="home-container">

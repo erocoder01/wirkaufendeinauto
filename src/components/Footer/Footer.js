@@ -90,11 +90,11 @@ function Footer() {
               </HashLink>
             </li>
             <li>
-              <a href="/contact">Kontaktiere uns</a>
+              <Link to="/contact">Kontaktiere uns</Link>
             </li>
             <li>
               <span>
-                <a href="tel:0800202320">Telefon: 0800 20 23 20</a>
+                <span>Telefon: 0800 20 23 20</span>
               </span>
             </li>
           </ul>
@@ -106,13 +106,13 @@ function Footer() {
         </div>
         <div className="footer-links">
           <span>
-            <a href="/impressum">Impressum</a>
+            <Link to="/impressum">Impressum</Link>
           </span>
           <span>
-            <a href="#">AGB</a>
+            <p>AGB</p>
           </span>
           <span>
-            <a href="#">Datenschutz</a>
+            <p>Datenschutz</p>
           </span>
         </div>
       </div>
