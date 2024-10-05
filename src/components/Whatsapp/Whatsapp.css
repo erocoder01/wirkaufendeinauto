@@ -14,11 +14,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s;
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* Weiche Übergänge für Opazität und Sichtbarkeit */
+  opacity: 0; /* Anfangs unsichtbar */
+  visibility: hidden; /* Anfangs unsichtbar */
+}
+
+.whatsapp-float.visible {
+  opacity: 1; /* Langsames Einblenden */
+  visibility: visible; /* Sichtbar */
+  transition: opacity 0.5s ease, visibility 0.5s ease; /* Weicher Übergang */
 }
 
 .whatsapp-icon {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .whatsapp-float {
+    bottom: 20px; /* Weiter unten auf mobilen Geräten */
+    right: 20px; /* Weiter links auf mobilen Geräten */
+    width: 50px; /* Optional: Kleinere Größe auf Mobilgeräten */
+    height: 50px; /* Optional: Kleinere Größe auf Mobilgeräten */
+  }
 }

@@ -15,9 +15,10 @@ const About = () => {
                 Unsere Mission ist es, den Autoverkaufsprozess so einfach und
                 transparent wie möglich zu gestalten. Wir verstehen, dass der
                 Verkauf eines Autos eine wichtige Entscheidung ist, und wir sind
-                hier, um Sie bei jedem Schritt zu unterstützen. Unser Engagement
-                für exzellenten Kundenservice und faire Preise hat uns zu einer
-                vertrauenswürdigen Anlaufstelle für Autoverkäufer gemacht.
+                hier, um dich bei jedem Schritt zu unterstützen. Unser
+                Engagement für exzellenten Kundenservice und faire Preise hat
+                uns zu einer vertrauenswürdigen Anlaufstelle für Autoverkäufer
+                gemacht.
               </p>
             </div>
           </div>

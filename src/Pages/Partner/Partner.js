@@ -66,11 +66,10 @@ const Partner = () => {
             <h2>Der AutoAnkauf24 Partnerbereich</h2>
             <h4>Für registrierte Autohändler</h4>
             <p>
-              Kaufen Sie private, gebrauchte Fahrzeuge über unsere
-              Online-Auktion und unseren Marktplatz. Entdecken Sie ein
-              zuverlässiges Netzwerk für den Fahrzeugkauf, das Ihren
-              Fahrzeugkauf vereinfacht und eine nahtlose und stressfreie
-              Erfahrung bietet.
+              Kaufe private, gebrauchte Fahrzeuge über unsere Online-Auktion und
+              unseren Marktplatz. Entdecke ein zuverlässiges Netzwerk für den
+              Fahrzeugkauf, das dir den Prozess vereinfacht und eine nahtlose,
+              stressfreie Erfahrung bietet.
             </p>
           </div>
 
@@ -130,7 +129,7 @@ const Partner = () => {
       </section>
       {/* Partner Vorteile */}
       <div class="section-divider"></div>
-      <section className="partner-benefits">
+      <section id="vorteile" className="partner-benefits">
         <div className="container">
           <h2>Wir betreuen professionelle Autokäufer</h2>
           <p>Die Vorteile, die unsere Partner erwarten können</p>
@@ -138,19 +137,19 @@ const Partner = () => {
             {[
               {
                 icon: icon1,
-                text: "Erhalten Sie Zugang zu AutoAnkauf24 kuratiertem Bestand an Fahrzeugen",
+                text: "Erhalte exklusiven Zugang zu dem kuratierten Fahrzeugbestand von AutoEinfachLos",
               },
               {
                 icon: icon2,
-                text: "Kaufen Sie professionell geprüfte Fahrzeuge mit absoluter Transparenz über den Fahrzeugzustand",
+                text: "Kaufe professionell geprüfte Fahrzeuge mit vollständiger Transparenz über den Fahrzeugzustand",
               },
               {
                 icon: icon3,
-                text: "AutoAnkauf24 kümmert sich um die Beschaffung und Suche von Fahrzeugen",
+                text: "AutoEinfachLos übernimmt für dich die gesamte Beschaffung und Suche nach Fahrzeugen",
               },
               {
                 icon: icon4,
-                text: "Sparen Sie Zeit, denn wir kümmern uns um den Papierkram, die Zahlung und die Lieferung.",
+                text: "Spare Zeit, denn wir übernehmen den gesamten Papierkram, die Zahlung und die Lieferung für dich",
               },
             ].map((benefit, idx) => (
               <div key={idx} className="benefit-item">
@@ -164,13 +163,13 @@ const Partner = () => {
 
       {/* Inspektions Sektion */}
       <div class="section-divider"></div>
-      <section className="inspection-section">
+      <section id="inspection" className="inspection-section">
         <div className="container">
           <h2>Wir führen über 150 Punkte Inspektionen durch</h2>
           <p>
-            Wir bieten detaillierte Inspektionsberichte, CarFax und
-            OBD2-Berichte für jedes Auto, um Ihnen den Kauf <br /> einfacher,
-            schneller und intelligenter zu machen.
+            Wir bieten für jedes Auto detaillierte Inspektionsberichte,
+            CarFax-Berichte und OBD2-Daten, damit dein Kauf <br /> einfacher,
+            schneller und intelligenter wird.
           </p>
           <div className="inspection-grid">
             {[
@@ -192,26 +191,26 @@ const Partner = () => {
 
       {/* Testimonial Sektion */}
       <div class="section-divider"></div>
-      <section className="testimonials">
+      <section id="feedback" className="testimonials">
         <div className="container">
-          <h2>Das sagen unsere Partner über AutoAnkauf24</h2>
+          <h2>Das sagen unsere Partner über Autoeinfachlos</h2>
           <div className="testimonial-grid">
             {[
               {
                 quote:
-                  "AutoAnkauf24 war eine großartige Quelle für zusätzlichen Lagerbestand für uns. Wir erhalten 10-15 Stück Inventar pro Woche, die wir sonst nicht bekommen hätten.",
+                  "Autoeinfachlos war eine großartige Quelle für zusätzlichen Lagerbestand für uns. Wir erhalten 10-15 Stück Inventar pro Monat, die wir sonst nicht bekommen hätten.",
                 name: "Vertrauenswürdiger Käufer",
                 location: "Wien, Österreich",
               },
               {
                 quote:
-                  "Wir arbeiten sehr gerne mit AutoAnkauf24 zusammen, und unser Vertreter hilft uns, während der Auktionen die besten Preise zu erzielen.",
+                  "Wir arbeiten sehr gerne mit Autoeinfachlos zusammen, und unser Vertreter hilft uns, während der Auktionen die besten Preise zu erzielen.",
                 name: "Vertrauenswürdiger Käufer",
                 location: "Salzburg, Österreich",
               },
               {
                 quote:
-                  "Was ich an AutoAnkauf24 am meisten schätze, ist, dass es meinem Team Zeit spart, indem es sich um den Kundenkontakt und den Verkaufsprozess kümmert.",
+                  "Was ich an Autoeinfachlos am meisten schätze, ist, dass es meinem Team Zeit spart, indem es sich um den Kundenkontakt und den Verkaufsprozess kümmert.",
                 name: "Vertrauenswürdiger Käufer",
                 location: "Graz, Österreich",
               },

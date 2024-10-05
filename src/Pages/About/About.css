@@ -29,6 +29,7 @@
   display: inline-block;
   padding-bottom: 5px;
   position: relative;
+  margin-top: 0px;
 }
 
 .about-header h3::after {
@@ -123,7 +124,7 @@
 
 .about-details p {
   font-size: 16px;
-  color: #666;
+  color: #333;
   margin-bottom: 20px;
   text-align: justify; /* Optional, falls du den Text blockweise ausrichten möchtest */
 }
@@ -140,14 +141,14 @@
 /* Für größere Bildschirme (große Laptops, Desktops) */
 @media (min-width: 1440px) {
   .about::before {
-    height: 600px;
+    height: 500px;
   }
 }
 
 /* Für kleinere Bildschirme (Mobilgeräte) */
 @media (max-width: 768px) {
   .about::before {
-    height: 500px;
+    height: 650px;
   }
 
   .about {
@@ -170,7 +171,7 @@
   }
 
   .about-features {
-    gap: 100px;
+    gap: 50px;
     margin-top: 50px;
   }
 
