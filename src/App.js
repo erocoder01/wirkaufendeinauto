@@ -14,6 +14,7 @@ import CarImages from "./Pages/CarImages/CarImages";
 import Success from "./Pages/Success/Success";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Impressum from "./Pages/Impressum/Impressum";
+import CarAdditionalInfo from "./Pages/CarAdditionalInfo/CarAdditionalInfo";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -30,12 +31,16 @@ function App() {
   const [power, setPower] = useState("");
   const [modification, setModification] = useState("");
 
+  //zweite seite
+
   const [kilometerstand, setKilometerstand] = useState("");
   const [unfallschaden, setUnfallschaden] = useState(false);
   const [serviceHeft, setServiceHeft] = useState(false);
   const [paintConditionLack, setPaintConditionLack] = useState("");
   const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
+
+  //dritte seite
 
   return (
     <Router>
@@ -115,6 +120,7 @@ function App() {
             }
           />
           <Route path="/" element={<Car />} />
+          <Route path="/additionalInfo" element={<CarAdditionalInfo />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/howitworks" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
