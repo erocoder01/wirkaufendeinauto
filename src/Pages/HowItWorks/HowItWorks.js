@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; // useState hinzufügen
 import "./HowItWorks.css"; // Import your custom styles
 import { HashLink } from "react-router-hash-link";
 import howto1 from "../../assets/howitworks/howto1.webp";
@@ -15,10 +15,29 @@ import verkauf2 from "../../assets/howitworks/Verkauf2.jpg";
 import verkauf3 from "../../assets/howitworks/Verkauf3.png";
 import verkauf4 from "../../assets/howitworks/Verkauf4.jpg";
 
+import tabelle from "../../assets/howitworks/Vergleichstabelle.png";
+
 import { useMediaQuery } from "@reactuses/core";
 
 const HowItWorks = () => {
   const isMobile = useMediaQuery(`(max-width: ${1000}px)`);
+  const [isZoomed, setIsZoomed] = useState(false); // Zustand für Zoom
+
+  // Funktion zum Öffnen des Overlays
+  const openZoom = () => {
+    setIsZoomed(true);
+  };
+
+  // Funktion zum Schließen des Overlays
+  const closeZoom = () => {
+    setIsZoomed(false);
+  };
+
+  const scrollWithOffset = (el) => {
+    const yOffset = -70; // Hier die Höhe deiner Navbar anpassen
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   return (
     <div>
@@ -27,7 +46,13 @@ const HowItWorks = () => {
         <p className="substrich">
           Erhalte den besten Preis für dein Auto in 4 einfachen Schritten
         </p>
+
         <div className="howitworks-steps">
+          <img
+            src={howto2}
+            alt="Main Image for Mobile"
+            className="main-image-mobile"
+          />
           {[
             {
               image: howto1,
@@ -150,6 +175,26 @@ const HowItWorks = () => {
           <h2 className="comparison-title">
             Autoeinfachlos im Vergleich zu anderen Verkaufsoptionen
           </h2>
+          {/* Bild der Vergleichstabelle für mobile Geräte */}
+          <img
+            src={tabelle}
+            alt="Vergleichstabelle"
+            className="comparison-image-mobile"
+            onClick={openZoom} // Klick zum Zoomen
+            style={{ cursor: "zoom-in" }}
+          />
+
+          {/* Overlay für das vergrößerte Bild */}
+          {isZoomed && (
+            <div className="overlay" onClick={closeZoom}>
+              <span className="close">&times;</span>
+              <img
+                src={tabelle}
+                alt="Zoomed Vergleichstabelle"
+                className="overlay-content"
+              />
+            </div>
+          )}
           <table className="comparison-table">
             {!isMobile ? (
               <thead>
@@ -263,7 +308,7 @@ const HowItWorks = () => {
             )}
           </table>
           <div className="comparison-cta">
-            <HashLink smooth to="/#">
+            <HashLink smooth to="/#" scroll={scrollWithOffset}>
               <span className="comparison-btn">Jetzt Fahrzeug bewerten</span>
             </HashLink>
           </div>

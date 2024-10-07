@@ -7,7 +7,7 @@ const About = () => {
     <div>
       <div className="about">
         <section className="about-header">
-          <h1>Wir sind AutoAnkauf24</h1>
+          <h1>Wir sind Autoeinfachlos</h1>
           <h3>Ihrem vertrauenswürdigen Partner für den Autoankauf.</h3>
           <div className="about-content">
             <div className="about-text">
