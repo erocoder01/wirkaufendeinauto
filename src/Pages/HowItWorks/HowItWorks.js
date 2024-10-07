@@ -50,7 +50,7 @@ const HowItWorks = () => {
         <div className="howitworks-steps">
           <img
             src={howto2}
-            alt="Main Image for Mobile"
+            alt="Main for Mobile"
             className="main-image-mobile"
           />
           {[
