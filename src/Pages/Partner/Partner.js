@@ -63,7 +63,7 @@ const Partner = () => {
       <section className="partner-section">
         <div className="partner-content">
           <div className="partner-text">
-            <h2>Der AutoAnkauf24 Partnerbereich</h2>
+            <h2>Der Autoeinfachlos Partnerbereich</h2>
             <h4>Für registrierte Autohändler</h4>
             <p>
               Kaufe private, gebrauchte Fahrzeuge über unsere Online-Auktion und
@@ -127,17 +127,20 @@ const Partner = () => {
           </div>
         </div>
       </section>
+
       {/* Partner Vorteile */}
       <div class="section-divider"></div>
       <section id="vorteile" className="partner-benefits">
         <div className="container">
           <h2>Wir betreuen professionelle Autokäufer</h2>
-          <p>Die Vorteile, die unsere Partner erwarten können</p>
+          <p className="subtitle">
+            Die Vorteile, die unsere Partner erwarten können
+          </p>
           <div className="benefit-grid">
             {[
               {
                 icon: icon1,
-                text: "Erhalte exklusiven Zugang zu dem kuratierten Fahrzeugbestand von AutoEinfachLos",
+                text: "Erhalte exklusiven Zugang zu dem kuratierten Fahrzeugbestand von Autoeinfachlos",
               },
               {
                 icon: icon2,
@@ -145,7 +148,7 @@ const Partner = () => {
               },
               {
                 icon: icon3,
-                text: "AutoEinfachLos übernimmt für dich die gesamte Beschaffung und Suche nach Fahrzeugen",
+                text: "Autoeinfachlos übernimmt für dich die gesamte Beschaffung und Suche nach Fahrzeugen",
               },
               {
                 icon: icon4,

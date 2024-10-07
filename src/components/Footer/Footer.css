@@ -36,6 +36,10 @@ footer {
   margin: 0;
 }
 
+.footer-column span {
+  color: #83888f;
+}
+
 .footer-column ul li {
   margin-bottom: 10px;
 }

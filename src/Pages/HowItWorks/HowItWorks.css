@@ -1,7 +1,7 @@
 /* Service Hero Section */
 .howitworks-container {
   text-align: center;
-  padding: 50px 0;
+  padding: 30px 0;
 }
 
 .howitworks-container h2 {
@@ -29,6 +29,10 @@
   gap: 1.25rem;
   margin-top: 20px;
   justify-content: center;
+}
+
+.main-image-mobile {
+  display: none;
 }
 
 .howitworks-step {
@@ -78,7 +82,7 @@
 .how-it-works-section h2 {
   font-size: 32px;
   color: #333;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .how-it-works-container {
@@ -151,7 +155,7 @@
   font-size: 32px;
   margin-bottom: 40px;
   color: #333;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .verkaufsprozess-container p {
@@ -219,7 +223,7 @@
   font-size: 32px;
   text-align: center;
   margin-bottom: 40px;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 .comparison-table {
@@ -271,10 +275,123 @@
   font-size: 18px;
 }
 
+/* Standardmäßiges Bild */
+.comparison-image-mobile {
+  width: 100%;
+  cursor: zoom-in;
+  display: none;
+}
+
+/* Overlay, das das gesamte Fenster abdeckt */
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  overflow: hidden; /* Verhindert Scrollen, wenn Bild größer ist */
+}
+
+/* Vergrößertes Bild im Overlay */
+.overlay-content {
+  width: auto;
+  height: 100%; /* Passt die Höhe des Bildes an den Bildschirm an */
+  max-width: none; /* Deaktiviert die maximale Breite */
+  max-height: 100%; /* Das Bild füllt die Höhe des Bildschirms aus */
+  object-fit: contain; /* Das Bild wird proportional angepasst */
+  display: block;
+}
+
+/* Schließen-Button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ccc;
+}
+
+@media screen and (max-width: 768px) {
+  /* Für Bildschirme unter 768px Breite */
+  .comparison-table {
+    display: none; /* Tabelle verstecken */
+  }
+
+  .comparison-image-mobile {
+    display: block; /* Bild anzeigen */
+    width: 100%; /* Optional: Bild in voller Breite anzeigen */
+    height: auto; /* Automatische Höhe basierend auf der Bildbreite */
+    margin-bottom: 50px;
+  }
+
+  .overlay-content {
+    height: auto;
+    width: 100%; /* Bild nutzt 100% der Breite auf kleineren Geräten */
+    max-height: none; /* Deaktiviert die maximale Höhe auf kleinen Bildschirmen */
+  }
+}
+
 @media (max-width: 768px) {
+  /* Blendet standardmäßig alle Bilder aus */
+  .step-image {
+    display: none;
+  }
+
+  /* Zeigt nur das Bild des ersten Elements auf mobilen Bildschirmen an */
+  .main-image-mobile {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 0px;
+    height: 13rem;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Vertikale Anordnung der Schritte */
+  .howitworks-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+
+  /* Volle Breite für jeden Schritt */
   .howitworks-step {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 0;
+  }
+
+  /* Linksbündiger Text */
+  .howitworks-step h3 {
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  .howitworks-step p {
+    font-size: 16px;
+    text-align: left;
+    margin: 0;
+  }
+
+  .howitworks-step {
+    width: 100%;
+    margin-bottom: 0px;
   }
 
   .verkaufsprozess-schritt {
@@ -294,48 +411,13 @@
 
   .howitworks-container,
   .verkaufsprozess-container {
-    margin-top: 70px;
+    margin-top: 50px;
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  .howitworks-container p {
-    font-size: 14px;
-  }
-
   .step-image {
     width: 100%;
-  }
-
-  .howitworks-steps {
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-  }
-
-  .howitworks-step {
-    width: 100%;
-    margin-bottom: 0;
-  }
-
-  .howitworks-step-info {
-    margin-top: 0;
-    text-align: center;
-  }
-
-  .howitworks-step-info h3 {
-    margin-bottom: 0;
-    font-size: 20px;
-  }
-
-  .howitworks-step-info p {
-    margin-bottom: 30px;
-  }
-
-  .howitworks-step-info h3 span {
-    font-size: 18px;
   }
 
   .how-it-works-benefits-box {
@@ -351,20 +433,5 @@
 
   .verkaufsprozess-schritte {
     flex-direction: column;
-  }
-
-  .comparison-table td:first-child {
-    font-weight: bold;
-    color: #000000;
-    background-color: #f1f1f1;
-    text-align: left;
-    max-width: 120px;
-    word-wrap: break-word; /* Ensures words break to the next line */
-    overflow-wrap: break-word; /* Provides support for other browsers */
-    hyphens: auto; /* Allows words to be hyphenated if they are too long */
-  }
-
-  .comparison-table td {
-    max-width: 120px;
   }
 }

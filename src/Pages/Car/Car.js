@@ -7,9 +7,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { HashLink } from "react-router-hash-link";
 import { Link } from "react-router-dom";
 import securityImage from "../../assets/security.png";
-import stats1 from "../../assets/public-relation.png";
-import stats2 from "../../assets/service.png";
-import stats3 from "../../assets/customer-service.png";
+import stats1 from "../../assets/public-relation.svg";
+import stats2 from "../../assets/sold-car.svg";
+import stats3 from "../../assets/happy-customar.svg";
+import stats4 from "../../assets/use-car.svg";
 import whysell1 from "../../assets/bildone.webp";
 import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
@@ -101,6 +102,12 @@ function Car({
     setSelectedYear(selectedYear);
   };
 
+  const scrollWithOffset = (el) => {
+    const yOffset = -70; // Hier die Höhe deiner Navbar anpassen
+    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
   async function loadModels(brandName) {
     try {
       const response = await fetch(`${api}/cars/getModels/${brandName}`);
@@ -189,7 +196,7 @@ function Car({
                   onChange={(e) => handleBrandSelect(e.target.value)}
                 >
                   <option value="" disabled>
-                    Modell auswählen
+                    Marke auswählen
                   </option>
                   {/* List with filtered brands */}
                   {carBrands.map((brand, index) => (
@@ -262,6 +269,7 @@ function Car({
           </div>
         </div>
       </section>
+
       {/* Vorteile - Neuer Abschnitt */}
       <section className="features">
         <div className="container">
@@ -297,6 +305,7 @@ function Car({
           </div>
         </div>
       </section>
+
       {/* So funktioniert's */}
       <div class="section-divider"></div>
       <section id="sofunktionierts" className="how-it-works">
@@ -316,13 +325,13 @@ function Car({
               },
               {
                 number: "3",
-                title: "In Zahlung geben oder verkaufen",
-                text: "Gib dein Auto in Zahlung für ein anderes von Autohero oder buche einen Verkaufstermin, um direkt zu verkaufen.",
+                title: "Inspektion buchen",
+                text: "Um den Zustand des Fahrzeugs zu bestätigen, führt ein Autoeinfachlos-Mitarbeiter eine Inspektion deines Fahrzeugs durch.",
               },
               {
                 number: "4",
                 title: "Übergib dein Auto",
-                text: "Beim Verkaufstermin werden deine online eingegebenen Daten verifiziert und dein Preis bestätigt, entweder direkt von uns oder von unserem Partner.",
+                text: "Du wirst die Zahlung auf deinem Bankkonto sehen, noch bevor dein Auto dein Haus verlässt.",
               },
             ].map((step, idx) => (
               <div className="step" key={idx}>
@@ -334,13 +343,14 @@ function Car({
               </div>
             ))}
           </div>
-          <HashLink smooth to="/#">
+          <HashLink smooth to="/#" scroll={scrollWithOffset}>
             <div className="cta-button">
               <button>Mit der Bewertung fortfahren</button>
             </div>
           </HashLink>
         </div>
       </section>
+
       {/* Warum bei uns verkaufen */}
       <div class="section-divider"></div>
       <section className="why-sell">
@@ -384,8 +394,10 @@ function Car({
           </div>
         </div>
       </section>
+
       {/* Stats Section */}
-      <section className="stats-section" style={{ display: "none" }}>
+      <div class="section-divider"></div>
+      <section className="stats-section">
         <div className="section-title">
           <h2>Zahlen & Fakten</h2>
         </div>
@@ -395,21 +407,28 @@ function Car({
               <img src={stats1} alt="Zufriedene Kunden Icon" />
             </div>
             <div className="stat-number">2,793+</div>
-            <div className="stat-description">Zufriedene Kunden</div>
+            <div className="stat-description">Bewertungen</div>
           </div>
           <div className="stat-item">
             <div className="stat-icon">
               <img src={stats2} alt="Weiterempfehlungen Icon" />
             </div>
-            <div className="stat-number">197+</div>
-            <div className="stat-description">Weiterempfehlungen</div>
+            <div className="stat-number">2340+</div>
+            <div className="stat-description">Gekaufte Autos</div>
           </div>
           <div className="stat-item">
             <div className="stat-icon">
               <img src={stats3} alt="Auto Bewertungen Icon" />
             </div>
-            <div className="stat-number">3,924</div>
-            <div className="stat-description">Auto Bewertungen</div>
+            <div className="stat-number">98.50%</div>
+            <div className="stat-description">Kundenzufriedenheit</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-icon">
+              <img src={stats4} alt="Weiterempfehlungen Icon" />
+            </div>
+            <div className="stat-number">10+</div>
+            <div className="stat-description">Jahre Erfahrung</div>
           </div>
         </div>
       </section>

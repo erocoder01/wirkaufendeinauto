@@ -4,6 +4,12 @@ import "./Footer.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/AutoEinfachLos_Negative.webp";
 
+const scrollWithOffset = (el) => {
+  const yOffset = -70; // Hier die Höhe deiner Navbar anpassen
+  const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  window.scrollTo({ top: y, behavior: "smooth" });
+};
+
 function Footer() {
   return (
     <footer>
@@ -19,7 +25,7 @@ function Footer() {
           </h4>
           <ul>
             <li>
-              <HashLink smooth to="/#sofunktionierts">
+              <HashLink smooth to="/#sofunktionierts" scroll={scrollWithOffset}>
                 So funktioniert´s
               </HashLink>
             </li>
@@ -37,22 +43,26 @@ function Footer() {
           <h4>Verkauf</h4>
           <ul>
             <li>
-              <HashLink smooth to="/#">
+              <HashLink smooth to="/#" scroll={scrollWithOffset}>
                 Verkaufe dein Auto
               </HashLink>
             </li>
             <li>
-              <HashLink smooth to="/#">
+              <HashLink smooth to="/#" scroll={scrollWithOffset}>
                 Auto Bewertung
               </HashLink>
             </li>
             <li>
-              <HashLink smooth to="/howitworks">
+              <HashLink smooth to="/howitworks" scroll={scrollWithOffset}>
                 Detalierter Ablauf
               </HashLink>
             </li>
             <li>
-              <HashLink smooth to="/howitworks#vergleichstabelle">
+              <HashLink
+                smooth
+                to="/howitworks#vergleichstabelle"
+                scroll={scrollWithOffset}
+              >
                 Vergleichstabelle
               </HashLink>
             </li>
@@ -65,17 +75,21 @@ function Footer() {
               <Link to="/partner">Werde ein Partner</Link>
             </li>
             <li>
-              <HashLink smooth to="/partner#inspection">
+              <HashLink
+                smooth
+                to="/partner#inspection"
+                scroll={scrollWithOffset}
+              >
                 Inspektionen
               </HashLink>
             </li>
             <li>
-              <HashLink smooth to="/partner#vorteile">
+              <HashLink smooth to="/partner#vorteile" scroll={scrollWithOffset}>
                 Vorteile
               </HashLink>
             </li>
             <li>
-              <HashLink smooth to="/partner#feedback">
+              <HashLink smooth to="/partner#feedback" scroll={scrollWithOffset}>
                 Bewertungen & Erfahrung
               </HashLink>
             </li>
@@ -85,7 +99,7 @@ function Footer() {
           <h4>Hilfe & Service</h4>
           <ul>
             <li>
-              <HashLink smooth to="/#häufigefragen">
+              <HashLink smooth to="/#häufigefragen" scroll={scrollWithOffset}>
                 Häufig gestellte Fragen
               </HashLink>
             </li>
@@ -94,7 +108,9 @@ function Footer() {
             </li>
             <li>
               <span>
-                <span>Telefon: 0800 20 23 20</span>
+                <span>
+                  Telefon: <a href="tel:0800202320">0800 20 23 20</a>
+                </span>
               </span>
             </li>
           </ul>
@@ -109,10 +125,10 @@ function Footer() {
             <Link to="/impressum">Impressum</Link>
           </span>
           <span>
-            <p>AGB</p>
+            <Link to="#">AGB</Link>
           </span>
           <span>
-            <p>Datenschutz</p>
+            <Link to="#">Datenschutz</Link>
           </span>
         </div>
       </div>
