@@ -171,7 +171,7 @@ function Car({
           <div className="form-container">
             <div className="form-header">
               <h1>
-                Verkaufe dein Auto <DynamicText />{" "}
+                Verkaufe dein Auto <DynamicText />
                 {/* Nutze DynamicText hier */}
               </h1>
               <p>

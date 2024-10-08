@@ -313,7 +313,7 @@ function CarDetails({
       scrollToWithOffset(paintConditionKarosserieRef, -50);
     } else {
       // If all fields are valid, navigate to the /carImages page
-      navigate("/carImages");
+      navigate("/additionalInfo");
     }
   };
 

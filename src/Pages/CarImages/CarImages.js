@@ -21,6 +21,31 @@ function CarImages({
   paintConditionLack,
   paintConditionKarosserie,
   additionalNotes,
+  //daten von dritte seite
+  carKeysAmount,
+  additionalTires,
+  pickerl,
+  sellerType,
+  importedCar,
+  isLeasingOrFinanced,
+  carOwnerAmount,
+  carColorOutside,
+  carColorSeats,
+  isDriveable,
+  hadCrash,
+  conditionInside,
+  conditionOutside,
+  hasWarningLights,
+  hasDamages,
+  isEngineInGoodCondition,
+  isTransmissionInGoodCondition,
+  isSteeringInGoodCondition,
+  isSuspensionInGoodCondition,
+  areBrakesInGoodCondition,
+  isAirConditioningInGoodCondition,
+  FIN,
+  selectedMonth,
+  zugelassenSelectedYear,
 }) {
   // State variables for form inputs
 
@@ -170,7 +195,6 @@ function CarImages({
     return true; // If all validations passed
   };
 
-  // Function to handle form submission (dummy for now)
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -207,6 +231,39 @@ function CarImages({
     formData.append("paintConditionLack", paintConditionLack);
     formData.append("paintConditionKarosserie", paintConditionKarosserie);
 
+    // Append additional values
+    formData.append("carKeysAmount", carKeysAmount);
+    formData.append("additionalTires", additionalTires);
+    formData.append("pickerl", pickerl);
+    formData.append("sellerType", sellerType);
+    formData.append("importedCar", importedCar);
+    formData.append("isLeasingOrFinanced", isLeasingOrFinanced);
+    formData.append("carOwnerAmount", carOwnerAmount);
+    formData.append("carColorOutside", carColorOutside);
+    formData.append("carColorSeats", carColorSeats);
+    formData.append("isDriveable", isDriveable);
+    formData.append("hadCrash", hadCrash);
+    formData.append("conditionInside", conditionInside);
+    formData.append("conditionOutside", conditionOutside);
+    formData.append("hasWarningLights", hasWarningLights);
+    formData.append("hasDamages", hasDamages);
+    formData.append("isEngineInGoodCondition", isEngineInGoodCondition);
+    formData.append(
+      "isTransmissionInGoodCondition",
+      isTransmissionInGoodCondition
+    );
+    formData.append("isSteeringInGoodCondition", isSteeringInGoodCondition);
+    formData.append("isSuspensionInGoodCondition", isSuspensionInGoodCondition);
+    formData.append("areBrakesInGoodCondition", areBrakesInGoodCondition);
+    formData.append(
+      "isAirConditioningInGoodCondition",
+      isAirConditioningInGoodCondition
+    );
+    formData.append("FIN", FIN);
+    formData.append("selectedMonth", selectedMonth);
+    formData.append("zugelassenSelectedYear", zugelassenSelectedYear);
+
+    // Additional notes (if not empty)
     additionalNotes !== "" &&
       formData.append("additionalNotes", additionalNotes);
 

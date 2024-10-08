@@ -1,0 +1,514 @@
+.second-page-input-wrapper {
+  margin-bottom: 20px;
+}
+
+.second-page-input-wrapper label {
+  font-weight: bold;
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.second-page-input-wrapper input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.second-page-input-wrapper input[type="text"]:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(245, 242, 0, 0.5); /* Gelber Schein bei Fokus */
+  outline: none;
+}
+
+.second-page-input-wrapper input[type="email"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.second-page-input-wrapper input[type="email"]:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(245, 242, 0, 0.5); /* Gelber Schein bei Fokus */
+  outline: none;
+}
+
+.km-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.km-input-container input {
+  width: 100%;
+  padding-right: 40px; /* Platz für das "km" */
+  font-size: 16px;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.km-suffix {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+}
+
+.ps-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.ps-input-container input {
+  width: 100%;
+  padding-right: 40px; /* Platz für das "PS" */
+  font-size: 16px;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.ps-suffix {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+}
+/* Photo abteilung */
+
+.photo-upload-container {
+  margin: 20px 0;
+}
+
+.photo-upload-container h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.photo-upload-container p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.upload-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.photo-upload-box {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.3s ease;
+  overflow: hidden; /* Stellt sicher, dass das Bild den Rahmen nicht sprengt */
+}
+
+.photo-upload-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  display: none; /* Standardmäßig ausgeblendet */
+}
+
+.photo-upload-box .delete-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  text-align: center;
+  display: none; /* Standardmäßig ausgeblendet */
+}
+
+.photo-upload-box img.uploaded {
+  display: block;
+}
+
+.photo-upload-box:hover {
+  border-color: #ff6600;
+}
+
+.photo-upload-box:hover .delete-icon {
+  display: none;
+}
+
+.upload-box-content {
+  text-align: center;
+}
+
+.upload-box-content span {
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.photo-upload-box input[type="file"] {
+  display: none;
+}
+
+.optional-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.optional-button {
+  padding: 10px 20px;
+  border: 2px solid #333;
+  background-color: white;
+  color: #333;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.optional-button:hover {
+  background-color: #ff6600;
+  color: #333;
+}
+
+.second-page-select-wrapper {
+  margin-bottom: 20px;
+}
+
+.type-options {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* This makes the items wrap to the next row on overflow */
+}
+
+.second-page-select-wrapper label {
+  font-weight: bold;
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.second-page-select-wrapper select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="292.362" height="292.362" viewBox="0 0 292.362 292.362"><path fill="%23333" d="M287.94 69.242L277.004 58.305c-2.67-2.668-6.083-4.004-10.14-4.004s-7.471 1.336-10.139 4.004L146.181 168.854 35.637 58.305c-2.662-2.668-6.083-4.004-10.139-4.004s-7.471 1.336-10.139 4.004L4.422 69.242c-2.662 2.662-4.004 6.084-4.004 10.139 0 4.058 1.342 7.471 4.004 10.139l131.4 131.399c2.674 2.674 6.089 4.009 10.143 4.009 4.057 0 7.471-1.336 10.139-4.009l131.399-131.399c2.662-2.668 4.004-6.081 4.004-10.139-.002-4.055-1.344-7.478-4.006-10.139z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+.type-box {
+  width: 49%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+}
+
+.selected {
+  border: 1px solid #ff6600 !important;
+}
+
+.second-page-select-wrapper select:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(245, 242, 0, 0.5);
+}
+
+/* hier */
+
+.progress-bar {
+  background-color: #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.progress-bar .progress {
+  background-color: #ff6600;
+  height: 100%;
+}
+
+.form-container {
+  text-align: start;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.form-group-2 {
+  margin-bottom: 20px;
+}
+
+.form-group-2 label {
+  font-weight: bold; /* Titel wird fett */
+  display: block;
+
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.label-title {
+  margin-bottom: 0px !important;
+}
+.checkbox-group-2 label {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center; /* Stellt sicher, dass die Checkbox und der Haupttext in einer Linie sind */
+  gap: 10px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-group-2 label .main-text {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.checkbox-group-2 label .sub-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.checkbox-group-2 .text-wrapper {
+  display: flex;
+  flex-direction: column; /* Platziert den Untertitel unter dem Haupttext */
+}
+
+.checkbox-group-2 label:hover {
+  background-color: #e6e6e6;
+  border-color: #999;
+}
+
+.checkbox-group-2 input[type="checkbox"] {
+  margin-top: 4px; /* Abstand zum Text anpassen, um die Checkbox auszurichten */
+}
+
+.checkbox-group-2 label.active {
+  background-color: #ff6600;
+  border-color: #ff6600;
+}
+
+.form-group-2 textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: #333;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group-2 textarea:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 5px rgba(245, 242, 0, 0.5);
+}
+
+.button-weiter {
+  padding: 14px 16px;
+  border: 1px solid #e04b00;
+  background-color: #ff6600;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  min-width: 190px;
+  max-width: 500px;
+  font-size: 18px;
+  margin-left: auto; /* Zentriere den Button */
+  margin-right: auto; /* Zentriere den Button */
+}
+
+.button-abschließen {
+  padding: 14px 16px;
+  border: 1px solid #e04b00;
+  background-color: #ff6600;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: block;
+  min-width: 290px;
+  max-width: 500px;
+  font-size: 18px;
+  margin-left: auto; /* Zentriere den Button */
+  margin-right: auto; /* Zentriere den Button */
+}
+
+.fas.fa-spinner {
+  margin-left: 10px;
+}
+
+.fa-spin {
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.radio-group label,
+.checkbox-group label,
+.options {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #ccc;
+  width: calc(50% - 10px);
+  font-weight: normal;
+}
+
+.options {
+  margin-bottom: 8px;
+  padding-right: 10px;
+}
+
+.radio-group label input,
+.checkbox-group label input {
+  margin-right: 10px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.Title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.required {
+  font-size: 12px;
+  color: red;
+}
+
+/* Bei kleineren Bildschirmen umbricht es ordentlich */
+@media (max-width: 768px) {
+  .second-page-background {
+    margin-top: 90px;
+  }
+}
+
+/* Remove arrows for Webkit browsers (Chrome, Safari, etc.) */
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove arrows for Firefox */
+.no-arrows[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 0px;
+}
+
+.fieldOptions {
+  width: 100%;
+  padding-right: 40px; /* Platz für das Icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  min-height: 44.5px;
+}
+
+.input-wrapper-zulassung {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.input-wrapper-zulassung select {
+  padding: 0 10px;
+}

@@ -14,6 +14,7 @@ import CarImages from "./Pages/CarImages/CarImages";
 import Success from "./Pages/Success/Success";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Impressum from "./Pages/Impressum/Impressum";
+import CarAdditionalInfo from "./Pages/CarAdditionalInfo/CarAdditionalInfo";
 
 function App() {
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -30,12 +31,46 @@ function App() {
   const [power, setPower] = useState("");
   const [modification, setModification] = useState("");
 
+  //zweite seite
+
   const [kilometerstand, setKilometerstand] = useState("");
   const [unfallschaden, setUnfallschaden] = useState(false);
   const [serviceHeft, setServiceHeft] = useState(false);
   const [paintConditionLack, setPaintConditionLack] = useState("");
   const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
+
+  //dritte seite
+
+  const [carKeysAmount, setCarKeyAmount] = useState("");
+  const [additionalTires, setAdditionalTires] = useState("");
+  const [pickerl, setPickerl] = useState("");
+  // Welche art von verkäufer
+  const [sellerType, setSellerType] = useState("");
+  // ist das auto importiert aus dem ausland
+  const [importedCar, setImportedCar] = useState("");
+  const [isLeasingOrFinanced, setIsLeasingOrFinanced] = useState("");
+  const [carOwnerAmount, setCarOwnerAmount] = useState("");
+  const [carColorOutside, setCarColorOutside] = useState("");
+  const [carColorSeats, setCarColorSeats] = useState("");
+  const [isDriveable, setIsDriveable] = useState("");
+  const [conditionInside, setConditionInside] = useState("");
+  const [conditionOutside, setConditionOutside] = useState("");
+  const [hasWarningLights, setHasWarningLights] = useState("");
+  const [hasDamages, setHasDamages] = useState("");
+  const [isEngineInGoodCondition, setIsEngineInGoodCondition] = useState("");
+  const [isTransmissionInGoodCondition, setIsTransmissionInGoodCondition] =
+    useState("");
+  const [isSteeringInGoodCondition, setIsSteeringInGoodCondition] =
+    useState("");
+  const [isSuspensionInGoodCondition, setIsSuspensionInGoodCondition] =
+    useState("");
+  const [areBrakesInGoodCondition, setAreBrakesInGoodCondition] = useState("");
+  const [
+    isAirConditioningInGoodCondition,
+    setIsAirConditioningInGoodCondition,
+  ] = useState("");
+  const [FIN, setFIN] = useState("");
 
   return (
     <Router>
@@ -111,10 +146,90 @@ function App() {
                 paintConditionLack={paintConditionLack}
                 paintConditionKarosserie={paintConditionKarosserie}
                 additionalNotes={additionalNotes}
+                //daten von seite 3
+                carKeysAmount={carKeysAmount}
+                additionalTires={additionalTires}
+                pickerl={pickerl}
+                sellerType={sellerType}
+                importedCar={importedCar}
+                isLeasingOrFinanced={isLeasingOrFinanced}
+                carOwnerAmount={carOwnerAmount}
+                carColorOutside={carColorOutside}
+                carColorSeats={carColorSeats}
+                isDriveable={isDriveable}
+                conditionInside={conditionInside}
+                conditionOutside={conditionOutside}
+                hasWarningLights={hasWarningLights}
+                hasDamages={hasDamages}
+                isEngineInGoodCondition={isEngineInGoodCondition}
+                isTransmissionInGoodCondition={isTransmissionInGoodCondition}
+                isSteeringInGoodCondition={isSteeringInGoodCondition}
+                isSuspensionInGoodCondition={isSuspensionInGoodCondition}
+                areBrakesInGoodCondition={areBrakesInGoodCondition}
+                isAirConditioningInGoodCondition={
+                  isAirConditioningInGoodCondition
+                }
+                FIN={FIN}
               />
             }
           />
           <Route path="/" element={<Car />} />
+          <Route
+            path="/additionalInfo"
+            element={
+              <CarAdditionalInfo
+                carKeysAmount={carKeysAmount}
+                setCarKeyAmount={setCarKeyAmount}
+                additionalTires={additionalTires}
+                setAdditionalTires={setAdditionalTires}
+                pickerl={pickerl}
+                setPickerl={setPickerl}
+                sellerType={sellerType}
+                setSellerType={setSellerType}
+                importedCar={importedCar}
+                setImportedCar={setImportedCar}
+                isLeasingOrFinanced={isLeasingOrFinanced}
+                setIsLeasingOrFinanced={setIsLeasingOrFinanced}
+                carOwnerAmount={carOwnerAmount}
+                setCarOwnerAmount={setCarOwnerAmount}
+                carColorOutside={carColorOutside}
+                setCarColorOutside={setCarColorOutside}
+                carColorSeats={carColorSeats}
+                setCarColorSeats={setCarColorSeats}
+                isDriveable={isDriveable}
+                setIsDriveable={setIsDriveable}
+                conditionInside={conditionInside}
+                setConditionInside={setConditionInside}
+                conditionOutside={conditionOutside}
+                setConditionOutside={setConditionOutside}
+                hasWarningLights={hasWarningLights}
+                setHasWarningLights={setHasWarningLights}
+                hasDamages={hasDamages}
+                setHasDamages={setHasDamages}
+                isEngineInGoodCondition={isEngineInGoodCondition}
+                setIsEngineInGoodCondition={setIsEngineInGoodCondition}
+                isTransmissionInGoodCondition={isTransmissionInGoodCondition}
+                setIsTransmissionInGoodCondition={
+                  setIsTransmissionInGoodCondition
+                }
+                isSteeringInGoodCondition={isSteeringInGoodCondition}
+                setIsSteeringInGoodCondition={setIsSteeringInGoodCondition}
+                isSuspensionInGoodCondition={isSuspensionInGoodCondition}
+                setIsSuspensionInGoodCondition={setIsSuspensionInGoodCondition}
+                areBrakesInGoodCondition={areBrakesInGoodCondition}
+                setAreBrakesInGoodCondition={setAreBrakesInGoodCondition}
+                isAirConditioningInGoodCondition={
+                  isAirConditioningInGoodCondition
+                }
+                setIsAirConditioningInGoodCondition={
+                  setIsAirConditioningInGoodCondition
+                }
+                FIN={FIN}
+                setFIN={setFIN}
+              />
+            }
+          />
+
           <Route path="/contact" element={<Contact />} />
           <Route path="/howitworks" element={<HowItWorks />} />
           <Route path="/about" element={<About />} />
