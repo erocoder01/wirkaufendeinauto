@@ -1,0 +1,33 @@
+export const colorOutsideOptions = [
+  { name: "Schwarz", hex: "#000000" },
+  { name: "Weiß", hex: "#FFFFFF" },
+  { name: "Grau", hex: "#808080" },
+  { name: "Silber", hex: "#C0C0C0" },
+  { name: "Blau", hex: "#0000FF" },
+  { name: "Beige", hex: "#F5F5DC" },
+  { name: "Braun", hex: "#A52A2A" },
+  { name: "Bronze", hex: "#CD7F32" },
+  { name: "Gelb", hex: "#FFFF00" },
+  { name: "Gold", hex: "#FFD700" },
+  { name: "Grün", hex: "#008000" },
+  { name: "Orange", hex: "#FFA500" },
+  { name: "Rot", hex: "#FF0000" },
+  { name: "Violett", hex: "#8A2BE2" },
+];
+
+export const seatColorOptions = [
+  { name: "Schwarz", hex: "#000000" },
+  { name: "Grau", hex: "#808080" },
+  { name: "Beige", hex: "#F5F5DC" },
+  { name: "Braun", hex: "#A52A2A" },
+  { name: "Blau", hex: "#0000FF" },
+  { name: "Bronze", hex: "#CD7F32" },
+  { name: "Gelb", hex: "#FFFF00" },
+  { name: "Gold", hex: "#FFD700" },
+  { name: "Grün", hex: "#008000" },
+  { name: "Orange", hex: "#FFA500" },
+  { name: "Rot", hex: "#FF0000" },
+  { name: "Silber", hex: "#C0C0C0" },
+  { name: "Violett", hex: "#8A2BE2" },
+  { name: "Weiß", hex: "#FFFFFF" },
+];

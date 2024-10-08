@@ -422,7 +422,8 @@
 }
 
 .radio-group label,
-.checkbox-group label {
+.checkbox-group label,
+.options {
   background-color: #f9f9f9;
   padding: 10px;
   border-radius: 4px;
@@ -433,6 +434,11 @@
   border: 1px solid #ccc;
   width: calc(50% - 10px);
   font-weight: normal;
+}
+
+.options {
+  margin-bottom: 8px;
+  padding-right: 10px;
 }
 
 .radio-group label input,
@@ -478,4 +484,31 @@ textarea {
 /* Remove arrows for Firefox */
 .no-arrows[type="number"] {
   -moz-appearance: textfield;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 0px;
+}
+
+.fieldOptions {
+  width: 100%;
+  padding-right: 40px; /* Platz für das Icon */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #f7f7f7;
+  min-height: 44.5px;
+}
+
+.input-wrapper-zulassung {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.input-wrapper-zulassung select {
+  padding: 0 10px;
 }
