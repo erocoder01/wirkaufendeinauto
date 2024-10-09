@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { apiUrl } from "../../config/apiUrl";
 import "./CarDetails.css";
@@ -6,34 +6,36 @@ import cx from "classnames";
 import { scrollToWithOffset } from "../../helpers/scrollDown";
 import RadioForm from "../../components/Form/RadioForm";
 import MultipleChoiceForm from "../../components/Form/MultipleChoiceForm";
+import { CarContext } from "../../context/CarContext";
 
-function CarDetails({
-  brandName,
-  modelName,
-  year,
-  selectedBodyType,
-  setSelectedBodyType,
-  fuelType,
-  setFuelType,
-  gearbox,
-  setGearbox,
-  power,
-  setPower,
-  modification,
-  setModification,
-  kilometerstand,
-  setKilometerstand,
-  unfallschaden,
-  setUnfallschaden,
-  serviceHeft,
-  setServiceHeft,
-  paintConditionLack,
-  setPaintConditionLack,
-  paintConditionKarosserie,
-  setPaintConditionKarosserie,
-  additionalNotes,
-  setAdditionalNotes,
-}) {
+function CarDetails() {
+  const {
+    brandName,
+    modelName,
+    year,
+    selectedBodyType,
+    setSelectedBodyType,
+    fuelType,
+    setFuelType,
+    gearbox,
+    setGearbox,
+    power,
+    setPower,
+    modification,
+    setModification,
+    kilometerstand,
+    setKilometerstand,
+    unfallschaden,
+    setUnfallschaden,
+    serviceHeft,
+    setServiceHeft,
+    paintConditionLack,
+    setPaintConditionLack,
+    paintConditionKarosserie,
+    setPaintConditionKarosserie,
+    additionalNotes,
+    setAdditionalNotes,
+  } = useContext(CarContext);
   // list of options are saved here
   const [bodyTypes, setBodyTypes] = useState([]);
   const [fuelTypes, setFuelTypes] = useState([]);

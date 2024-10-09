@@ -1,53 +1,56 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./CarImages.css";
 import cx from "classnames";
 import { BarLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import { scrollToWithOffset } from "../../helpers/scrollDown";
+import { CarContext } from "../../context/CarContext";
 
-function CarImages({
-  brandName,
-  modelName,
-  year,
-  selectedBodyType,
-  fuelType,
-  gearbox,
-  power,
-  modification,
-  kilometerstand,
-  unfallschaden,
-  serviceHeft,
-  paintConditionLack,
-  paintConditionKarosserie,
-  additionalNotes,
-  //daten von dritte seite
-  carKeysAmount,
-  additionalTires,
-  pickerl,
-  sellerType,
-  importedCar,
-  isLeasingOrFinanced,
-  carOwnerAmount,
-  carColorOutside,
-  carColorSeats,
-  isDriveable,
-  hadCrash,
-  conditionInside,
-  conditionOutside,
-  hasWarningLights,
-  hasDamages,
-  isEngineInGoodCondition,
-  isTransmissionInGoodCondition,
-  isSteeringInGoodCondition,
-  isSuspensionInGoodCondition,
-  areBrakesInGoodCondition,
-  isAirConditioningInGoodCondition,
-  FIN,
-  selectedMonth,
-  zugelassenSelectedYear,
-}) {
+function CarImages() {
   // State variables for form inputs
+
+  const {
+    brandName,
+    modelName,
+    year,
+    selectedBodyType,
+    fuelType,
+    gearbox,
+    power,
+    modification,
+    kilometerstand,
+    unfallschaden,
+    serviceHeft,
+    paintConditionLack,
+    paintConditionKarosserie,
+    additionalNotes,
+    //daten von dritte seite
+    carKeysAmount,
+    additionalTires,
+    pickerl,
+    sellerType,
+    importedCar,
+    isLeasingOrFinanced,
+    carOwnerAmount,
+    carColorOutside,
+    carColorSeats,
+    isDriveable,
+    hadCrash,
+    conditionInside,
+    conditionOutside,
+    hasWarningLights,
+    hasDamages,
+    isEngineInGoodCondition,
+    isTransmissionInGoodCondition,
+    isSteeringInGoodCondition,
+    isSuspensionInGoodCondition,
+    areBrakesInGoodCondition,
+    isAirConditioningInGoodCondition,
+    FIN,
+    selectedMonth,
+    zugelassenSelectedYear,
+  } = useContext(CarContext);
 
   // State to manage the preview images
   const [imagePreviews, setImagePreviews] = useState({

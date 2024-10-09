@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { apiUrl } from "../../config/apiUrl";
 import "./Car.css";
 
@@ -16,6 +16,7 @@ import whysell2 from "../../assets/bildtwo.webp";
 import whysell3 from "../../assets/bildthree.webp";
 import whysell4 from "../../assets/bildfour.webp";
 import cx from "classnames";
+import { CarContext } from "../../context/CarContext";
 
 function DynamicText() {
   const texts = ["schnell", "bequem", "einfach"];
@@ -34,18 +35,20 @@ function DynamicText() {
   return <span id="dynamic-text">{texts[currentIndex]}</span>;
 }
 
-function Car({
-  selectedBrand,
-  setSelectedBrand,
-  selectedModel,
-  setSelectedModel,
-  brandModels,
-  setBrandModels,
-  availableYears,
-  setAvailableYears,
-  setSelectedYear,
-  selectedYear,
-}) {
+function Car() {
+  const {
+    selectedBrand,
+    setSelectedBrand,
+    selectedModel,
+    setSelectedModel,
+    brandModels,
+    setBrandModels,
+    availableYears,
+    setAvailableYears,
+    selectedYear,
+    setSelectedYear,
+  } = useContext(CarContext); // Access the values from the context
+
   const [carBrands, setCarBrands] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 

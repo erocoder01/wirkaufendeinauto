@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./CarAdditionalInfo.css";
 
@@ -7,52 +7,53 @@ import { colorOutsideOptions, seatColorOptions } from "./carColors";
 import RadioForm from "../../components/Form/RadioForm";
 import TextForm from "../../components/Form/TextForm";
 import cx from "classnames";
+import { CarContext } from "../../context/CarContext";
 
-function CarAdditionalInfo({
-  carKeysAmount,
-  setCarKeyAmount,
-  additionalTires,
-  setAdditionalTires,
-  pickerl,
-  setPickerl,
-  sellerType,
-  setSellerType,
-  importedCar,
-  setImportedCar,
-  isLeasingOrFinanced,
-  setIsLeasingOrFinanced,
-  carOwnerAmount,
-  setCarOwnerAmount,
-  carColorOutside,
-  setCarColorOutside,
-  carColorSeats,
-  setCarColorSeats,
-  isDriveable,
-  setIsDriveable,
-
-  conditionInside,
-  setConditionInside,
-  conditionOutside,
-  setConditionOutside,
-  hasWarningLights,
-  setHasWarningLights,
-  hasDamages,
-  setHasDamages,
-  isEngineInGoodCondition,
-  setIsEngineInGoodCondition,
-  isTransmissionInGoodCondition,
-  setIsTransmissionInGoodCondition,
-  isSteeringInGoodCondition,
-  setIsSteeringInGoodCondition,
-  isSuspensionInGoodCondition,
-  setIsSuspensionInGoodCondition,
-  areBrakesInGoodCondition,
-  setAreBrakesInGoodCondition,
-  isAirConditioningInGoodCondition,
-  setIsAirConditioningInGoodCondition,
-  FIN,
-  setFIN,
-}) {
+function CarAdditionalInfo() {
+  const {
+    carKeysAmount,
+    setCarKeyAmount,
+    additionalTires,
+    setAdditionalTires,
+    pickerl,
+    setPickerl,
+    sellerType,
+    setSellerType,
+    importedCar,
+    setImportedCar,
+    isLeasingOrFinanced,
+    setIsLeasingOrFinanced,
+    carOwnerAmount,
+    setCarOwnerAmount,
+    carColorOutside,
+    setCarColorOutside,
+    carColorSeats,
+    setCarColorSeats,
+    isDriveable,
+    setIsDriveable,
+    conditionInside,
+    setConditionInside,
+    conditionOutside,
+    setConditionOutside,
+    hasWarningLights,
+    setHasWarningLights,
+    hasDamages,
+    setHasDamages,
+    isEngineInGoodCondition,
+    setIsEngineInGoodCondition,
+    isTransmissionInGoodCondition,
+    setIsTransmissionInGoodCondition,
+    isSteeringInGoodCondition,
+    setIsSteeringInGoodCondition,
+    isSuspensionInGoodCondition,
+    setIsSuspensionInGoodCondition,
+    areBrakesInGoodCondition,
+    setAreBrakesInGoodCondition,
+    isAirConditioningInGoodCondition,
+    setIsAirConditioningInGoodCondition,
+    FIN,
+    setFIN,
+  } = useContext(CarContext);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const [submitClicked, setSubmitClicked] = useState(false);
