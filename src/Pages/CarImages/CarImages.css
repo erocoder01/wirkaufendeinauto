@@ -24,6 +24,7 @@
   width: 150px;
   height: 150px;
   border: 2px dashed #ccc;
+  padding: 10px;
   border-radius: 8px;
   display: flex;
   justify-content: center;

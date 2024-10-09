@@ -4,11 +4,16 @@ import React, { createContext, useState } from "react";
 export const CarContext = createContext();
 
 export const CarProvider = ({ children }) => {
+  const [brandModels, setBrandModels] = useState([]);
+  const [availableYears, setAvailableYears] = useState([]);
+
+  // Car.js
+
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
-  const [brandModels, setBrandModels] = useState([]);
-  const [availableYears, setAvailableYears] = useState([]);
+
+  // CarDetails.js
 
   const [selectedBodyType, setSelectedBodyType] = useState("");
   const [fuelType, setFuelType] = useState("");
@@ -16,12 +21,18 @@ export const CarProvider = ({ children }) => {
   const [power, setPower] = useState("");
   const [modification, setModification] = useState("");
   const [kilometerstand, setKilometerstand] = useState("");
-  const [unfallschaden, setUnfallschaden] = useState(false);
-  const [serviceHeft, setServiceHeft] = useState(false);
+  const [unfallschaden, setUnfallschaden] = useState("");
+  const [serviceHeft, setServiceHeft] = useState("");
+  const [
+    completedAndDocumentedMaintenances,
+    setCompletedAndDocumentedMaintenances,
+  ] = useState("");
+  const [isDamageRepaired, setIsDamageRepaired] = useState("");
   const [paintConditionLack, setPaintConditionLack] = useState("");
   const [paintConditionKarosserie, setPaintConditionKarosserie] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
 
+  // CarAdditionalInfo.js
   const [carKeysAmount, setCarKeyAmount] = useState("");
   const [additionalTires, setAdditionalTires] = useState("");
   const [pickerl, setPickerl] = useState("");
@@ -32,10 +43,11 @@ export const CarProvider = ({ children }) => {
   const [carColorOutside, setCarColorOutside] = useState("");
   const [carColorSeats, setCarColorSeats] = useState("");
   const [isDriveable, setIsDriveable] = useState("");
+  const [hasDamagesAndWear, setHasDamagesAndWear] = useState("");
+  const [selectedDamages, setSelectedDamages] = useState([]);
   const [conditionInside, setConditionInside] = useState("");
   const [conditionOutside, setConditionOutside] = useState("");
   const [hasWarningLights, setHasWarningLights] = useState("");
-  const [hasDamages, setHasDamages] = useState("");
   const [isEngineInGoodCondition, setIsEngineInGoodCondition] = useState("");
   const [isTransmissionInGoodCondition, setIsTransmissionInGoodCondition] =
     useState("");
@@ -79,6 +91,10 @@ export const CarProvider = ({ children }) => {
         setUnfallschaden,
         serviceHeft,
         setServiceHeft,
+        completedAndDocumentedMaintenances,
+        setCompletedAndDocumentedMaintenances,
+        isDamageRepaired,
+        setIsDamageRepaired,
         paintConditionLack,
         setPaintConditionLack,
         paintConditionKarosserie,
@@ -105,14 +121,14 @@ export const CarProvider = ({ children }) => {
         setCarColorSeats,
         isDriveable,
         setIsDriveable,
+        hasDamagesAndWear,
+        setHasDamagesAndWear,
         conditionInside,
         setConditionInside,
         conditionOutside,
         setConditionOutside,
         hasWarningLights,
         setHasWarningLights,
-        hasDamages,
-        setHasDamages,
         isEngineInGoodCondition,
         setIsEngineInGoodCondition,
         isTransmissionInGoodCondition,
@@ -127,6 +143,8 @@ export const CarProvider = ({ children }) => {
         setIsAirConditioningInGoodCondition,
         FIN,
         setFIN,
+        selectedDamages,
+        setSelectedDamages,
       }}
     >
       {children}

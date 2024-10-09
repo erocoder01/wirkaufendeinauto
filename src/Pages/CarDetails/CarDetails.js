@@ -5,14 +5,13 @@ import "./CarDetails.css";
 import cx from "classnames";
 import { scrollToWithOffset } from "../../helpers/scrollDown";
 import RadioForm from "../../components/Form/RadioForm";
-import MultipleChoiceForm from "../../components/Form/MultipleChoiceForm";
 import { CarContext } from "../../context/CarContext";
 
 function CarDetails() {
   const {
-    brandName,
-    modelName,
-    year,
+    selectedBrand,
+    selectedModel,
+    selectedYear,
     selectedBodyType,
     setSelectedBodyType,
     fuelType,
@@ -28,6 +27,10 @@ function CarDetails() {
     unfallschaden,
     setUnfallschaden,
     serviceHeft,
+    completedAndDocumentedMaintenances,
+    setCompletedAndDocumentedMaintenances,
+    isDamageRepaired,
+    setIsDamageRepaired,
     setServiceHeft,
     paintConditionLack,
     setPaintConditionLack,
@@ -36,6 +39,7 @@ function CarDetails() {
     additionalNotes,
     setAdditionalNotes,
   } = useContext(CarContext);
+
   // list of options are saved here
   const [bodyTypes, setBodyTypes] = useState([]);
   const [fuelTypes, setFuelTypes] = useState([]);
@@ -43,13 +47,7 @@ function CarDetails() {
   const [powerHPOptions, setPowerHPOptions] = useState([]);
   const [modificationOptions, setModificationOptions] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [
-    completedAndDocumentedMaintenances,
-    setCompletedAndDocumentedMaintenances,
-  ] = useState("");
-  const [isDamageRepaired, setIsDamageRepaired] = useState("");
-  const [hasDamagesAndWear, setHasDamagesAndWear] = useState("");
-  const [selectedDamages, setSelectedDamages] = useState([]);
+
   const [submitClicked, setSubmitClicked] = useState(false);
 
   useEffect(() => {
@@ -94,34 +92,35 @@ function CarDetails() {
   const paintConditionKarosserieRef = useRef(null);
   const completedAndDocumentedMaintenancesRef = useRef(null);
   const isDamageRepairedRef = useRef(null);
-  const hasDamagesAndWearRef = useRef(null);
 
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   useEffect(() => {
-    if (brandName && modelName && year) {
-      loadBodytypes(brandName, modelName, year);
+    if (selectedBrand && selectedModel && selectedYear) {
+      loadBodytypes(selectedBrand, selectedModel, selectedYear);
+    } else {
+      console.log(selectedBrand, selectedModel, selectedYear);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [brandName, modelName, year]);
+  }, [selectedBrand, selectedModel, selectedYear]);
 
-  // Function to load body types based on selected brand, model, and year
-  async function loadBodytypes(brandName, modelName, year) {
-    if (!brandName || !modelName || !year) return;
+  // Function to load body types based on selected brand, model, and selectedYear
+  async function loadBodytypes(selectedBrand, selectedModel, selectedYear) {
+    if (!selectedBrand || !selectedModel || !selectedYear) return;
 
     try {
-      // Make a request to the backend to get body types for the selected brand, model, and year
+      // Make a request to the backend to get body types for the selected brand, model, and selectedYear
       const response = await fetch(
-        `${api}/carDetails/getBodyTypes/${brandName}/${modelName}/${year}`
+        `${api}/carDetails/getBodyTypes/${selectedBrand}/${selectedModel}/${selectedYear}`
       );
       const data = await response.json();
 
       if (response.ok) {
         // Override the previous body types with the new ones
-        setBodyTypes(data.bodyTypes || []);
+        setBodyTypes(data.bodyTypes);
 
         // After selecting a body type, load the available fuels
-        loadFuels(brandName, modelName, year, selectedBodyType);
+        loadFuels(selectedBrand, selectedModel, selectedYear, selectedBodyType);
       } else {
         console.error("Error fetching body types:", data.error);
         setBodyTypes([]); // Reset body types if an error occurs
@@ -132,13 +131,18 @@ function CarDetails() {
     }
   }
 
-  async function loadFuels(brandName, modelName, year, bodytype) {
-    if (!brandName || !modelName || !year || !bodytype) return;
+  async function loadFuels(
+    selectedBrand,
+    selectedModel,
+    selectedYear,
+    bodytype
+  ) {
+    if (!selectedBrand || !selectedModel || !selectedYear || !bodytype) return;
 
     try {
       // Make a request to the backend to get fuel types
       const response = await fetch(
-        `${api}/carDetails/getFuels/${brandName}/${modelName}/${year}/${bodytype}`
+        `${api}/carDetails/getFuels/${selectedBrand}/${selectedModel}/${selectedYear}/${bodytype}`
       );
       const data = await response.json();
 
@@ -155,14 +159,26 @@ function CarDetails() {
     }
   }
 
-  async function loadGearbox(brandName, modelName, year, bodytype, fuel) {
-    if (!brandName || !modelName || !year || !fuel || !bodytype) {
+  async function loadGearbox(
+    selectedBrand,
+    selectedModel,
+    selectedYear,
+    bodytype,
+    fuel
+  ) {
+    if (
+      !selectedBrand ||
+      !selectedModel ||
+      !selectedYear ||
+      !fuel ||
+      !bodytype
+    ) {
       return;
     }
 
     try {
       const response = await fetch(
-        `${api}/carDetails/getGearboxes/${brandName}/${modelName}/${year}/${bodytype}/${fuel}`
+        `${api}/carDetails/getGearboxes/${selectedBrand}/${selectedModel}/${selectedYear}/${bodytype}/${fuel}`
       );
       const data = await response.json();
 
@@ -180,19 +196,26 @@ function CarDetails() {
   }
 
   async function loadPowerHp(
-    brandName,
-    modelName,
-    year,
+    selectedBrand,
+    selectedModel,
+    selectedYear,
     bodytype,
     fuel,
     gearbox
   ) {
-    if (!brandName || !modelName || !year || !fuel || !gearbox || !bodytype)
+    if (
+      !selectedBrand ||
+      !selectedModel ||
+      !selectedYear ||
+      !fuel ||
+      !gearbox ||
+      !bodytype
+    )
       return;
 
     try {
       const response = await fetch(
-        `${api}/carDetails/getPowerHp/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}`
+        `${api}/carDetails/getPowerHp/${selectedBrand}/${selectedModel}/${selectedYear}/${bodytype}/${fuel}/${gearbox}`
       );
       const data = await response.json();
 
@@ -209,18 +232,18 @@ function CarDetails() {
   }
 
   async function loadModifications(
-    brandName,
-    modelName,
-    year,
+    selectedBrand,
+    selectedModel,
+    selectedYear,
     bodytype,
     gearbox,
     fuel,
     powerHp
   ) {
     if (
-      !brandName ||
-      !modelName ||
-      !year ||
+      !selectedBrand ||
+      !selectedModel ||
+      !selectedYear ||
       !fuel ||
       !gearbox ||
       !powerHp ||
@@ -230,7 +253,7 @@ function CarDetails() {
 
     try {
       const response = await fetch(
-        `${api}/carDetails/getModifications/${brandName}/${modelName}/${year}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
+        `${api}/carDetails/getModifications/${selectedBrand}/${selectedModel}/${selectedYear}/${bodytype}/${fuel}/${gearbox}/${powerHp}`
       );
       const data = await response.json();
 
@@ -248,7 +271,7 @@ function CarDetails() {
 
   const selectBodyType = (bodytype) => {
     setSelectedBodyType(bodytype);
-    loadFuels(brandName, modelName, year, bodytype);
+    loadFuels(selectedBrand, selectedModel, selectedYear, bodytype);
 
     // Delete everything if selected under BodyType
 
@@ -260,7 +283,13 @@ function CarDetails() {
 
   const selectFuelType = (fuelType) => {
     setFuelType(fuelType);
-    loadGearbox(brandName, modelName, year, selectedBodyType, fuelType);
+    loadGearbox(
+      selectedBrand,
+      selectedModel,
+      selectedYear,
+      selectedBodyType,
+      fuelType
+    );
 
     // Delete everything if selected under fuel
 
@@ -273,9 +302,9 @@ function CarDetails() {
     setPower([]);
     setGearbox(gearboxType);
     loadPowerHp(
-      brandName,
-      modelName,
-      year,
+      selectedBrand,
+      selectedModel,
+      selectedYear,
       selectedBodyType,
       fuelType,
       gearboxType
@@ -290,9 +319,9 @@ function CarDetails() {
   const selectHorsePower = (horsePower) => {
     setPower(horsePower);
     loadModifications(
-      brandName,
-      modelName,
-      year,
+      selectedBrand,
+      selectedModel,
+      selectedYear,
       selectedBodyType,
       gearbox,
       fuelType,
@@ -329,6 +358,8 @@ function CarDetails() {
       navigate("/additionalInfo");
     }
   };
+
+  console.log(unfallschaden);
 
   return (
     <div className="second-page-background">
@@ -508,7 +539,7 @@ function CarDetails() {
                     name="unfallschaden"
                     value="Ja"
                     checked={unfallschaden}
-                    onChange={() => setUnfallschaden(true)}
+                    onChange={() => setUnfallschaden("Ja")}
                     required
                   />
                   Ja
@@ -519,7 +550,7 @@ function CarDetails() {
                     name="unfallschaden"
                     value="Nein"
                     checked={!unfallschaden}
-                    onChange={() => setUnfallschaden(false)}
+                    onChange={() => setUnfallschaden("Nein")}
                     required
                   />
                   Nein
@@ -555,9 +586,9 @@ function CarDetails() {
                   <input
                     type="radio"
                     name="serviceHeft"
-                    value={true}
-                    checked={serviceHeft}
-                    onChange={() => setServiceHeft(true)}
+                    value="Ja"
+                    checked={serviceHeft === "Ja"}
+                    onChange={() => setServiceHeft("Ja")}
                     required
                   />{" "}
                   Ja
@@ -566,9 +597,9 @@ function CarDetails() {
                   <input
                     type="radio"
                     name="serviceHeft"
-                    value={false}
-                    checked={!serviceHeft}
-                    onChange={() => setServiceHeft(false)}
+                    value="Nein"
+                    checked={serviceHeft === "Nein"}
+                    onChange={() => setServiceHeft("Nein")}
                     required
                   />{" "}
                   Nein / Nicht vollständig
@@ -586,49 +617,6 @@ function CarDetails() {
                 submitClicked={submitClicked}
                 options={["Alle", "Einzelne", "Keine"]}
                 ref={completedAndDocumentedMaintenancesRef}
-              />
-            )}
-
-            <RadioForm
-              title="Wie viele von den nach Herstellerangaben fälligen Wartungen wurden durchgeführt und dokumentiert?"
-              value={completedAndDocumentedMaintenances}
-              setValue={setCompletedAndDocumentedMaintenances}
-              name="completedAndDocumentedMaintenances"
-              required={true}
-              submitClicked={submitClicked}
-              options={["Alle", "Einzelne", "Keine"]}
-              ref={completedAndDocumentedMaintenancesRef}
-            />
-
-            <RadioForm
-              title="Gibt es Schäden und Gebrauchsspuren?"
-              value={hasDamagesAndWear}
-              setValue={setHasDamagesAndWear}
-              name="hasDamagesAndWear"
-              required={true}
-              submitClicked={submitClicked}
-              options={["Ja", "Nein"]}
-              ref={hasDamagesAndWearRef}
-            />
-
-            {hasDamagesAndWear === "Ja" && (
-              <MultipleChoiceForm
-                title="Welche Schäden und Gebrauchsspuren hat dein Auto?"
-                values={selectedDamages}
-                setValues={setSelectedDamages}
-                name="carDamages"
-                required={true}
-                submitClicked={submitClicked}
-                options={[
-                  "Beulen",
-                  "Kratzer",
-                  "Abnutzung von Sitzen und Armaturen",
-                  "Steinschläge",
-                  "Verblasster Lack",
-                  "Dellen",
-                  "Rost",
-                  "Hagelschläge",
-                ]}
               />
             )}
 

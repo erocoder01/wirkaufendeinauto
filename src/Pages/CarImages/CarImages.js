@@ -8,12 +8,10 @@ import { scrollToWithOffset } from "../../helpers/scrollDown";
 import { CarContext } from "../../context/CarContext";
 
 function CarImages() {
-  // State variables for form inputs
-
   const {
-    brandName,
-    modelName,
-    year,
+    selectedBrand,
+    selectedModel,
+    selectedYear,
     selectedBodyType,
     fuelType,
     gearbox,
@@ -22,6 +20,8 @@ function CarImages() {
     kilometerstand,
     unfallschaden,
     serviceHeft,
+    completedAndDocumentedMaintenances,
+    isDamageRepaired,
     paintConditionLack,
     paintConditionKarosserie,
     additionalNotes,
@@ -36,11 +36,10 @@ function CarImages() {
     carColorOutside,
     carColorSeats,
     isDriveable,
-    hadCrash,
     conditionInside,
+    hasDamagesAndWear,
     conditionOutside,
     hasWarningLights,
-    hasDamages,
     isEngineInGoodCondition,
     isTransmissionInGoodCondition,
     isSteeringInGoodCondition,
@@ -48,19 +47,26 @@ function CarImages() {
     areBrakesInGoodCondition,
     isAirConditioningInGoodCondition,
     FIN,
-    selectedMonth,
-    zugelassenSelectedYear,
+    selectedDamages,
   } = useContext(CarContext);
 
   // State to manage the preview images
   const [imagePreviews, setImagePreviews] = useState({
     front: null,
-    back: null,
-    side: null,
-    interiorFront: null,
-    interiorBack: null,
-    dashboard: null,
   });
+
+  // State to manage the preview images for damages
+  const [damagePreviews, setDamagePreviews] = useState({});
+
+  // Initialize damagePreviews based on selectedDamages
+  useEffect(() => {
+    const previews = {};
+    selectedDamages.forEach((damage) => {
+      previews[damage] = null; // Initially, no image for the damage
+    });
+    setDamagePreviews(previews);
+  }, [selectedDamages]);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -83,9 +89,9 @@ function CarImages() {
   const priceExpectationRef = useRef(null);
   const sellTimeRef = useRef(null);
 
-  const allImagesValid = Object.values(imagePreviews).every(
-    (image) => image !== null
-  );
+  const allImagesValid =
+    Object.values(imagePreviews).every((image) => image !== null) &&
+    Object.values(damagePreviews).every((image) => image !== null);
 
   const navigate = useNavigate(); // Initialize navigate
 
@@ -127,7 +133,6 @@ function CarImages() {
     imagePreviews.dashboard,
   ]);
 
-  // Function to preview the image
   const previewImage = (event, previewKey) => {
     const file = event.target.files[0];
 
@@ -139,17 +144,48 @@ function CarImages() {
       return;
     }
 
+    // Store the file object in the state and generate a preview URL for display
     const reader = new FileReader();
-
     reader.onload = (e) => {
       setImagePreviews((prev) => ({
         ...prev,
-        [previewKey]: e.target.result,
+        [previewKey]: {
+          file, // Store the actual file object
+          preview: e.target.result, // Store the base64 string for preview
+        },
       }));
     };
 
     if (file) {
-      reader.readAsDataURL(file); // Read the image file as data URL
+      reader.readAsDataURL(file); // Read the image file as data URL for preview
+    }
+  };
+
+  const previewImageDamages = (event, previewKey) => {
+    const file = event.target.files[0];
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    if (file && !allowedTypes.includes(file.type)) {
+      alert("Please upload a valid image format (JPEG, JPG, PNG, WEBP).");
+      event.target.value = ""; // Reset the input
+      return;
+    }
+
+    // Store the file object in the state and generate a preview URL for display
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setDamagePreviews((prev) => ({
+        ...prev,
+        [previewKey]: {
+          file, // Store the actual file object
+          preview: e.target.result, // Store the base64 string for preview
+        },
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file); // Read the image file as data URL for preview
     }
   };
 
@@ -207,34 +243,40 @@ function CarImages() {
     if (!isValid) {
       return; // If validation failed, do not proceed
     }
+
     setIsLoading(true);
     setIsButtonDisabled(true);
 
     const formData = new FormData();
 
-    // Append car details
-    formData.append("brandName", brandName);
-    formData.append("modelName", modelName);
-    formData.append("year", year);
+    // Append car details (same as before)
+    // Car.js
+    formData.append("selectedBrand", selectedBrand);
+    formData.append("selectedModel", selectedModel);
+    formData.append("selectedYear", selectedYear);
+    // CarDetails.js
     formData.append("selectedBodyType", selectedBodyType);
     formData.append("fuelType", fuelType);
     formData.append("gearbox", gearbox);
     formData.append("power", power);
     formData.append("modification", modification);
     formData.append("kilometerstand", kilometerstand);
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("phoneNumber", phoneNumber);
-    formData.append("email", email);
-    formData.append("postalCode", postalCode);
-    formData.append("priceExpectation", priceExpectation);
-    formData.append("sellTime", sellTime);
     formData.append("unfallschaden", unfallschaden);
     formData.append("serviceHeft", serviceHeft);
+    formData.append(
+      "completedAndDocumentedMaintenances",
+      completedAndDocumentedMaintenances
+    );
+    formData.append("isDamageRepaired", isDamageRepaired);
     formData.append("paintConditionLack", paintConditionLack);
     formData.append("paintConditionKarosserie", paintConditionKarosserie);
+    // Additional notes (if not empty)
+    if (additionalNotes !== "") {
+      formData.append("additionalNotes", additionalNotes);
+    }
 
-    // Append additional values
+    //CarAdditionalInfo.js
+
     formData.append("carKeysAmount", carKeysAmount);
     formData.append("additionalTires", additionalTires);
     formData.append("pickerl", pickerl);
@@ -245,11 +287,11 @@ function CarImages() {
     formData.append("carColorOutside", carColorOutside);
     formData.append("carColorSeats", carColorSeats);
     formData.append("isDriveable", isDriveable);
-    formData.append("hadCrash", hadCrash);
+    formData.append("hasDamagesAndWear", hasDamagesAndWear);
+    formData.append("selectedDamages", selectedDamages);
     formData.append("conditionInside", conditionInside);
     formData.append("conditionOutside", conditionOutside);
     formData.append("hasWarningLights", hasWarningLights);
-    formData.append("hasDamages", hasDamages);
     formData.append("isEngineInGoodCondition", isEngineInGoodCondition);
     formData.append(
       "isTransmissionInGoodCondition",
@@ -263,42 +305,31 @@ function CarImages() {
       isAirConditioningInGoodCondition
     );
     formData.append("FIN", FIN);
-    formData.append("selectedMonth", selectedMonth);
-    formData.append("zugelassenSelectedYear", zugelassenSelectedYear);
 
-    // Additional notes (if not empty)
-    additionalNotes !== "" &&
-      formData.append("additionalNotes", additionalNotes);
+    //CarImages.js
 
-    // Append images (ensure these inputs are files in the state)
-    if (document.getElementById("front-photo").files[0]) {
-      formData.append("Vorne", document.getElementById("front-photo").files[0]);
-    }
-    if (document.getElementById("back-photo").files[0]) {
-      formData.append("Hinten", document.getElementById("back-photo").files[0]);
-    }
-    if (document.getElementById("side-photo").files[0]) {
-      formData.append("Seite", document.getElementById("side-photo").files[0]);
-    }
-    if (document.getElementById("interior-front-photo").files[0]) {
-      formData.append(
-        "interiorFront",
-        document.getElementById("interior-front-photo").files[0]
-      );
-    }
-    if (document.getElementById("interior-back-photo").files[0]) {
-      formData.append(
-        "interiorBack",
-        document.getElementById("interior-back-photo").files[0]
-      );
-    }
-    if (document.getElementById("interior-dashboard-photo").files[0]) {
-      formData.append(
-        "dashboard",
-        document.getElementById("interior-dashboard-photo").files[0]
-      );
-    }
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("phoneNumber", phoneNumber);
+    formData.append("email", email);
+    formData.append("postalCode", postalCode);
+    formData.append("priceExpectation", priceExpectation);
+    formData.append("sellTime", sellTime);
 
+    // Append images from imagePreviews (front, back, side)
+    Object.keys(imagePreviews).forEach((key) => {
+      if (imagePreviews[key] && imagePreviews[key].file) {
+        // Ensure we're appending the file object, not the preview
+        formData.append(key, imagePreviews[key].file); // Append the actual File object
+      }
+    });
+
+    Object.keys(damagePreviews).forEach((key) => {
+      if (damagePreviews[key] && damagePreviews[key].file) {
+        // Ensure we're appending the file object, not the preview
+        formData.append(key, damagePreviews[key].file); // Append the actual File object
+      }
+    });
     try {
       const response = await fetch(`${api}/cars/uploadCar`, {
         method: "POST",
@@ -335,17 +366,21 @@ function CarImages() {
       <form id="third-step-form" method="POST" encType="multipart/form-data">
         {/* Exterior Photos */}
         <div className="photo-upload-container">
+          <label htmlFor="Exterior-images" className="title-label">
+            Füge ein Bild des Außenbereichs deines Autos hinzu
+          </label>
+
           <div className="upload-section">
             {/* Front Photo */}
             <div className="photo-upload-box" ref={imagesRef}>
               <label htmlFor="front-photo">
                 <div className="upload-box-content">
-                  {imagePreviews.front ? (
+                  {imagePreviews.front && imagePreviews.front.preview ? ( // Check if preview exists
                     <>
                       <img
                         id="front-photo-preview"
                         className="uploaded"
-                        src={imagePreviews.front}
+                        src={imagePreviews.front.preview} // Display the preview image
                         alt="Vorne"
                       />
                       <button
@@ -357,195 +392,60 @@ function CarImages() {
                       </button>
                     </>
                   ) : (
-                    <span>Vorne</span>
+                    <span>Dein Auto</span> // Placeholder text
                   )}
                   <input
                     type="file"
                     className="input-image"
                     id="front-photo"
                     accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "front")}
-                  />
-                </div>
-              </label>
-            </div>
-
-            {/* Back Photo */}
-            <div className="photo-upload-box">
-              <label htmlFor="back-photo">
-                <div className="upload-box-content">
-                  {imagePreviews.back ? (
-                    <>
-                      <img
-                        id="back-photo-preview"
-                        className="uploaded"
-                        src={imagePreviews.back}
-                        alt="Hinten"
-                      />
-                      <button
-                        type="button"
-                        className="delete-icon"
-                        onClick={() => removeImage("back", "back-photo")}
-                      >
-                        ×
-                      </button>
-                    </>
-                  ) : (
-                    <span>Hinten</span>
-                  )}
-                  <input
-                    type="file"
-                    id="back-photo"
-                    className="input-image"
-                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "back")}
-                  />
-                </div>
-              </label>
-            </div>
-
-            {/* Side Photo */}
-            <div className="photo-upload-box">
-              <label htmlFor="side-photo">
-                <div className="upload-box-content">
-                  {imagePreviews.side ? (
-                    <>
-                      <img
-                        id="side-photo-preview"
-                        className="uploaded"
-                        src={imagePreviews.side}
-                        alt="Seite"
-                      />
-                      <button
-                        type="button"
-                        className="delete-icon"
-                        onClick={() => removeImage("side", "side-photo")}
-                      >
-                        ×
-                      </button>
-                    </>
-                  ) : (
-                    <span>Seite</span>
-                  )}
-                  <input
-                    type="file"
-                    id="side-photo"
-                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "side")}
+                    onChange={(event) => previewImage(event, "front")} // Handle preview and file selection
                   />
                 </div>
               </label>
             </div>
           </div>
         </div>
-
-        {/* Interior Photos */}
         <div className="photo-upload-container">
+          <label htmlFor="Exterior-images" className="title-label">
+            Füge Bilder der Schäden in deinem Auto ein
+          </label>
           <div className="upload-section">
-            {/* Interior Front Photo */}
-            <div className="photo-upload-box">
-              <label htmlFor="interior-front-photo">
-                <div className="upload-box-content">
-                  {imagePreviews.interiorFront ? (
-                    <>
-                      <img
-                        id="interior-front-photo-preview"
-                        className="uploaded"
-                        src={imagePreviews.interiorFront}
-                        alt="Vordersitze"
-                      />
-                      <button
-                        type="button"
-                        className="delete-icon"
-                        onClick={() =>
-                          removeImage("interiorFront", "interior-front-photo")
-                        }
-                      >
-                        ×
-                      </button>
-                    </>
-                  ) : (
-                    <span>Vordersitze</span>
-                  )}
-                  <input
-                    type="file"
-                    id="interior-front-photo"
-                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "interiorFront")}
-                  />
-                </div>
-              </label>
-            </div>
-
-            {/* Interior Back Photo */}
-            <div className="photo-upload-box">
-              <label htmlFor="interior-back-photo">
-                <div className="upload-box-content">
-                  {imagePreviews.interiorBack ? (
-                    <>
-                      <img
-                        id="interior-back-photo-preview"
-                        className="uploaded"
-                        src={imagePreviews.interiorBack}
-                        alt="Rücksitzbank"
-                      />
-                      <button
-                        type="button"
-                        className="delete-icon"
-                        onClick={() =>
-                          removeImage("interiorBack", "interior-back-photo")
-                        }
-                      >
-                        ×
-                      </button>
-                    </>
-                  ) : (
-                    <span>Rücksitzbank</span>
-                  )}
-                  <input
-                    type="file"
-                    id="interior-back-photo"
-                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "interiorBack")}
-                  />
-                </div>
-              </label>
-            </div>
-
-            {/* Dashboard Photo */}
-            <div className="photo-upload-box">
-              <label htmlFor="interior-dashboard-photo">
-                <div className="upload-box-content">
-                  {imagePreviews.dashboard ? (
-                    <>
-                      <img
-                        id="interior-dashboard-photo-preview"
-                        className="uploaded"
-                        src={imagePreviews.dashboard}
-                        alt="Tacho"
-                      />
-                      <button
-                        type="button"
-                        className="delete-icon"
-                        onClick={() =>
-                          removeImage("dashboard", "interior-dashboard-photo")
-                        }
-                      >
-                        ×
-                      </button>
-                    </>
-                  ) : (
-                    <span>Tacho</span>
-                  )}
-                  <input
-                    type="file"
-                    id="interior-dashboard-photo"
-                    accept="image/jpeg, image/jpg, image/png, image/webp" // Specify accepted formats
-                    onChange={(event) => previewImage(event, "dashboard")}
-                  />
-                </div>
-              </label>
-            </div>
+            {/* Dynamically map through selectedDamages and create upload boxes */}
+            {selectedDamages.map((damage) => (
+              <div key={damage} className="photo-upload-box">
+                <label htmlFor={`${damage}-photo`}>
+                  <div className="upload-box-content">
+                    {damagePreviews[damage] &&
+                    damagePreviews[damage].preview ? ( // Access the preview property
+                      <>
+                        <img
+                          id={`${damage}-photo-preview`}
+                          className="uploaded"
+                          src={damagePreviews[damage].preview} // Show preview from the preview property
+                          alt={damage}
+                        />
+                        <button
+                          type="button"
+                          className="delete-icon"
+                          onClick={() => removeImage(damage, `${damage}-photo`)} // Remove image handler
+                        >
+                          ×
+                        </button>
+                      </>
+                    ) : (
+                      <span>{damage}</span> // Show damage type as placeholder
+                    )}
+                    <input
+                      type="file"
+                      id={`${damage}-photo`}
+                      accept="image/jpeg, image/jpg, image/png, image/webp" // Accepted formats
+                      onChange={(event) => previewImageDamages(event, damage)} // Preview image handler
+                    />
+                  </div>
+                </label>
+              </div>
+            ))}
           </div>
         </div>
 
