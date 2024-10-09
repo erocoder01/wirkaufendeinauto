@@ -4,6 +4,8 @@ import { apiUrl } from "../../config/apiUrl";
 import "./CarDetails.css";
 import cx from "classnames";
 import { scrollToWithOffset } from "../../helpers/scrollDown";
+import RadioForm from "../../components/Form/RadioForm";
+import MultipleChoiceForm from "../../components/Form/MultipleChoiceForm";
 
 function CarDetails({
   brandName,
@@ -39,7 +41,13 @@ function CarDetails({
   const [powerHPOptions, setPowerHPOptions] = useState([]);
   const [modificationOptions, setModificationOptions] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
+  const [
+    completedAndDocumentedMaintenances,
+    setCompletedAndDocumentedMaintenances,
+  ] = useState("");
+  const [isDamageRepaired, setIsDamageRepaired] = useState("");
+  const [hasDamagesAndWear, setHasDamagesAndWear] = useState("");
+  const [selectedDamages, setSelectedDamages] = useState([]);
   const [submitClicked, setSubmitClicked] = useState(false);
 
   useEffect(() => {
@@ -82,6 +90,9 @@ function CarDetails({
   const unfallschadenRef = useRef(null);
   const paintConditionLackRef = useRef(null);
   const paintConditionKarosserieRef = useRef(null);
+  const completedAndDocumentedMaintenancesRef = useRef(null);
+  const isDamageRepairedRef = useRef(null);
+  const hasDamagesAndWearRef = useRef(null);
 
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
@@ -514,6 +525,19 @@ function CarDetails({
               </div>
             </div>
 
+            {unfallschaden === "Ja" && (
+              <RadioForm
+                title="Wurde der Schaden repariert?"
+                value={isDamageRepaired}
+                setValue={setIsDamageRepaired}
+                name="isDamageRepaired"
+                required={true}
+                submitClicked={submitClicked}
+                options={["Ja", "Nein"]}
+                ref={isDamageRepairedRef}
+              />
+            )}
+
             <div className="form-group">
               <div className="Title-wrapper">
                 <label>
@@ -549,6 +573,62 @@ function CarDetails({
                 </label>
               </div>
             </div>
+
+            {serviceHeft === "Ja" && (
+              <RadioForm
+                title="Wie viele von den nach Herstellerangaben fälligen Wartungen wurden durchgeführt und dokumentiert?"
+                value={completedAndDocumentedMaintenances}
+                setValue={setCompletedAndDocumentedMaintenances}
+                name="completedAndDocumentedMaintenances"
+                required={true}
+                submitClicked={submitClicked}
+                options={["Alle", "Einzelne", "Keine"]}
+                ref={completedAndDocumentedMaintenancesRef}
+              />
+            )}
+
+            <RadioForm
+              title="Wie viele von den nach Herstellerangaben fälligen Wartungen wurden durchgeführt und dokumentiert?"
+              value={completedAndDocumentedMaintenances}
+              setValue={setCompletedAndDocumentedMaintenances}
+              name="completedAndDocumentedMaintenances"
+              required={true}
+              submitClicked={submitClicked}
+              options={["Alle", "Einzelne", "Keine"]}
+              ref={completedAndDocumentedMaintenancesRef}
+            />
+
+            <RadioForm
+              title="Gibt es Schäden und Gebrauchsspuren?"
+              value={hasDamagesAndWear}
+              setValue={setHasDamagesAndWear}
+              name="hasDamagesAndWear"
+              required={true}
+              submitClicked={submitClicked}
+              options={["Ja", "Nein"]}
+              ref={hasDamagesAndWearRef}
+            />
+
+            {hasDamagesAndWear === "Ja" && (
+              <MultipleChoiceForm
+                title="Welche Schäden und Gebrauchsspuren hat dein Auto?"
+                values={selectedDamages}
+                setValues={setSelectedDamages}
+                name="carDamages"
+                required={true}
+                submitClicked={submitClicked}
+                options={[
+                  "Beulen",
+                  "Kratzer",
+                  "Abnutzung von Sitzen und Armaturen",
+                  "Steinschläge",
+                  "Verblasster Lack",
+                  "Dellen",
+                  "Rost",
+                  "Hagelschläge",
+                ]}
+              />
+            )}
 
             {/* Abschnitt für Lackzustand */}
             <div className="form-group-2">
