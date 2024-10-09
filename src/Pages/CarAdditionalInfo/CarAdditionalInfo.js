@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./CarAdditionalInfo.css";
 
@@ -7,52 +7,56 @@ import { colorOutsideOptions, seatColorOptions } from "./carColors";
 import RadioForm from "../../components/Form/RadioForm";
 import TextForm from "../../components/Form/TextForm";
 import cx from "classnames";
+import { CarContext } from "../../context/CarContext";
+import MultipleChoiceForm from "../../components/Form/MultipleChoiceForm";
 
-function CarAdditionalInfo({
-  carKeysAmount,
-  setCarKeyAmount,
-  additionalTires,
-  setAdditionalTires,
-  pickerl,
-  setPickerl,
-  sellerType,
-  setSellerType,
-  importedCar,
-  setImportedCar,
-  isLeasingOrFinanced,
-  setIsLeasingOrFinanced,
-  carOwnerAmount,
-  setCarOwnerAmount,
-  carColorOutside,
-  setCarColorOutside,
-  carColorSeats,
-  setCarColorSeats,
-  isDriveable,
-  setIsDriveable,
-
-  conditionInside,
-  setConditionInside,
-  conditionOutside,
-  setConditionOutside,
-  hasWarningLights,
-  setHasWarningLights,
-  hasDamages,
-  setHasDamages,
-  isEngineInGoodCondition,
-  setIsEngineInGoodCondition,
-  isTransmissionInGoodCondition,
-  setIsTransmissionInGoodCondition,
-  isSteeringInGoodCondition,
-  setIsSteeringInGoodCondition,
-  isSuspensionInGoodCondition,
-  setIsSuspensionInGoodCondition,
-  areBrakesInGoodCondition,
-  setAreBrakesInGoodCondition,
-  isAirConditioningInGoodCondition,
-  setIsAirConditioningInGoodCondition,
-  FIN,
-  setFIN,
-}) {
+function CarAdditionalInfo() {
+  const {
+    carKeysAmount,
+    setCarKeyAmount,
+    additionalTires,
+    setAdditionalTires,
+    pickerl,
+    setPickerl,
+    sellerType,
+    setSellerType,
+    importedCar,
+    setImportedCar,
+    isLeasingOrFinanced,
+    setIsLeasingOrFinanced,
+    carOwnerAmount,
+    setCarOwnerAmount,
+    carColorOutside,
+    setCarColorOutside,
+    carColorSeats,
+    setCarColorSeats,
+    isDriveable,
+    setIsDriveable,
+    hasDamagesAndWear,
+    setHasDamagesAndWear,
+    conditionInside,
+    setConditionInside,
+    conditionOutside,
+    setConditionOutside,
+    hasWarningLights,
+    setHasWarningLights,
+    isEngineInGoodCondition,
+    setIsEngineInGoodCondition,
+    isTransmissionInGoodCondition,
+    setIsTransmissionInGoodCondition,
+    isSteeringInGoodCondition,
+    setIsSteeringInGoodCondition,
+    isSuspensionInGoodCondition,
+    setIsSuspensionInGoodCondition,
+    areBrakesInGoodCondition,
+    setAreBrakesInGoodCondition,
+    isAirConditioningInGoodCondition,
+    setIsAirConditioningInGoodCondition,
+    FIN,
+    setFIN,
+    selectedDamages,
+    setSelectedDamages,
+  } = useContext(CarContext);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -72,7 +76,6 @@ function CarAdditionalInfo({
       conditionInside !== "" &&
       conditionOutside !== "" &&
       hasWarningLights !== "" &&
-      hasDamages !== "" &&
       isEngineInGoodCondition !== "" &&
       isTransmissionInGoodCondition !== "" &&
       isSteeringInGoodCondition !== "" &&
@@ -100,7 +103,6 @@ function CarAdditionalInfo({
     conditionInside,
     conditionOutside,
     hasWarningLights,
-    hasDamages,
     isEngineInGoodCondition,
     isTransmissionInGoodCondition,
     isSteeringInGoodCondition,
@@ -128,7 +130,6 @@ function CarAdditionalInfo({
   const conditionInsideRef = useRef(null);
   const conditionOutsideRef = useRef(null);
   const hasWarningLightsRef = useRef(null);
-  const hasDamagesRef = useRef(null);
   const isEngineInGoodConditionRef = useRef(null);
   const isTransmissionInGoodConditionRef = useRef(null);
   const isSteeringInGoodConditionRef = useRef(null);
@@ -136,6 +137,7 @@ function CarAdditionalInfo({
   const areBrakesInGoodConditionRef = useRef(null);
   const isAirConditioningInGoodConditionRef = useRef(null);
   const FINRef = useRef(null);
+  const hasDamagesAndWearRef = useRef(null);
 
   const validateAndScrollToFirstInvalid = () => {
     setSubmitClicked(true);
@@ -166,8 +168,6 @@ function CarAdditionalInfo({
       scrollToWithOffset(conditionOutsideRef, -50);
     } else if (!hasWarningLights) {
       scrollToWithOffset(hasWarningLightsRef, -50);
-    } else if (!hasDamages) {
-      scrollToWithOffset(hasDamagesRef, -50);
     } else if (!isEngineInGoodCondition) {
       scrollToWithOffset(isEngineInGoodConditionRef, -50);
     } else if (!isTransmissionInGoodCondition) {
@@ -332,6 +332,38 @@ function CarAdditionalInfo({
             />
 
             <RadioForm
+              title="Gibt es Schäden und Gebrauchsspuren?"
+              value={hasDamagesAndWear}
+              setValue={setHasDamagesAndWear}
+              name="hasDamagesAndWear"
+              required={true}
+              submitClicked={submitClicked}
+              options={["Ja", "Nein"]}
+              ref={hasDamagesAndWearRef}
+            />
+
+            {hasDamagesAndWear === "Ja" && (
+              <MultipleChoiceForm
+                title="Welche Schäden und Gebrauchsspuren hat dein Auto?"
+                values={selectedDamages}
+                setValues={setSelectedDamages}
+                name="carDamages"
+                required={true}
+                submitClicked={submitClicked}
+                options={[
+                  "Beulen",
+                  "Kratzer",
+                  "Abnutzung von Sitzen und Armaturen",
+                  "Steinschläge",
+                  "Verblasster Lack",
+                  "Dellen",
+                  "Rost",
+                  "Hagelschläge",
+                ]}
+              />
+            )}
+
+            <RadioForm
               title="Wie ist der Zustand des Wageninneren?"
               value={conditionInside}
               setValue={setConditionInside}
@@ -362,17 +394,6 @@ function CarAdditionalInfo({
               submitClicked={submitClicked}
               options={["Ja", "Nein"]}
               ref={hasWarningLightsRef}
-            />
-
-            <RadioForm
-              title="Gibt es Schäden und Gebrauchsspuren?"
-              value={hasDamages}
-              setValue={setHasDamages}
-              name="damages"
-              required={true}
-              submitClicked={submitClicked}
-              options={["Ja", "Nein"]}
-              ref={hasDamagesRef}
             />
 
             <RadioForm
