@@ -283,7 +283,7 @@ function Car() {
               className="feature-image"
             />
             <h3>Kostenlose Bewertung online</h3>
-            <p>Erhalten Sie sofort ein Angebot für Ihr Fahrzeug.</p>
+            <p>Erhalte sofort ein Angebot für dein Fahrzeug.</p>
           </div>
           <div className="feature">
             <img

@@ -110,7 +110,7 @@
 .partner-benefits p {
   font-size: 18px;
   margin-bottom: 40px;
-  color: #1e1f24;
+  color: #666;
 }
 
 /* Popup Overlay Styling */
@@ -218,7 +218,7 @@
 
 .benefit-item p {
   font-size: 16px;
-  color: #333;
+  color: #666;
   line-height: 1.6;
 }
 
@@ -243,7 +243,7 @@
 .inspection-section p {
   font-size: 18px;
   margin-bottom: 40px;
-  color: #1e1f24;
+  color: #666;
 }
 
 .inspection-grid {
@@ -266,7 +266,7 @@
 .inspection-item p {
   font-size: 16px;
   font-weight: 500;
-  color: #333;
+  color: #666;
 }
 
 .testimonials {
